@@ -140,3 +140,8 @@ dmypy.json
 
 # MacOS
 .DS_Store
+
+## added by Joel 
+# I use rp.py to keep stuff I want to import in the repl
+# this keeps me from typing the same stuff when I have to restart the repl 
+rp.py 

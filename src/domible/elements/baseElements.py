@@ -1,22 +1,32 @@
-"""  pymenable//elements/baseElements.py
-classes in here are meant to be used to build HTML elements
-most of the functionality of an element can be in the base class
+"""  domible/src/domible/elements/baseElements.py
+classes in here are used to build HTML elements
+most of the functionality of an element is in the base class
 The derived classes are mostly responsible for setting the appropriate tag string value 
+And there are places where __repr__ needs to be overwritten 
 """
 
-## from datetime import datetime as dt 
+from __future__ import annotations
+
 from random import random 
 from typing import Dict, List, Any
 
-from markupsafe import escape 
 
 ####### 
 class ElementList(list):
     """
-    this class only exists because __repr__ in BaseElement prints the square brackets 
+    this class only exists because list.__repr__ in BaseElement prints the square brackets 
     when it's generating the HTML for the list objects  
+    This is needed in BaseElementList where the contents is a list of BaseElements,
+    not just a single BaseElement
     """
     def __repr__(self):
+        """ 
+        return a string that does not include square brackets for the list 
+        and has a newline between each element 
+        This is used to generate HTML text for sibling elements 
+        sibling elements are stored in a list 
+        """
+        #  I should change this to map() 
         listString = ''
         for entry in self:
             listString += f'{entry}\n'
@@ -26,19 +36,51 @@ class ElementList(list):
 #######
 class BaseElement:
     """
-    BaseElement holds the tag value and a dict of attrivutes      
-    and some methods likely needed by any element 
+    BaseElement holds the tag value, the contents,  and a dict of attrivutes      
+    and some methods likely needed by all elements 
+
+    The text for the HTML element is genereated by __repr__
+    and almost all elements derived from BaseElement can let BaseElement.__repr__ generate the text
+
+    Should we deep copy the contents and attributes?
+    Probably not the attributes, they're all strings.
+    The contents though can be very complicated structures 
+    with many levels of nesting of other elements.
+    If someone used elementX in the contents of elementB, 
+    then changed elementX, that would change elementB if only references were copied.
+
+    Should it then be an explicit callout that contents are references, not deep copied?
+    Maybe ...  
     """
     def __init__(self, tag: str, contents: Any = None, **kwArgs):
         self.tag = tag
         self.contents = contents
         self.attrs = dict(kwArgs)
 
+    def getElements(self, tag: str = None, attrs: list[str] = None) -> list[Any]:
+        """
+        look at this element and any elements in its contents and 
+        return any elements with the given tag or list of attributes 
+        Search is breadth first with returned elements in a list 
+        with an ordering you'd expect from BFS 
+
+        Think of self as the root of a generic tree.
+        self has contents which could be empty, have one or more BaseElements, or something else (e.g., string).
+        Only other BaseElements are considerred children, needing to be searched.
+        Contents that are not children (not derived from BaseElement) are considered  leave nodes. 
+        """
+        found = []
+        searching = [self]
+        while len(searching) > 0:
+            current = searching.pop(0)
+            
+        return found 
+
     def attrValue(self, attr: str, value: str = None) -> str:
         """
         use this to set a value for a single attribute,
         or to get the value set for the given attribute.
-        if value is None, returns the value of attr in attrs
+        if value is None, returns the value of attr in self.attrs
         if value is set, adds attr to attrs with given value.
         if attr already existed in attrs, updates attr in attrs with new value and  returns old value 
         """ 
@@ -53,14 +95,17 @@ class BaseElement:
     def id(self, value:str = None) -> str:
         """
         id() is separate from attrValue as it's reasonable for the package to generate a unique id for the element.
-        If there is no id in attrs, id() will generate one, add it to attrs and return the value.
+        If there is no id in self.attrs, id() will generate one, add it to attrs and return the value.
         if the value argument is not None, id() will go through attrValue to set that value for the 'id' attribute and return that.
         """
         if value:
             return self.attrValue('id', value)
         elif (existing := self.attrs.get('id')):
+            # no value was provided and 'id' already exists in self.attyrs, return the existing value 
             return existing
         else:
+            # no value was provided and 'id' does not already exist in self.attrs
+            # generate an id, set it in attrs and return that new value 
             idValue = f'{self.tag}-{random()}'
             self.attrValue('id', idValue)
             return idValue 
@@ -85,21 +130,24 @@ class BaseElement:
 
     def openingTag(self) -> str:
         """
-        returns a string representing the opening tag  and any attributes 
+        returns a string representing the opening tag  including any attributes 
         """
-        return f'<{self.tag} {self.getAttributesString()}>'
+        return f'<{self.tag}{self.getAttributesString()}>'
         
     def closingTag(self) -> str:
         return f'</{self.tag}>'
 
 
     def __repr__(self):
-        return f'{self.openingTag()} {self.contents} {self.closingTag()}'
+        return f'{self.openingTag()}{self.contents}{self.closingTag()}'
 
 
 #######
 class BaseElementList(BaseElement):
     """
+    BaseElementList is an elment whose contents can be a list of elements
+    e.g., <ul>, <ol>, <tr>, ...
+
     when implementing the list elements (<ol>, <ul>, <dl>, <menu>), I created a BaseList in lists.py 
     Each of the list elements extended BaseList
     When implemeting tables, I realized there are many elements whose contents is a list of other elements
