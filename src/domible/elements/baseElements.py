@@ -3,6 +3,18 @@ classes in here are used to build HTML elements
 most of the functionality of an element is in the base class
 The derived classes are mostly responsible for setting the appropriate tag string value 
 And there are places where __repr__ needs to be overwritten 
+
+*** note about contents ***
+
+I'll elaborate on this more in the documentation as there's possibly quite a bit to say, here's the gist of it 
+
+Initially, I assumed contents was a single item, e.g., a string, or another BaseElement.
+I realized some elements had lists of other elements as their contents, so I made another class, BaseElementList 
+in which the contents was specifically a list, though the list could hold anything.
+As I learned more about HTML and was developing more complex documents, 
+I realized I should only have BaseElement and let contents be anything, including a list.
+I could handle it all within the BaseElement implementation. 
+Thus BaseElementList is gone and BaseEllement dynamically adjust contents accordingly. 
 """
 
 from __future__ import annotations
@@ -12,22 +24,19 @@ from typing import Dict, List, Any
 
 
 ####### 
-class ElementList(list):
+class ContentsList(list):
     """
-    this class only exists because list.__repr__ in BaseElement prints the square brackets 
+    this class only exists because list.__repr__ prints the square brackets 
     when it's generating the HTML for the list objects  
-    This is needed in BaseElementList where the contents is a list of BaseElements,
-    not just a single BaseElement
     """
     def __repr__(self):
         """ 
         return a string that does not include square brackets for the list 
-        and has a newline between each element 
+        and has a newline between each element, instead of comma 
         This is used to generate HTML text for sibling elements 
-        sibling elements are stored in a list 
         """
-        #  I should change this to map() 
-        listString = ''
+        #  I should change this to map(), except this way is so readable ... 
+        listString = '\n'
         for entry in self:
             listString += f'{entry}\n'
         return listString 
@@ -39,7 +48,7 @@ class BaseElement:
     BaseElement holds the tag value, the contents,  and a dict of attrivutes      
     and some methods likely needed by all elements 
 
-    The text for the HTML element is genereated by __repr__
+    The text for the element is genereated by __repr__
     and almost all elements derived from BaseElement can let BaseElement.__repr__ generate the text
 
     Should we deep copy the contents and attributes?
@@ -50,11 +59,17 @@ class BaseElement:
     then changed elementX, that would change elementB if only references were copied.
 
     Should it then be an explicit callout that contents are references, not deep copied?
-    Maybe ...  
+    Maybe ...    But isn't that just saying Python uses pass by reference?
     """
     def __init__(self, tag: str, contents: Any = None, **kwArgs):
         self.tag = tag
-        self.contents = contents
+        if not contents:
+            self.contents = ContentsList()
+        elif not isinstance(contents, list):
+            # need to call this out here so we don't end up with a list of a list 
+            self.contents = ContentsList([contents])
+        else:
+            self.contents = ContentsList(contents)
         self.attrs = dict(kwArgs)
 
     def getElements(self, tag: str = None, attrs: list[str] = None) -> list[Any]:
@@ -72,7 +87,7 @@ class BaseElement:
         found = []
         searching = [self]
         while len(searching) > 0:
-            current = searching.pop(0)
+            Bcurrent = searching.pop(0)
             
         return found 
 
@@ -96,7 +111,8 @@ class BaseElement:
         """
         id() is separate from attrValue as it's reasonable for the package to generate a unique id for the element.
         If there is no id in self.attrs, id() will generate one, add it to attrs and return the value.
-        if the value argument is not None, id() will go through attrValue to set that value for the 'id' attribute and return that.
+        if the value argument is provided, id() will go through attrValue to set that value for the 'id' attribute 
+        and return whatever attrValue returned.
         """
         if value:
             return self.attrValue('id', value)
@@ -125,16 +141,30 @@ class BaseElement:
 
 
     def addAttributes(self, **kwArgs) -> None:
+        """ add all atttributes in kwArgs to self.attrs """
         self.attrs.update(kwArgs)
 
 
+    def addContent(self, content: Any, front: bool = False) -> None: 
+        """ 
+        add content to any existing contents.  
+        Adds to end of contents by default 
+        We know from __init__, contents is at least a empty list 
+        """
+        if not isinstance(content, list):
+            content = [content]
+        if front:
+            self.contents = ContentsList(content + self.contents)
+        else:
+            self.contents = ContentsList(self.contents + content)
+
+
     def openingTag(self) -> str:
-        """
-        returns a string representing the opening tag  including any attributes 
-        """
+        """ returns a string representing the opening tag  including any attributes """
         return f'<{self.tag}{self.getAttributesString()}>'
         
     def closingTag(self) -> str:
+        """ returns closing tag """
         return f'</{self.tag}>'
 
 
@@ -142,43 +172,27 @@ class BaseElement:
         return f'{self.openingTag()}{self.contents}{self.closingTag()}'
 
 
-#######
-class BaseElementList(BaseElement):
+class BaseVoidElement(BaseElement):
     """
-    BaseElementList is an elment whose contents can be a list of elements
-    e.g., <ul>, <ol>, <tr>, ...
+    a void element cannot have contents and there is no closing tag
+    This class enforces those two properties by overriding a few of BaseElements methods 
+    """    
+    def __init__(self, tag: str, **kwArgs):
+        super().__init__(tag=tag, **kwArgs)
 
-    when implementing the list elements (<ol>, <ul>, <dl>, <menu>), I created a BaseList in lists.py 
-    Each of the list elements extended BaseList
-    When implemeting tables, I realized there are many elements whose contents is a list of other elements
-    Thus BaseList is now in baseElements.py as BaseElementList
-    I'm not entirely happy with that name, maybe something better will come to me
-    Regarding the type of objects contained in an ElementList,
-    it really should be Baseelement as the idea is it's a list of Elements
-    However, <dl> threw a wrench in the planning
-    <dl> is a list but of two different types of elements
-    In lists.py, there's DListItem used to make <dl> entries look like <li> elements
-    But DListItem is not derived from BaseElement because it's not an element,
-    and it doesn't have a tag, and I didn't want to make up one
-    So ElementList can have Any type in it to initially accomodate ListItem and DListItem 
-    And other elements like tr and label and input 
-    and probably more objects like DListItem in the future 
-    """
-    def __init__(self, tag: str, elements: List[Any] = None, **kwArgs):
-        self.elements = ElementList(elements) if elements else ElementList([])
-        super().__init__(tag, self.elements, **kwArgs)
+    def addContent(self, content: Any, front: bool = False) -> None: 
+        """ 
+        void elements do not contain content 
+        as it is now, simply return from this method.
+        Maybe we should raise an exception 
+        or provide an override to say do it regardless.
+        If an override is eventually added, __repr__ will need to be updated to include the contents 
+        """
+        return 
 
-    def addElement(self, elem: Any, front: bool = False) -> None: 
-        if front:
-            self.elements.insert(0, elem)
-        else:
-            self.elements.append(elem)
-
-    def addElements(self, elements: List[Any]) -> None:
-        self.elements += ElementList(elements)
-
-    def elementCount(self) -> int:
-        return len(self.elements)
+    def __repr__(self):
+        """ a void element only has an opening tag, with attributes, if any  """
+        return f'{self.openingTag()}'
 
 
 ## end of file 

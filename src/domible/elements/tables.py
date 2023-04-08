@@ -9,7 +9,7 @@ it's 2022, use  CSS for layout and formatting
 
 from typing import List, Any
 
-from .baseElements import BaseElement, BaseElementList
+from .baseElements import BaseElement
 
 
 #######
@@ -51,11 +51,11 @@ class TableRowHeader(TableHeader):
 
 
 #######
-class TableRow(BaseElementList):
+class TableRow(BaseElement):
     """ creates a tr element.
     Note the tr element contains a list of th and/or td elements.
     The th/td elements can be provided at creation time,
-    or added later via instance methods to add elements.
+    or added later via instance methods to add content.
     """
     def __init__(self, cells: List[Any] = None, **kwArgs):
         """
@@ -71,11 +71,11 @@ hopefully there are no cut'n'paste errors here...
 #######
 
 
-class TableHead(BaseElementList):
+class TableHead(BaseElement):
     """ creates a thead element.
     Note the thead element contains a list of tr elements.
     The tr elements can be provided at creation time,
-    or added later via instance methods to add elements.
+    or added later via instance methods to add content.
     """
     def __init__(self, rows: List[Any] = None, **kwArgs):
         """
@@ -85,11 +85,11 @@ class TableHead(BaseElementList):
 
 
 #######
-class TableBody(BaseElementList):
+class TableBody(BaseElement):
     """ creates a tbody element.
     Note the tbody element contains a list of tr elements.
     The tr elements can be provided at creation time,
-    or added later via instance methods to add elements.
+    or added later via instance methods to add content.
     """
     def __init__(self, rows: List[Any] = None, **kwArgs):
         """
@@ -99,11 +99,11 @@ class TableBody(BaseElementList):
 
 
 #######
-class TableFoot(BaseElementList):
+class TableFoot(BaseElement):
     """ creates a tfoot element.
     Note the tfoot element contains a list of tr elements.
     The tr elements can be provided at creation time,
-    or added later via instance methods to add elements.
+    or added later via instance methods to add content.
     """
     def __init__(self, rows: List[Any] = None, **kwArgs):
         """
@@ -122,9 +122,9 @@ class Caption(BaseElement):
 
 
 #######
-class Table(BaseElementList):
+class Table(BaseElement):
     """ creates the table element."""
-    def __init__(self, caption: Caption, elements: List[Any] = None, **kwArgs):
+    def __init__(self, caption: Caption, contents: List[Any] = None, **kwArgs):
         """
         a caption is not required in a table, here's where I start to get opinionated.
         And this opinion is toward accessibility.
@@ -136,9 +136,9 @@ class Table(BaseElementList):
             raise ValueError(
                 "WTF, gives us a real caption for this Table my precious")
         self.caption = caption
-        # make sure caption is first on the elements list so it gets rendered by the base __repr__
-        elements = [caption] + elements if elements else [caption]
-        super().__init__(tag='table', elements=elements, **kwArgs)
+        # make sure caption is first on the contents list so it gets rendered by the base __repr__
+        contents = [caption] + contents if contents else [caption]
+        super().__init__(tag='table', elements=contents, **kwArgs)
 
 
 ## end of file

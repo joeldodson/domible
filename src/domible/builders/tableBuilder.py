@@ -138,7 +138,7 @@ class TableInfo:
         a <thead> is a list of rows though in this case it's a single row of the names of the columns
         a TableRow is a list of anything derived from TableData <td> or TableHeader <th> elements 
         """
-        table.addElement(
+        table.addContent(
             TableHead([
                 TableRow(
                     # list comprehension to initiate the TableRow
@@ -150,7 +150,7 @@ class TableInfo:
         now add all the rows in the tbody element 
         same idea as adding the TableHead above 
         """
-        table.addElement(
+        table.addContent(
             TableBody([row.getRow(list(self.columnHeadings.keys())) for row in self.rows]))
         return table
 

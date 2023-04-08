@@ -5,7 +5,7 @@ the list items (including <dt> and <dd>) are defined in here as well.
 
 from typing import List, Any
 
-from domible.elements.baseElements import BaseElement, BaseElementList
+from domible.elements.baseElements import BaseElement
 
 """
 <li>, <dt>, and <dd> are nearly the same element with different tags.
@@ -66,7 +66,7 @@ class ListItem(BaseElement):
 
 
 #######
-class UnorderedList(BaseElementList):
+class UnorderedList(BaseElement):
     """ creates a ul element. """
 
     def __init__(self, entries: List[ListItem] = None, **kwArgs):
@@ -78,7 +78,7 @@ class UnorderedList(BaseElementList):
 
 
 #######
-class OrderedList(BaseElementList):
+class OrderedList(BaseElement):
     """ creates an ol element. """
 
     def __init__(self, entries: List[Any] = None, **kwArgs):
@@ -86,7 +86,7 @@ class OrderedList(BaseElementList):
 
 
 #######
-class MenuList(BaseElementList):
+class MenuList(BaseElement):
     """ creates a menu element. """
 
     def __init__(self, entries: List[Any] = None, **kwArgs):
@@ -94,7 +94,7 @@ class MenuList(BaseElementList):
 
 
 #######
-class DescriptionList(BaseElementList):
+class DescriptionList(BaseElement):
     """ creates a dl element.  """
 
     def __init__(self, entries: List[Any] = None, **kwArgs):
