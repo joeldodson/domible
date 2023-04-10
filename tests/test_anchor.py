@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 from domible.elements import Anchor
 
-from .utils import validate_anchor
+from .testutils import validate_anchor
 
 
 def test_basic_anchor():
