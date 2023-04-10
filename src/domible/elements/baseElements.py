@@ -22,6 +22,8 @@ from __future__ import annotations
 from random import random 
 from typing import Dict, List, Any
 
+from .. import utils 
+
 
 ####### 
 class ContentsList(list):
@@ -72,10 +74,10 @@ class BaseElement:
             self.contents = ContentsList(contents)
         self.attrs = dict(kwArgs)
 
-    def getElements(self, tag: str = None, attrs: list[str] = None) -> list[Any]:
+    def getElements(self, tag: str = None, **attrs) -> list[Any]:
         """
         look at this element and any elements in its contents and 
-        return any elements with the given tag or list of attributes 
+        return any elements with the given tag and list of attributes 
         Search is breadth first with returned elements in a list 
         with an ordering you'd expect from BFS 
 
@@ -84,11 +86,14 @@ class BaseElement:
         Only other BaseElements are considerred children, needing to be searched.
         Contents that are not children (not derived from BaseElement) are considered  leave nodes. 
         """
+        if not (tag or attrs): return None 
         found = []
         searching = [self]
         while len(searching) > 0:
-            Bcurrent = searching.pop(0)
-            
+            current = searching.pop(0)
+            if tag == current.tag and utils.isSubDict(attrs, current.attrs):
+                found.append(current)  
+            searching += [elem for elem in current.contents if isinstance(elem, BaseElement)]    
         return found 
 
     def attrValue(self, attr: str, value: str = None) -> str:

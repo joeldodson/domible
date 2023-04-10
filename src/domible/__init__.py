@@ -7,5 +7,6 @@ __version__ = version("domible")
 
 import domible.elements
 import domible.builders
+import domible.starterDocuments 
 
 ## end of file 
