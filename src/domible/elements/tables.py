@@ -81,7 +81,7 @@ class TableHead(BaseElement):
         """
         rows should be a list of tr elements 
         """
-        super().__init__(tag='thead', elements=rows, **kwArgs)
+        super().__init__(tag='thead', contents=rows, **kwArgs)
 
 
 #######
@@ -95,7 +95,7 @@ class TableBody(BaseElement):
         """
         rows should be a list of tr elements 
         """
-        super().__init__(tag='tbody', elements=rows, **kwArgs)
+        super().__init__(tag='tbody', contents=rows, **kwArgs)
 
 
 #######
@@ -109,7 +109,7 @@ class TableFoot(BaseElement):
         """
         rows should be a list of tr elements 
         """
-        super().__init__(tag='tfoot', elements=rows, **kwArgs)
+        super().__init__(tag='tfoot', contents=rows, **kwArgs)
 
 
 #######
@@ -124,7 +124,7 @@ class Caption(BaseElement):
 #######
 class Table(BaseElement):
     """ creates the table element."""
-    def __init__(self, caption: Caption, contents: List[Any] = None, **kwArgs):
+    def __init__(self, caption: Caption, contents: Any = None, **kwArgs):
         """
         a caption is not required in a table, here's where I start to get opinionated.
         And this opinion is toward accessibility.
@@ -132,13 +132,13 @@ class Table(BaseElement):
         If I type 't' to go to the next table, I generally have to arrow up to understand what is in the table.
         A caption howerver will be read to me after typing 't' and landing on the next table.
         """
-        if not caption:
+        if not caption or not isinstance(caption, Caption):
             raise ValueError(
-                "WTF, gives us a real caption for this Table my precious")
+                "Table caption needs to be of type domible.elements.Caption")
         self.caption = caption
         # make sure caption is first on the contents list so it gets rendered by the base __repr__
         contents = [caption] + contents if contents else [caption]
-        super().__init__(tag='table', elements=contents, **kwArgs)
+        super().__init__(tag='table', contents=contents, **kwArgs)
 
 
 ## end of file

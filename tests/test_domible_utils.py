@@ -23,6 +23,12 @@ def test_subdict_equal_dicts():
     assert dSub == dSuper, "sub and super are supposed to be equivalent"
     assert domutils.isSubDict(dSub, dSuper),  f"{dSub} should be equal to {dSuper}"
 
+def test_subdict_same_attrs_different_values():
+    dSub = {"id": "unique-id", "class": "fancy", "random-attribute": "random-value"}
+    dSuper = {"id": "uniqueId", "class": "fancy", "random-attribute": "random-value"}
+    assert not domutils.isSubDict(dSub, dSuper),  "dSub and dSuper have same attributes but a value is different"
+
+
 def test_subdict_empty_sub():
     dSub = {}
     dSuper = {"id": "uniqueId", "class": "fancy", "random-attribute": "random-value"}

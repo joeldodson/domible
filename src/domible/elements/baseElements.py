@@ -163,6 +163,15 @@ class BaseElement:
         else:
             self.contents = ContentsList(self.contents + content)
 
+    def setContent(self, content: Any) -> None: 
+        """ 
+        set the content of this element to the passed in content
+        any existing content will be be lost 
+        """
+        if not isinstance(content, list):
+            content = [content]
+        self.contents = ContentsList(content)
+
 
     def openingTag(self) -> str:
         """ returns a string representing the opening tag  including any attributes """

@@ -21,6 +21,9 @@ class Title(BaseElement):
     """ Create a Title element
     Titles can only contain strings of text (per spec).
     This is enforced in this class.
+
+    it's necessary to override setContent and addContent to ensure title is a string 
+    and there is no other content in the element 
     """
 
     def __init__(self, contents: str, **kwArgs):
@@ -32,21 +35,27 @@ class Title(BaseElement):
 
     def setTitle(self, title: str) -> None:
         """ set the value, must be a string, for the Title. """
-        self.addContent(title)
+        self.setContent(title)
 
 
-    def addContent(self, content: Any, front: bool = False) -> None:
+    def setContent(self, content: Any) -> None:
         """ 
         <title> can only have a string that is the title  
-        and it might have already been set at creation time.
         If the new content is a string, 
         overrite any existing title 
+        else, raise an exception 
         """
         if not isinstance(content, str):
             raise TypeError("Title contents must be a string")
         self.titleStr = content
-        self.contents = []
-        super().addContent(content)
+        super().setContent(content)
+
+
+    def addContent(self, content: Any, front: bool = False) -> None:
+        """ 
+        let Title.setContent handle this 
+        """
+        self.setContent(content)
 
 
 # end of file
