@@ -1,10 +1,18 @@
 [tool.poetry]
 name = "domible"
 version = "0.1.0"
-description = "python package to create accessible HTML elements and documents "
+description = "python classes to create accessible HTML elements and documents "
 authors = ["Joel Dodson <joeldodson@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/joeldodson/domible"
+repository = "https://github.com/joeldodson/domible"
+keywords = ["html", "accessibility", "a11y", "web development", "frontend", "server side rendering", "SSR"]
+packages = [
+{ include = "domible", from = "src" },
+{ include = "dicli", from = "src"}
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -12,7 +20,6 @@ beautifulsoup4 = {version = "^4.11.2", optional = true}
 typer = {version = "^0.7.0", optional = true}
 jsonloggeriso8601datetime = {version = "^1.0.3", optional = true}
 
-[tool.poetry.dev-dependencies]
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^2.0.2"
@@ -21,6 +28,12 @@ pytest-cov = "^4.0.0"
 beautifulsoup4 = "^4.11.2"
 jsonloggeriso8601datetime = "^1.0.3"
 pytest-reportlog = "^0.2.1"
+
+[tool.poetry.extras]
+dicli = ["beautifulsoup4", "typer", "jsonloggeriso8601datetime"]
+
+[tool.poetry.scripts]
+dicli = { callable = "dicli:run", extras = ["dicli"] }
 
 [tool.semantic_release]
 version_variable = "pyproject.toml:version" # version location
