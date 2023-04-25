@@ -1,4 +1,4 @@
-""" domible/src/distarter/distarter.py 
+""" domible/src/distarter/main.py 
 
 this file serves as Python code to get started with domible
 The datetime and webbrowser imports and openPage() funtion 
