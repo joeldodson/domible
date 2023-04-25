@@ -10,7 +10,8 @@ repository = "https://github.com/joeldodson/domible"
 keywords = ["html", "accessibility", "a11y", "web development", "frontend", "server side rendering", "SSR"]
 packages = [
 { include = "domible", from = "src" },
-{ include = "dicli", from = "src"}
+{ include = "dicli", from = "src"},
+{ include = "distarter", from = "src"}
 ]
 
 
@@ -33,6 +34,7 @@ pytest-reportlog = "^0.2.1"
 dicli = ["beautifulsoup4", "typer", "jsonloggeriso8601datetime"]
 
 [tool.poetry.scripts]
+distarter = "distarter:run"
 dicli = { callable = "dicli:run", extras = ["dicli"] }
 
 [tool.semantic_release]

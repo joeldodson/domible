@@ -1,12 +1,14 @@
 """ domible/src/dicli/dicli.py 
 """
 
+import logging
 import jsonloggeriso8601datetime as jlidt
 
 jlidt.setConfig()
+logger = logging.getLogger(__name__)
 
-import os
-import inspect
+## import os
+## import inspect
 from datetime import datetime as dt
 import webbrowser as wb
 
@@ -53,7 +55,13 @@ def simple() -> None:
     htmlDoc = barebones(title)
     body = htmlDoc.getBody()
     body.addContent(
-        [Heading(1, title), Paragraph("Really, this is all you're going to get.")]
+        [
+            Heading(1, title),
+            Paragraph("Really, this is all you're going to get."),
+            Paragraph(
+                f'You might find more interesting content at {Anchor(href="https://blindgumption.com", contents="the Blind Gumption Website")}'
+            ),
+        ]
     )
     openPage(htmlDoc)
 
@@ -294,14 +302,7 @@ def headings():
 
 #######
 @app.callback(invoke_without_command=True)
-def main(
-    configfile: str = typer.Option(None, "-c", "--configfile"),
-    templatedirs: str = typer.Option(None, "-t", "--templatedirs"),
-) -> None:
-    if configfile:
-        typer.echo(f"using config file: {configfile}")
-    if templatedirs:
-        typer.echo(f"using template directories: {templatedirs}")
+def main() -> None:
     typer.echo(
         "that's it for main, hope it went well, and there's a page to view in your browser."
     )
