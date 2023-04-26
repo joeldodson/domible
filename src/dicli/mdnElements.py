@@ -1,4 +1,4 @@
-""" domible/examples/elementsMdn.py
+""" /domible/src/dicli/mdnElements.py
 code to get HTML elements reference from MDN
 used by getTableData 
 
@@ -20,7 +20,7 @@ from markupsafe import escape
 import requests
 from typing import Dict, Tuple
 
-from domible.elements.inline import Anchor
+from domible.elements import Anchor
 from domible.builders.tableBuilder import TableInfo, RowInfo
 
 

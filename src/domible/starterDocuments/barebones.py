@@ -1,23 +1,11 @@
 """ domible/src/domible/starterDocuments/barebones.py
 
-the following is what I get using emmit 
+to see what barebones returns, use emmit 
 (in vscode,  in a .html file, type !<tab> as the first characters in the file):
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-</body>
-</html>
+or run the distarter script installed along with domible and view source.
 
 barebones.py will return a reference to a domible.elements.roots.Html object
-which will render the above HTML when evaluated
+which will render the simple HTML when evaluated
 """
 
 from domible.elements import Html, Head, Meta, Title, Body

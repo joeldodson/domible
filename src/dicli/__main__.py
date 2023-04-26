@@ -3,7 +3,7 @@
 
 import jsonloggeriso8601datetime as jlidt
 
-from . import app, app_name 
+from . import app, app_name
 from . import run
 
 
@@ -16,4 +16,4 @@ if __name__ == "__main__":
     run()
     ## main()
 
-    ## end of file 
+    ## end of file
