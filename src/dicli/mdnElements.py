@@ -16,7 +16,6 @@ from os import path
 
 from bs4 import BeautifulSoup as BSoup
 from bs4.element import Tag
-from markupsafe import escape
 import requests
 from typing import Dict, Tuple
 
@@ -46,8 +45,8 @@ def updateLocalAnchorHref(tag: Tag) -> BSoup:
 #######
 def filterAnchor(anchor: Tag) -> bool:
     """
-    for each element, there is a page with a url of the form:
-        elementsReferenceUrl/<element_name>
+    for each element, there is a page with a url of the form
+    elementsReferenceUrl/<element_name>
     there are other anchors on the base MDN HTML reference page though with a similar base path
     there is also an anchor with href that looks like its fro an element called 'contributors.txt', filter that out too
     This filter is to ensure we get only the anchors referencing HTML elements
@@ -63,7 +62,9 @@ def filterAnchor(anchor: Tag) -> bool:
 
 #######
 def getElementSummary(soup: BSoup) -> Dict:
-    """the summary is in the first <p> element immediately after the only <h1> element in the doc"""
+    """
+    the summary is in the first <p> element immediately after the only <h1> element in the doc
+    """
     summary = soup.find("h1").next_sibling.find("p")
     updateLocalAnchorHref(summary)
     ## summary = str(escape(summary.encode()))
@@ -111,12 +112,12 @@ def getElementsTables(outfile: str) -> Tuple[TableInfo, TableInfo]:
                 deprecatedElementsTable.addRow(row)
             else:
                 currentElementsTable.addRow(row)
-        with open(outfile, "w") as of:
+        with open(outfile, "w") as ofd:
             tsp = BSoup(str(currentElementsTable.getTable()), "html.parser")
-            of.write(tsp.prettify())
+            ofd.write(tsp.prettify())
             tsp = BSoup(str(deprecatedElementsTable.getTable()), "html.parser")
-            of.write(tsp.prettify())
-    except Exception as exc:
+            ofd.write(tsp.prettify())
+    except Exception:
         logger.exception("something bad happened while scraping MDN")
         return (None, None)
     return (currentElementsTable, deprecatedElementsTable)

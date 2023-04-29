@@ -1,4 +1,4 @@
-""" domible/src/dicli/dicli.py 
+""" domible/src/dicli/main.py 
 """
 
 import logging
@@ -7,18 +7,17 @@ import jsonloggeriso8601datetime as jlidt
 jlidt.setConfig()
 logger = logging.getLogger(__name__)
 
-## import os
-## import inspect
 from datetime import datetime as dt
 import webbrowser as wb
 
 from typing import Any, Dict, List
 
 import typer
+app = typer.Typer()
 
-from .mdnElements import getElementsTables, mdnAnchor
+from dicli.mdnElements import getElementsTables, mdnAnchor
 
-from . import app
+## from dicli import app
 
 from domible.elements import Html, Body, Title
 from domible.elements import (

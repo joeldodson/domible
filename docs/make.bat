@@ -10,7 +10,7 @@ if "%SPHINXBUILD%" == "" (
 set SOURCEDIR=.
 set BUILDDIR=_build
 set SPHINXPROJ=domible
-
+set SPHINXOPTS=-W -w sphinx_build.err
 if "%1" == "" goto help
 
 %SPHINXBUILD% >NUL 2>NUL
