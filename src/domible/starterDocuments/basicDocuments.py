@@ -1,17 +1,14 @@
-""" domible/src/domible/starterDocuments/barebones.py
-
-to see what barebones returns, use emmit 
-(in vscode,  in a .html file, type !<tab> as the first characters in the file)
-or run the distarter script installed along with domible and view source.
-
-barebones.py will return a reference to a domible.elements.roots.Html object
-which will render the simple HTML when evaluated
-"""
+""" domible/src/domible/starterDocuments/barebones.py """ 
 
 from domible.elements import Html, Head, Meta, Title, Body
 
 
-def barebones(title: str = "Domible Default Title") -> Html:
+def basicHeadEmptyBody(title: str = "Domible Default Title") -> Html:
+    """
+    barebones creates an Html object with the minimal recommended elements:
+    DOCTYPE, head with two meta elements and a tile, and a body with nothing
+    """
+
     return Html(
         [
             Head(

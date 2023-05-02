@@ -1,9 +1,5 @@
-""" domible/src/domible/starterDocuments/__init__.py
-export all the functions used to create 
-the beginnings of an HTML document 
-"""
+""" domible/src/domible/starterDocuments/__init__.py """
 
-
-from starterDocuments.barebones import barebones
+from domible.starterDocuments.basicDocuments import basicHeadEmptyBody
 
 # end of file

@@ -31,7 +31,7 @@ from domible.elements import (
 )
 from domible.elements import Heading, Anchor, Paragraph
 from domible.builders.tableBuilder import TableInfo, createTableFromDicts
-from domible.starterDocuments import barebones
+from domible.starterDocuments import basicHeadEmptyBody
 
 
 #######
@@ -51,7 +51,7 @@ def simple() -> None:
     a very simple HTML document
     """
     title = "BareBones with a Minimal Body"
-    htmlDoc = barebones(title)
+    htmlDoc = basicHeadEmptyBody(title)
     body = htmlDoc.getBody()
     body.addContent(
         [
@@ -77,7 +77,7 @@ def elements(
     """
     typer.echo(f"using output file: {outputfile}")
     title = "Tables of HTML Elements Scraped from MDN "
-    htmlDoc = barebones(title)
+    htmlDoc = basicHeadEmptyBody(title)
     body = htmlDoc.getBody()
     (currentElementsTable, deprecatedElementsTable) = getElementsTables(outputfile)
     if not currentElementsTable or not deprecatedElementsTable:
@@ -116,7 +116,7 @@ def ctfd(
     ## we have a matrix, now display it in an HTML table
     table = createTableFromDicts("base number raised to column heading number", rows)
     title = f"Testing createTableFromDicts function in tableBuilder, lower is {lower}, upper is {upper}"
-    htmlDoc = barebones(title)
+    htmlDoc = basicHeadEmptyBody(title)
     body = htmlDoc.getBody()
     body.addContent(
         [
@@ -226,7 +226,7 @@ def lists():
     )
     detailsList.attrValue("aria-labelledby", detailsHeading.id())
     title = "Testing Domible Lists"
-    htmlDoc = barebones(title)
+    htmlDoc = basicHeadEmptyBody(title)
     body = htmlDoc.getBody()
     body.addContent(
         [
@@ -253,7 +253,7 @@ def headings():
     """
     typer.echo("testing heading generation")
     title = "Domible testing Heading Element"
-    htmlDoc = barebones(title)
+    htmlDoc = basicHeadEmptyBody(title)
     body = htmlDoc.getBody()
     body.addContent(Heading(1, title))
     for lvl in range(0, 8):
