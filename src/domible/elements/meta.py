@@ -9,6 +9,14 @@ from typing import Any
 from .baseElements import BaseElement, BaseVoidElement
 
 
+class Base(BaseVoidElement):
+    """ generates the base voide element """
+
+    def __init__(self, **kwArgs):
+        """ base is a void element, no contents are allowed """
+        super().__init__(tag="base", **kwArgs)
+
+
 class Meta(BaseVoidElement):
     """ generates the meta voide element """
 

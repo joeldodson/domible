@@ -86,8 +86,8 @@ class BaseElement:
         Only other BaseElements are considerred children, needing to be searched.
         Contents that are not children (not derived from BaseElement) are considered  leave nodes. 
         """
-        if not (tag or attrs): return None 
         found = []
+        if not (tag or attrs): return found
         searching = [self]
         while len(searching) > 0:
             current = searching.pop(0)

@@ -33,7 +33,7 @@ def run() -> None:
         href="https://blindgumption.com", contents="the Blind Gumption Website"
     )
     htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBody()
+    body = htmlDoc.getBodyElement()
     body.addContent(
         [
             Heading(1, title),

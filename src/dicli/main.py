@@ -15,11 +15,9 @@ from typing import Any, Dict, List
 import typer
 app = typer.Typer()
 
-from dicli.mdnElements import getElementsTables, mdnAnchor
+import dicli.mdnElements as mdnElements  
 
-## from dicli import app
-
-from domible.elements import Html, Body, Title
+from domible.elements import Html, Head, Body, Title, Base
 from domible.elements import (
     UnorderedList,
     OrderedList,
@@ -35,9 +33,11 @@ from domible.starterDocuments import basicHeadEmptyBody
 
 
 #######
-def openPage(htmlDoc: Html) -> None:
+def openPage(htmlDoc: Html, saveToFile: str = None) -> None:
     """create temp html file to use webbrowser to open passed in Html doc"""
-    thf = f"tmp_html_{dt.timestamp(dt.now())}.html"
+    thf = saveToFile
+    if not thf:
+        thf = f"tmp_html_{dt.timestamp(dt.now())}.html"
     with open(thf, "w") as f:
         f.write(f"{htmlDoc}")
     wb.open(thf)
@@ -52,7 +52,7 @@ def simple() -> None:
     """
     title = "BareBones with a Minimal Body"
     htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBody()
+    body = htmlDoc.getBodyElement()
     body.addContent(
         [
             Heading(1, title),
@@ -68,18 +68,23 @@ def simple() -> None:
 #######
 @app.command()
 def elements(
-    outputfile: str = typer.Option("mdnElementsData.html", "-o", "--outputfile")
+    mdn_base_url: str = typer.Option("https://developer.mozilla.org", "-u", "--url_mdn"),
+    lang: str = typer.Option("en-US", "-l", "--lang"),
+    outputfile: str = typer.Option(None, "-o", "--outputfile")
 ) -> None:
     """
     elements is used to test, and provide an example of, Table and the tableBuilder
     it will scrape HTML element reference info from MDN and present it in a table in your default browser
-    The HTML is also saved to a passed in file, defaults to ./mdnElementsData.html
+    The HTML is also saved to a passed in file, not saved if no file specified.
     """
-    typer.echo(f"using output file: {outputfile}")
+    if outputfile:
+        typer.echo(f"saving html output to file: {outputfile}")
     title = "Tables of HTML Elements Scraped from MDN "
     htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBody()
-    (currentElementsTable, deprecatedElementsTable) = getElementsTables(outputfile)
+    head = htmlDoc.getHeadElement()
+    head.addContent(Base(href=mdn_base_url))
+    body = htmlDoc.getBodyElement()
+    (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(mdn_base_url, lang)
     if not currentElementsTable or not deprecatedElementsTable:
         body.addContent(Heading(1, "failed to scrape elements from {mdnAnchor}"))
     else:
@@ -88,7 +93,7 @@ def elements(
             [
                 Heading(1, title),
                 Paragraph(
-                    f"Information in the below tables was scraped from {mdnAnchor}."
+                    f"Information in the below tables was scraped from {mdnElements.MdnAnchor}."
                 ),
                 Heading(2, "Currently Supported HTML Elements"),
                 currentElementsTable.getTable(),
@@ -96,7 +101,7 @@ def elements(
                 deprecatedElementsTable.getTable(),
             ]
         )
-    openPage(htmlDoc)
+    openPage(htmlDoc, outputfile)
 
 
 #######
@@ -117,7 +122,7 @@ def ctfd(
     table = createTableFromDicts("base number raised to column heading number", rows)
     title = f"Testing createTableFromDicts function in tableBuilder, lower is {lower}, upper is {upper}"
     htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBody()
+    body = htmlDoc.getBodyElement()
     body.addContent(
         [
             Heading(1, title),
@@ -227,7 +232,7 @@ def lists():
     detailsList.attrValue("aria-labelledby", detailsHeading.id())
     title = "Testing Domible Lists"
     htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBody()
+    body = htmlDoc.getBodyElement()
     body.addContent(
         [
             Heading(1, "Makin' Coffee, the Coffeenator"),
@@ -254,7 +259,7 @@ def headings():
     typer.echo("testing heading generation")
     title = "Domible testing Heading Element"
     htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBody()
+    body = htmlDoc.getBodyElement()
     body.addContent(Heading(1, title))
     for lvl in range(0, 8):
         body.addContent(Heading(level=str(lvl), contents=f"Heading with Level: {lvl}"))
