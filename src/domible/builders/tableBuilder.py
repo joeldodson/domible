@@ -145,13 +145,12 @@ class TableInfo:
         to corresponding elemensts (tr, th, td, caption...)
         """
         table = Table(Caption(self.caption))
-        logger.info(f"initial Table in getTable is {table}")
         # first add the column headings to the table
         # if column headings hve not been set yet, generate them based on the  rows
         if len(self.columnHeadings) == 0:
             self.generateColumnHeadings()
         columnNames = [self.rowHeadingName] + list(self.columnHeadings.values())
-        logger.info(f"column heading names is: {columnNames}")
+        logger.debug(f"table with caption {self.caption}, has column heading names:\n {columnNames}")
         """
         split this to multiple lines for readability 
         first add the table head <thead> element to the table.

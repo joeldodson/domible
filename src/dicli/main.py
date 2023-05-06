@@ -80,13 +80,13 @@ def elements(
     if outputfile:
         typer.echo(f"saving html output to file: {outputfile}")
     title = "Tables of HTML Elements Scraped from MDN "
-    htmlDoc = basicHeadEmptyBody(title)
+    htmlDoc = basicHeadEmptyBody(title, lang)
     head = htmlDoc.getHeadElement()
     head.addContent(Base(href=mdn_base_url))
     body = htmlDoc.getBodyElement()
     (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(mdn_base_url, lang)
     if not currentElementsTable or not deprecatedElementsTable:
-        body.addContent(Heading(1, "failed to scrape elements from {mdnAnchor}"))
+        body.addContent(Heading(1, f"failed to scrape elements from {mdnElements.mdnAnchor}"))
     else:
         # building up the body of the html document
         body.addContent(

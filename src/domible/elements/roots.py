@@ -27,7 +27,7 @@ class Body(BaseElement):
 
 
 class Html(BaseElement):
-    def __init__(self, contents: Any = None, lang: str = "en", **kwArgs):
+    def __init__(self, lang: str = "en", contents: Any = None, **kwArgs):
         self.lang = lang
         super().__init__(tag="html", contents=contents, lang=lang, **kwArgs)
 

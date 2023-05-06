@@ -20,6 +20,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 from os import path
+from random import random 
+from time import sleep 
 
 from bs4 import BeautifulSoup as BSoup
 from bs4.element import Tag
@@ -36,6 +38,7 @@ MdnHostUrlBase = ""
 ElementsReferenceUrl = f"{MdnHostUrlBase}{ElementsReferencePath}"
 MdnAnchor = None 
 
+DomibleIssuesPage = Anchor(href="https://github.com/joeldodson/domible/issues", contents="domible issue page on github")
 
 def updateInPageAnchorHref(soup: BSoup, elemUrl: str) -> None:
     """
@@ -70,27 +73,67 @@ def filterAnchor(anchor: Tag) -> bool:
 def getElementSummary(soup: BSoup) -> Dict:
     """
     find the summary in the document,
-    pull out the redundant html anchor,
-    and return the rest
 
     NOTE: this method hard codes knowledge of the format of the document.
     e.g., the summary is the first paragraph after the only heading 1,
-    and the html anchor is the first anchor in that paragraph,
-    except for the canvas element, now I have to check the contents.
     """
     summary = soup.find("h1").next_sibling.find("p")
-    anchor = summary.find('a')
-    if anchor.text == "HTML":
-        anchor.extract()
-    return {"Summary": summary.decode()}
+    if summary:
+        sv = summary.decode()
+    else:
+        sv = f"no summary?  that's odd.  Please open an issue at the {DomibleIssuesPage}"
+    return {"Summary": sv}
 
 
 def getElementSpecificationReference(soup: BSoup) -> Dict:
-    pass
+    """
+    The element specification is in a table with a single column and two rows.
+    The first row is a <thead> with a <th> with the word "Specification"
+    The second row is the specification link in a <td> in a <tbody>
+    This is generally the second table on the page, but let's not assume that 
+    """
+    entry = dict()
+    for table in soup.find_all('table'):
+        if (thead := table.find('thead')) and thead.text.lower() == "specification":
+            entry["Specification"] = table.find('tbody').find('td').decode_contents()
+    return entry 
+
+
+thToUseList = []
+def findThToUse(th: Tag) -> Tag:
+    """
+    see notes on getElementTechnicalSummary for why this is here
+    And the global hack is the easiest way to fake C like static variables 
+    """
+    global thToUseList
+    for savedTh in thToUseList:
+        if savedTh.text.lower() == th.text.lower():
+            return savedTh
+    thToUseList.append(th)
+    return th
 
 
 def getElementTechnicalSummary(soup: BSoup) -> Dict:
-    pass
+    """
+    The page for each element has a two column table with summaries of various topics.
+    The first column is the topic, the second is the summary.
+    I want the topics to be columns in the table we're creating, the topic summary will be in the row for each element.
+    Unfortunately, not all the tables topic columns are consistent.
+    If I simply pull out the content of the th, and use that as a key in the dict for the row,
+    we end up with multiple columns for what should be the same column.
+    For example, "DOM Interface" and "DOM interface" turn into two different columns.
+    To address this, the entries from the first element, <a> are saved to be used as keys for all the elements.
+    Subsequent element table entries need to be compared against the saved keys. 
+    """
+    entries = dict() 
+    detailstable = soup.find("table", {"class":"properties"})
+    if detailstable:
+        ths = detailstable.find_all('th')
+        tds = detailstable.find_all('td')
+        for th,td in zip(ths, tds):
+            thToUse = findThToUse(th)
+            entries[thToUse.decode_contents()] = td.decode_contents()
+    return entries 
 
 
 def getElementDetails(soup: BSoup, elemUrl: str) -> Dict:
@@ -121,8 +164,7 @@ def getElementInformation(elemName: str, elemUrl: str) -> Dict:
         elemDoc = requests.get(elemUrl)
         elemSoup = BSoup(elemDoc.content, "html.parser")
         updateInPageAnchorHref(elemSoup, elemUrl)
-        entries = getElementDetails(elemSoup, elemUrl)
-        return entries
+        return getElementDetails(elemSoup, elemUrl)
     except Exception:
         logger.exception(f"failed while getting info for element {elemName}")
         return dict()
@@ -157,10 +199,11 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableInfo, TableInfo]
             caption="Deprecated HTML Elements", rowHeadingName="Element"
         )
         for elmPath in elems:
-            elmUrl = f"{MdnHostUrlBase}{elmPath}"
-            elmName = path.split(elmUrl)[1]
-            rowEntries = getElementInformation(elmName, elmUrl)
-            row = RowInfo(Anchor(elmUrl, elmName), rowEntries)
+            sleep(random() + .3)  # don't get blocked by MDN...
+            elemUrl = f"{MdnHostUrlBase}{elmPath}"
+            elemName = path.split(elemUrl)[1]
+            rowEntries = getElementInformation(elemName, elemUrl)
+            row = RowInfo(Anchor(elemUrl, elemName), rowEntries)
             if "Deprecated" in rowEntries.get("Summary"):
                 deprecatedElementsTable.addRow(row)
             else:
