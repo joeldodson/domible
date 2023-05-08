@@ -52,3 +52,14 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/)
 and the
 [`py-pkgs-cookiecutter` template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+
+### Origin Story
+
+domible is an evolution of the
+[pymenable package](https://pypi.org/project/pymenable/)
+which is now deprecated.
+
+I decided pymenable was too complicated using jinja templates
+(e.g., having to manage extra resources and learn to use jinja).
+I'm not disparaging jinja, it's an awesome tool.
+I think it's easier though to use Python classes to create the root element as well as all the other elements for the HTML document.
