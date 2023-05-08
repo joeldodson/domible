@@ -1,10 +1,29 @@
 # domible
 
 Domible is a set of Python classes used to generate HTML documents and elements of arbitrary complexity.
-The basic idea behind domible is very simple, HTML elements are represented as Python objects.
+The basic idea behind domible is fairly simple, HTML elements are represented as Python objects.
 When an element object is evaluated, it renders the text of the HTML element.
 Objects can contain other element objects which will also evaluate to text when the containing object is evaluated.
-See below for a simple example.
+See below for a basic example.
+
+## Origin Story
+
+domible is an evolution of the
+[pymenable package](https://pypi.org/project/pymenable/)
+which is deprecated.
+
+Instead of using jinja templates for the basic structure of the HTML document,
+a root class, Html, generates the &lt;html> element
+with Head and Body classes generating the &lt;head> and &lt;body> elements.
+Elements can be added to the head and body to generate HTML documents of arbitrary complexity.
+
+I decided pymenable was too complicated using jinja templates
+(e.g., having to manage extra resources and learn to use jinja).
+
+I'm not disparaging jinja, it's an awesome tool.
+I think it's easier though to use Python classes to create the root element as well as all the other elements for the HTML document.
+
+Plus I wanted to change the name.
 
 ## Installation
 
@@ -53,13 +72,3 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 and the
 [`py-pkgs-cookiecutter` template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
 
-### Origin Story
-
-domible is an evolution of the
-[pymenable package](https://pypi.org/project/pymenable/)
-which is now deprecated.
-
-I decided pymenable was too complicated using jinja templates
-(e.g., having to manage extra resources and learn to use jinja).
-I'm not disparaging jinja, it's an awesome tool.
-I think it's easier though to use Python classes to create the root element as well as all the other elements for the HTML document.
