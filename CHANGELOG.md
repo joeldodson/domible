@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2 (2023-05-11)
+
+- strange problem when installing domible[dicli].  pip appears to be installing dicli 0.1.0 and 0.1.1.
+- adding versioning to dicli package using same version from pyproject.  let's see if that helps...
+
 ## v0.1.1 (2023-05-11)
 
 - missed adding `requests` package to `dev` group and `dicli` extra
