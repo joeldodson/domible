@@ -72,17 +72,23 @@ def filterAnchor(anchor: Tag) -> bool:
 
 def getElementSummary(soup: BSoup) -> Dict:
     """
-    find the summary in the document,
+    find and return the summary in the document,
 
     NOTE: this method hard codes knowledge of the format of the document.
-    e.g., the summary is the first paragraph after the only heading 1,
+    consider the first paragraph after the main element opening tag,
+    and all its sibling paragraphs, to be the summary.
     """
-    summary = soup.find("h1").next_sibling.find("p")
-    if summary:
-        sv = summary.decode()
-    else:
-        sv = f"no summary?  that's odd.  Please open an issue at the {DomibleIssuesPage}"
-    return {"Summary": sv}
+    summary = ""
+    try:
+        p0 = soup.find("main").find("p")
+        summary = p0.decode()
+        for el in p0.next_siblings:
+            if el.name and el.name == 'p': summary += el.decode()
+            elif el.name: break
+    except Exception:
+        logger.exception("exception while getting summary")
+        summary = f"no summary?  that's odd.  Please open an issue at the {DomibleIssuesPage}"
+    return {"Summary": summary}
 
 
 def getElementSpecificationReference(soup: BSoup) -> Dict:
