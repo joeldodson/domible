@@ -17,12 +17,33 @@ class Base(BaseVoidElement):
         super().__init__(tag="base", **kwArgs)
 
 
+class Head(BaseElement):
+    def __init__(self, contents: Any = None, **kwArgs):
+        """ 
+        tried having a constructor argument for a title with a default string.
+        Turned in to a pain considering a Title object could be in the contents.
+        Leaving it up to a document builder to handle a title string argument.  
+        """
+        super().__init__(tag="head", contents=contents, **kwArgs)
+
+
 class Meta(BaseVoidElement):
     """ generates the meta voide element """
 
     def __init__(self, **kwArgs):
         """ meta is a void element, no contents are allowed """
         super().__init__(tag="meta", **kwArgs)
+
+
+class Style(BaseElement):
+    """ 
+    create a <style> element 
+    As it stands, domible doesn't know anything about CSS.
+    The user crating a <style> object is expected to create valid CSS 
+    and create this element with the CSS content as a string.
+    """
+    def __init__(self, contents: str, **kwArgs):
+        super().__init__(tag="style", **kwArgs)
 
 
 class Title(BaseElement):
