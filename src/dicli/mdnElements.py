@@ -29,7 +29,7 @@ import requests
 from typing import Dict, Tuple
 
 from domible.elements import Anchor
-from domible.builders.tableBuilder import TableInfo, RowInfo
+from domible.builders.tableBuilder import TableBuilder, RowBuilder
 
 
 MdnLocalPathPrefix = "" 
@@ -66,8 +66,7 @@ def filterAnchor(anchor: Tag) -> bool:
         return False
     elif path.split(href)[0] != ElementsReferencePath:
         return False
-    else:
-        return True
+    return True
 
 
 def getElementSummary(soup: BSoup) -> Dict:
@@ -176,7 +175,7 @@ def getElementInformation(elemName: str, elemUrl: str) -> Dict:
         return dict()
 
 
-def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableInfo, TableInfo]:
+def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBuilder]:
     global MdnLocalPathPrefix, ElementsReferencePath, MdnHostUrlBase, ElementsReferenceUrl, MdnAnchor 
     MdnLocalPathPrefix = f"/{lang}/docs" ## was  "/en-US/docs/Web"
     ElementsReferencePath = f"{MdnLocalPathPrefix}/Web/HTML/Element"  ## was "/en-US/docs/Web/HTML/Element"
@@ -198,18 +197,18 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableInfo, TableInfo]
         logger.info(f"number of element references is {len(elems)}")
         # we have links to each element,
         # time to scrape each page and create rows for each element
-        currentElementsTable = TableInfo(
+        currentElementsTable = TableBuilder(
             caption="Current HTML Elements", rowHeadingName="Element"
         )
-        deprecatedElementsTable = TableInfo(
+        deprecatedElementsTable = TableBuilder(
             caption="Deprecated HTML Elements", rowHeadingName="Element"
         )
         for elmPath in elems:
-            sleep(random() + .3)  # don't get blocked by MDN...
+            sleep(random())  # don't get blocked by MDN...
             elemUrl = f"{MdnHostUrlBase}{elmPath}"
             elemName = path.split(elemUrl)[1]
             rowEntries = getElementInformation(elemName, elemUrl)
-            row = RowInfo(Anchor(elemUrl, elemName), rowEntries)
+            row = RowBuilder(Anchor(elemUrl, elemName), rowEntries)
             if "Deprecated" in rowEntries.get("Summary"):
                 deprecatedElementsTable.addRow(row)
             else:

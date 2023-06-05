@@ -28,7 +28,7 @@ from domible.elements import (
     DescriptionDef,
 )
 from domible.elements import Heading, Anchor, Paragraph
-from domible.builders.tableBuilder import TableInfo, createTableFromDicts
+from domible.builders.tableBuilder import TableBuilder, createTableFromDicts
 from domible.starterDocuments import basicHeadEmptyBody
 
 
@@ -89,6 +89,8 @@ def elements(
         body.addContent(Heading(1, f"failed to scrape elements from {mdnElements.mdnAnchor}"))
     else:
         # building up the body of the html document
+        currentTable, _, _ = currentElementsTable.getTable(),
+        deprecatedTable, _, _ = deprecatedElementsTable.getTable(),
         body.addContent(
             [
                 Heading(1, title),
@@ -96,9 +98,9 @@ def elements(
                     f"Information in the below tables was scraped from {mdnElements.MdnAnchor}."
                 ),
                 Heading(2, "Currently Supported HTML Elements"),
-                currentElementsTable.getTable(),
+                currentTable,
                 Heading(2, "Deprecated HTML Elements"),
-                deprecatedElementsTable.getTable(),
+                deprecatedTable,
             ]
         )
     openPage(htmlDoc, outputfile)

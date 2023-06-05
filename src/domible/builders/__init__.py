@@ -1,5 +1,5 @@
 """ domible/src/domible/builders/__init__.py """
 
-from domible.builders.tableBuilder import RowInfo, TableInfo, createTableFromDicts
+from domible.builders.tableBuilder import RowBuilder, TableBuilder, createTableFromDicts
 
 # end of file

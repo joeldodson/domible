@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
-from ..elements import (
+from domible.elements import (
     Caption,
     Table,
     TableRow,
@@ -43,12 +43,14 @@ from ..elements import (
     TableRowHeader,
     TableHead,
     TableBody,
+    Style,
+    Script,
 )
 
 
 #######
 @dataclass
-class RowInfo:
+class RowBuilder:
     """
     RowInfo has the values for the cells of the row stored as a dict (with the row heading called out separately)
     the key in the entries dict is the column id, the value is what will eventually be in the <th> or <td> elements
@@ -57,6 +59,8 @@ class RowInfo:
 
     heading: Any = "you need to set the row heading"
     # this is how **kwArgs works in dataclasses
+    # to ensure each instantiation gets its own object,
+    # not a reference to a dict shared by all RowInfo objects 
     entries: Dict = field(default_factory=dict)
 
     #####
@@ -99,9 +103,9 @@ class RowInfo:
 
 #######
 @dataclass
-class TableInfo:
+class TableBuilder:
     """
-    an object of TableInfo holds all the information needed to generate an HTML table
+    an object of TableBuilder holds all the information needed to generate an HTML table
     """
 
     caption: Any
@@ -110,10 +114,10 @@ class TableInfo:
     # Hopefully this is set to something meaningful by the user of this class.
     rowHeadingName: Any = "Row Names"
     columnHeadings: Dict = field(default_factory=dict)
-    rows: List[RowInfo] = field(default_factory=list)
+    rows: List[RowBuilder] = field(default_factory=list)
 
     #####
-    def addRow(self, row: RowInfo) -> None:
+    def addRow(self, row: RowBuilder) -> None:
         self.rows.append(row)
 
     #####
@@ -139,7 +143,7 @@ class TableInfo:
         self.columnHeadings = {key:key for key in counts.keys()}
 
     #####
-    def getTable(self) -> Table:
+    def getTable(self) -> tuple[Table, Style, Script]:
         """
         need to go through self (TableInfo) and convert all the info
         to corresponding elemensts (tr, th, td, caption...)
@@ -176,7 +180,7 @@ class TableInfo:
                 [row.getRow(list(self.columnHeadings.keys())) for row in self.rows]
             )
         )
-        return table
+        return table, None, None 
 
 
 #######
@@ -200,14 +204,14 @@ def createTableFromDicts(caption: Any, rows: List[Dict]) -> Table:
     if len(rows) == 0:
         raise ValueError("no rows sent to createTableFromDict")
     rowHeadingName = list(rows[0].keys())[0]
-    tableinfo = TableInfo(caption, rowHeadingName)
+    tbuilder = TableBuilder(caption, rowHeadingName)
     for row in rows:
         items = list(row.items())
         heading = items[0][1]
         entries = dict(items[1:])
-        ri = RowInfo(heading, entries)
-        tableinfo.addRow(ri)
-    return tableinfo.getTable()
+        ri = RowBuilder(heading, entries)
+        tbuilder.addRow(ri)
+    return tbuilder.getTable()
 
 
 # end of file
