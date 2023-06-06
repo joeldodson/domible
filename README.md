@@ -88,7 +88,7 @@ thus resulting in more accessible, semantic HTML.
 
 This module provides an intial HTML document on which to begin building your application.
 It will range from the most basic, an &lt;html> element with a 
-&lt;head>, with a few default &lt>meta> tags,
+&lt;head>, with a few default &lt;meta> tags,
 and an empty &lt;body> element ready to be added to with your own elements.
 
 Other starter documents will increase in complexity with more initial boiler plate elements
