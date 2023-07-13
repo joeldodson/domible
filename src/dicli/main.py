@@ -28,7 +28,7 @@ from domible.elements import (
     DescriptionDef,
 )
 from domible.elements import Heading, Anchor, Paragraph
-from domible.builders.tableBuilder import TableBuilder, createTableFromDicts
+from domible.builders.tableBuilder import TableBuilder, buildTableFromDicts
 from domible.starterDocuments import basicHeadEmptyBody
 
 
@@ -113,7 +113,7 @@ def ctfd(
     upper: int = typer.Option(10, "-u", "--upper"),
 ):
     """
-    to test the createTableFromDicts function from tableBuilder
+    to test the buildTableFromDicts function from tableBuilder
     """
     rows = []
     for x in range(lower, upper + 1):
@@ -121,7 +121,7 @@ def ctfd(
         row.update(dict([(y, x**y) for y in range(lower, upper + 1)]))
         rows.append(row)
     ## we have a matrix, now display it in an HTML table
-    table = createTableFromDicts("base number raised to column heading number", rows)
+    table = buildTableFromDicts("base number raised to column heading number", rows)
     title = f"Testing createTableFromDicts function in tableBuilder, lower is {lower}, upper is {upper}"
     htmlDoc = basicHeadEmptyBody(title)
     body = htmlDoc.getBodyElement()

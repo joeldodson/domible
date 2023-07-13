@@ -83,8 +83,8 @@ class BaseElement:
 
         Think of self as the root of a generic tree.
         self has contents which could be empty, have one or more BaseElements, or something else (e.g., string).
-        Only other BaseElements are considerred children, needing to be searched.
-        Contents that are not children (not derived from BaseElement) are considered  leave nodes. 
+        Only other BaseElements are considerred nodes needing to be searched.
+        Nodes not derived from BaseElement are considered  leave nodes, and not searched. 
         """
         found = []
         if not (tag or attrs): return found

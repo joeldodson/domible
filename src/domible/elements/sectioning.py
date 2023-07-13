@@ -49,10 +49,15 @@ class Main(BaseElement):
 
 
 class Nav(BaseElement):
-    """create <nav> element"""
+    """
+    create a <nav> element
+    For accessibility, require a label which will be used to set an aria-label attribute.
+    This will result in a meaningful announcement when navigating by landmarks (and other scenarios). 
+    """
 
-    def __init__(self, contents: Any = None, **kwArgs):
-        super().__init__(tag="nav", contents=contents, **kwArgs)
+    def __init__(self, label: str, contents: Any = None, **kwArgs):
+        self.label = label
+        super().__init__(tag="nav", contents=contents, **{"aria-label": self.label}, **kwArgs)
 
 
 class Section(BaseElement):

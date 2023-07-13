@@ -52,7 +52,7 @@ from domible.elements import (
 @dataclass
 class RowBuilder:
     """
-    RowInfo has the values for the cells of the row stored as a dict (with the row heading called out separately)
+    RowBuilder has the values for the cells of the row stored as a dict (with the row heading called out separately)
     the key in the entries dict is the column id, the value is what will eventually be in the <th> or <td> elements
     the first item is called out as the heading for that row mainly as an API feature.
     """
@@ -184,7 +184,7 @@ class TableBuilder:
 
 
 #######
-def createTableFromDicts(caption: Any, rows: List[Dict]) -> Table:
+def buildTableFromDicts(caption: Any, rows: List[Dict]) -> Table:
     """
     this is, so far, the easiest way to construct an HTML table from data the user has pulled from anywhere
     The rows are the dicts in the list, in order they appear in the list
