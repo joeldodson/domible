@@ -40,4 +40,15 @@ class Script(BaseElement):
         super().__init__(tag="script", **kwArgs)
 
 
+class Template(BaseElement):
+    """
+    create a <template> element
+    I guess this is like a <div> that can contain general HTML
+    to be rendered later using JavaScript
+    """
+
+    def __init__(self, contents: Any = None, **kwArgs):
+        super().__init__(tag="template", **kwArgs)
+
+
 ## end of file
