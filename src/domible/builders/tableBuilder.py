@@ -32,7 +32,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from domible.elements import (
     Caption,
@@ -76,7 +76,7 @@ class RowBuilder:
             self.entries = kwArgs
 
     #####
-    def properties(self) -> List[Any]:
+    def properties(self) -> list[Any]:
         """
         The properties are the keys from the entries in this row.
         The keys are used to identify which values from a row are used in a particular table.
@@ -87,7 +87,7 @@ class RowBuilder:
             return []
 
     #####
-    def getRow(self, columns: List[Any]) -> TableRow:
+    def getRow(self, columns: list[Any]) -> TableRow:
         """
         return the TableRow object that can generate the HTML for the row
         the columns parameter is needed to know which values from entries to include in the row
@@ -114,7 +114,7 @@ class TableBuilder:
     # Hopefully this is set to something meaningful by the user of this class.
     rowHeadingName: Any = "Row Names"
     columnHeadings: Dict = field(default_factory=dict)
-    rows: List[RowBuilder] = field(default_factory=list)
+    rows: list[RowBuilder] = field(default_factory=list)
 
     #####
     def addRow(self, row: RowBuilder) -> None:
@@ -184,7 +184,7 @@ class TableBuilder:
 
 
 #######
-def buildTableFromDicts(caption: Any, rows: List[Dict]) -> Table:
+def buildTableFromDicts(caption: Any, rows: list[Dict]) -> Table:
     """
     this is, so far, the easiest way to construct an HTML table from data the user has pulled from anywhere
     The rows are the dicts in the list, in order they appear in the list

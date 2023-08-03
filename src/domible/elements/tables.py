@@ -7,7 +7,7 @@ considering the audible pain you've inflicted on screen reader users
 it's 2022, use  CSS for layout and formatting  
 """
 
-from typing import List, Any
+from typing import Any
 
 from .baseElements import BaseElement
 
@@ -57,7 +57,7 @@ class TableRow(BaseElement):
     The th/td elements can be provided at creation time,
     or added later via instance methods to add content.
     """
-    def __init__(self, cells: List[Any] = None, **kwArgs):
+    def __init__(self, cells: list[Any] = None, **kwArgs):
         """
         cells should be a list of th or td elements 
         """
@@ -77,7 +77,7 @@ class TableHead(BaseElement):
     The tr elements can be provided at creation time,
     or added later via instance methods to add content.
     """
-    def __init__(self, rows: List[Any] = None, **kwArgs):
+    def __init__(self, rows: list[Any] = None, **kwArgs):
         """
         rows should be a list of tr elements 
         """
@@ -91,7 +91,7 @@ class TableBody(BaseElement):
     The tr elements can be provided at creation time,
     or added later via instance methods to add content.
     """
-    def __init__(self, rows: List[Any] = None, **kwArgs):
+    def __init__(self, rows: list[Any] = None, **kwArgs):
         """
         rows should be a list of tr elements 
         """
@@ -105,7 +105,7 @@ class TableFoot(BaseElement):
     The tr elements can be provided at creation time,
     or added later via instance methods to add content.
     """
-    def __init__(self, rows: List[Any] = None, **kwArgs):
+    def __init__(self, rows: list[Any] = None, **kwArgs):
         """
         rows should be a list of tr elements 
         """

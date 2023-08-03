@@ -69,6 +69,20 @@ It's more of there is a foundational idea,
 then interfaces using that foundational piece to provide higher level abstractions to encapsulate functionality.
 It's within these abstractions I hope to include HTML/CSS/JS to generate more accessible, semantic HTML documents.
 
+### typing (type hints)
+First a note on my random use of python type hints.
+Since each element is a class, in theory, I could, for example,
+use type hints to indicate the contents of a &lt;ul> can contain only 
+objects of type ListItem, Script, and Template (three classes defined in elements).
+
+I should do that, someday.
+
+We should be able to use typing to support using tools like mypy for checking 
+the validity of a Python program generating HTML.
+
+For now, I need to get more builders working to 
+create more sophisticated proofs of concept.
+
 ### elements - Create basic HTML elements.
 
 These are Python classes, one for each element, and are very low level.

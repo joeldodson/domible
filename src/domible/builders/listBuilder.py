@@ -3,21 +3,40 @@
 Provide a more flexible interface to the various list elements.
 
 This builder was motivated during implementation of the NavBuilder.
-I want to create a legit HTML list element by passing in a list of anythinh, 
-e.g., text string, Buttons, Anchors, Headings, whatever is allowed in <li> elements.
-The list classes based on BaseElement require the contents to be a list of ListItem objects.
-I think that's the right limitation at that layer, this ListBuilder will be the higher level interface.
-
+It might be necessary to update attributes in an <li> element,
+to, for example, indicate that list item is the current page in a <nav> element.
+It's better to have functionality like that in a builder,
+not in the element class itself.
 """
 
 import logging
 logger = logging.getLogger(__name__)
 
+from collections import namedtuple
 from typing import Any
 
 from domible.elements import DescriptionTerm, DescriptionDef, DListItem, ListItem 
 from domible.elements import OrderedList, UnorderedList, MenuList, DescriptionList
 from domible.elements import Script, Template
+
+
+# see comments in ListBuilder class declaration for why ListEntry exists 
+ListEntry = namedtuple("ListEntry", "contents attributes", defaults=[dict()])
+class ListEntry:
+    """
+    ListEntry encapsulates information to eventually be rendered as an HTML element.
+    HTML list entries can be anything allowed in an <li>, <script>, or <template> element, 
+    a very broad set.
+    A ListEntry object holds references to the contents of what will be eventually rendered in the list,
+    what type of element it should be rendered as,
+    and any attributes to be added to the opening tag.
+    """
+    def __init__(self, contents: Any, elemType: str = "li", **attributes):
+        """
+        """
+        self.contents = contents
+        self.elemType = elemType
+        self.attributes = attributes
 
 
 class ListBuilder:
@@ -27,12 +46,23 @@ class ListBuilder:
     <dl> is a different builder due to its contents being structurally different.
 
     The type of list created is left unspecified until the HTML element is requested.
-    This works because the contents of each  type of list is the same, 
-    the semantics are determined only by the tag string 
+    This works because the allowed contents of each  type of list is the same, 
+    the semantics of the list element are determined only by the tag string 
     (hopefully someone will correct me if I'm wrong about this).
 
     All that said, the builder encapsulates the ability to manipulate a list of items of arbitrary type.
     Hopefully the names and comments of the methods clarify what I mean.
+
+    Note on a design decision.
+    The list items (<li>) are not created until a list is requested.
+    Thus there is no way to easily add attributes to a specific list item (the ListItem object does not exist yet).
+    To enable attributes to be associated with a specific list item,
+    I made the items tuples of what will be the contents of the <li> element,
+    and a dict that will be attributes added to the <li> opening tag for the associated contents.
+    See the ListEntry named tuple above.
+    The interface for the ListBuilder should encapsulate this design detail 
+    by still defining the list item as Any and attributes as effectively kwArgs
+    in method signatures.
     """
     def __init__(self, items: list[Any] = None, **attributes):
         """
@@ -44,6 +74,9 @@ class ListBuilder:
         self.items = items if items else list()
         self.attributes = attributes if attributes else dict()
 
+    def addItem(self, item: Any, **attributes):
+        """
+        """
     def getList(self, tag: str, **attributes):
         """ 
         return the HTML element.

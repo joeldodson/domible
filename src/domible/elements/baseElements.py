@@ -20,7 +20,7 @@ Thus BaseElementList is gone and BaseEllement dynamically adjust contents accord
 from __future__ import annotations
 
 from random import random 
-from typing import Dict, List, Any
+from typing import Dict, Any
 
 from .. import utils 
 
@@ -154,7 +154,7 @@ class BaseElement:
         """ 
         add content to any existing contents.  
         Adds to end of contents by default 
-        We know from __init__, contents is at least a empty list 
+        We know from __init__, contents is at least an empty list 
         """
         if not isinstance(content, list):
             content = [content]
@@ -207,6 +207,14 @@ class BaseVoidElement(BaseElement):
     def __repr__(self):
         """ a void element only has an opening tag, with attributes, if any  """
         return f'{self.openingTag()}'
+
+
+class EventualBase(BaseElement):
+    """
+    In the ListBuilder, I needed something that acted like a real HTML element,
+    i.e., ability to contain/manipulate contents and attributes,
+    but what type of element it is isn't known until later.
+    """
 
 
 ## end of file 

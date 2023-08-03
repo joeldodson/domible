@@ -1,6 +1,6 @@
 """  domible/src/domible/elements/inline.py 
 """
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 from domible.elements.baseElements import BaseElement
 
