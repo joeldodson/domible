@@ -20,12 +20,11 @@ Thus BaseElementList is gone and BaseEllement dynamically adjust contents accord
 from __future__ import annotations
 
 from random import random 
-from typing import Dict, Any
+from typing import Any
 
-from .. import utils 
+from domible.utils import isSubDict 
 
 
-####### 
 class ContentsList(list):
     """
     this class only exists because list.__repr__ prints the square brackets 
@@ -44,7 +43,6 @@ class ContentsList(list):
         return listString 
 
 
-#######
 class BaseElement:
     """
     BaseElement holds the tag value, the contents,  and a dict of attrivutes      
@@ -72,7 +70,7 @@ class BaseElement:
             self.contents = ContentsList([contents])
         else:
             self.contents = ContentsList(contents)
-        self.attrs = dict(kwArgs)
+        self.attributes = dict(kwArgs)
 
     def getElements(self, tag: str = None, **attrs) -> list[Any]:
         """
@@ -91,7 +89,7 @@ class BaseElement:
         searching = [self]
         while len(searching) > 0:
             current = searching.pop(0)
-            if tag == current.tag and utils.isSubDict(attrs, current.attrs):
+            if tag == current.tag and isSubDict(attrs, current.attributes):
                 found.append(current)  
             searching += [elem for elem in current.contents if isinstance(elem, BaseElement)]    
         return found 
@@ -104,9 +102,9 @@ class BaseElement:
         if value is set, adds attr to attrs with given value.
         if attr already existed in attrs, updates attr in attrs with new value and  returns old value 
         """ 
-        originalValue = self.attrs.get(attr)
+        originalValue = self.attributes.get(attr)
         if value:
-            self.attrs[attr] = value
+            self.attributes[attr] = value
             # if attr did not exist already, need to return value it was just set to
             # if originalValue is not None, attr already existed thus need to return originalValue  
             originalValue = value if not originalValue else originalValue 
@@ -121,7 +119,7 @@ class BaseElement:
         """
         if value:
             return self.attrValue('id', value)
-        elif (existing := self.attrs.get('id')):
+        elif (existing := self.attributes.get('id')):
             # no value was provided and 'id' already exists in self.attyrs, return the existing value 
             return existing
         else:
@@ -131,13 +129,13 @@ class BaseElement:
             self.attrValue('id', idValue)
             return idValue 
 
-    def getAttributesString(self, inAttrs: Dict = None) -> str:
+    def getAttributesString(self, inAttrs: dict = None) -> str:
         """
         in general, this will return the string of the attributes currently set on the element
         alternatively, if a derived element has a dict of attributes not in the base attrs dict,
         that dict can be passed in and used instead.
         """
-        lattrs = inAttrs if inAttrs else  self.attrs 
+        lattrs = inAttrs if inAttrs else  self.attributes 
         attrString = ''
         if lattrs and len(lattrs) > 0: 
             for k,v in lattrs.items():
@@ -147,7 +145,7 @@ class BaseElement:
 
     def addAttributes(self, **kwArgs) -> None:
         """ add all atttributes in kwArgs to self.attrs """
-        self.attrs.update(kwArgs)
+        self.attributes.update(kwArgs)
 
 
     def addContent(self, content: Any, front: bool = False) -> None: 
@@ -207,14 +205,6 @@ class BaseVoidElement(BaseElement):
     def __repr__(self):
         """ a void element only has an opening tag, with attributes, if any  """
         return f'{self.openingTag()}'
-
-
-class EventualBase(BaseElement):
-    """
-    In the ListBuilder, I needed something that acted like a real HTML element,
-    i.e., ability to contain/manipulate contents and attributes,
-    but what type of element it is isn't known until later.
-    """
 
 
 ## end of file 

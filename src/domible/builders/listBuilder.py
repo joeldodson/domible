@@ -12,31 +12,12 @@ not in the element class itself.
 import logging
 logger = logging.getLogger(__name__)
 
-from collections import namedtuple
 from typing import Any
 
 from domible.elements import DescriptionTerm, DescriptionDef, DListItem, ListItem 
 from domible.elements import OrderedList, UnorderedList, MenuList, DescriptionList
 from domible.elements import Script, Template
-
-
-# see comments in ListBuilder class declaration for why ListEntry exists 
-ListEntry = namedtuple("ListEntry", "contents attributes", defaults=[dict()])
-class ListEntry:
-    """
-    ListEntry encapsulates information to eventually be rendered as an HTML element.
-    HTML list entries can be anything allowed in an <li>, <script>, or <template> element, 
-    a very broad set.
-    A ListEntry object holds references to the contents of what will be eventually rendered in the list,
-    what type of element it should be rendered as,
-    and any attributes to be added to the opening tag.
-    """
-    def __init__(self, contents: Any, elemType: str = "li", **attributes):
-        """
-        """
-        self.contents = contents
-        self.elemType = elemType
-        self.attributes = attributes
+from domible.utils import indexMatchingAttributes 
 
 
 class ListBuilder:
@@ -49,20 +30,39 @@ class ListBuilder:
     This works because the allowed contents of each  type of list is the same, 
     the semantics of the list element are determined only by the tag string 
     (hopefully someone will correct me if I'm wrong about this).
+    Does this provide any real value (the delaying of the tag specification)?
+    Perhaps ther's a need to generate a <ul> and <ol> from the same set of list entries?
+    Doubtful.
+    It's six of one, half dozen the other though, when to specify the type of list, 
+    so let's go with the delayed style.
 
-    All that said, the builder encapsulates the ability to manipulate a list of items of arbitrary type.
-    Hopefully the names and comments of the methods clarify what I mean.
+    I toyed with the idea of a class ListEntry builder.
+    It was motivated by the fact a list can contain <li>, <script>, and <template> elements.
+    The ListEntry was going to, sort of, encapsulate that, 
+    ideally making it easyer to create ListEntries.
+    Then users of ListBuilder would not have to explicitly create an <li>, <script>, or <template> element before adding it to the ListBuilder object.
+    ListEntry would hold the contents of the eventual HTML element, it would also have to hold attributes to eventually create the element. 
+    ListEntry started getting messy and duplicating BaseElement functionality.
+    I experimented with ways to avoid that duplication.
+    Short answer, it was all worse than simply requiring the ListBuilder user to
+    use ListItem, Script, or Template objects when creating/useing ListBuilder objects.
 
-    Note on a design decision.
-    The list items (<li>) are not created until a list is requested.
-    Thus there is no way to easily add attributes to a specific list item (the ListItem object does not exist yet).
-    To enable attributes to be associated with a specific list item,
-    I made the items tuples of what will be the contents of the <li> element,
-    and a dict that will be attributes added to the <li> opening tag for the associated contents.
-    See the ListEntry named tuple above.
-    The interface for the ListBuilder should encapsulate this design detail 
-    by still defining the list item as Any and attributes as effectively kwArgs
-    in method signatures.
+    I was also going down a rabbit hole deciding how much functionality to add to ListBuilder.
+    I thought about all the cool stuff to do, but realized quickly it would be just as easy 
+    for a user to grab the items from the ListBuilder and operate directly on that Python list.
+    OOP authorities might legitimately have me thrown in the socks for the idea of allowing 
+    users of ListBuilder to operate directly on its data.
+    I'll rationalize this anti pattern by claiming pragmatism 
+    and let's see first if anyone will use this before going deep on its interface.
+
+    Another thought on the ListBuilder interface, and why this class exists.
+    self.items is guaranteed to be a list based on __init__,
+    and Python's list interface is already quite good.
+    self.items contents though are guaranteed to be a type of BaseElement.
+    Considering that, the ListBuilder interface should probably provide functionality to optimize dealing with a list of BaseElement objects.
+    For example, I might want to add or update attributes to all elements in the list.
+    Or maybe I want to update an attribute in the contents of a list item.
+    And here we go down the rabbit hole... 
     """
     def __init__(self, items: list[Any] = None, **attributes):
         """
@@ -71,22 +71,54 @@ class ListBuilder:
         is not needed until the builder generates an HTML element.
         We do however want to be able to set attributes for the list, thus **attributes
         """
-        self.items = items if items else list()
-        self.attributes = attributes if attributes else dict()
+        self.items: list[Any] = items if items else list()
+        if not isinstance(self.items, list): self.items = [self.items]
+        self.attributes: dict[str, str] = attributes if attributes else dict()
+        for item in self.items:
+            if not isinstance(item, (ListItem, Script, Template)):
+                raise TypeError(f"{item} -- is not an li, script, or template element")
 
-    def addItem(self, item: Any, **attributes):
+
+    def addItem(self, item: Any, index: int = None, attributes: dict[str, str] = None, before: bool = True) -> None:
         """
+        add an item to the list, where is based on values of other parameters. 
+        if incdex given, add item at that index 
+        if index is not in range, raise IndexError
+        if attributes, add item based on the attributes of another item
+        if before is True, ad new item before existing item with matching attributes, else after
+        before is ignored if attributes is None 
+        if attributes is specified but no match is found, raise ValueError 
+        if no index and attributes, add new item to end of list
+        if index and attributes are both specified, attributes is ignored.
         """
+        if not isinstance(item, (ListItem, Script, Template)):
+            raise TypeError(f"{item} -- is not an li, script, or template element")
+        if index:
+            if index >= 0 and index < len(self.items):
+                self.items.insert(index, item)
+            else:
+                raise IndexError(f"index {index} is outside range, len of items is {len(self.items)}")
+        elif attributes:
+            if (insert := indexMatchingAttributes(self.items, attributes)) != None:
+                print(f"inserting at index {insert}, before is {before}")
+                if before: self.items.insert(insert, item)
+                else: self.items.insert(insert + 1, item)
+            else:
+                raise ValueError(f"no element found matching attributes {attributes}")
+        else:
+            self.items.append(item)
+
+
     def getList(self, tag: str, **attributes):
         """ 
         return the HTML element.
         More attributes can be added to the lists' opening tag if desired. 
         """
         if attributes: self.attributes.update(attributes)
-        listitems = [ListItem(item) if not isinstance(item, (ListItem, Script, Template)) else item for item in self.items]
-        if tag == "ul": return UnorderedList(listitems, **self.attributes)
-        elif tag == "ol": return OrderedList(listitems, **self.attributes)
-        elif tag == "menu": return MenuList(listitems, **self.attributes)
+        ## self.items = [ListItem(item) if not isinstance(item, (ListItem, Script, Template)) else item for item in self.items]
+        if tag == "ul": return UnorderedList(self.items, **self.attributes)
+        elif tag == "ol": return OrderedList(self.items, **self.attributes)
+        elif tag == "menu": return MenuList(self.items, **self.attributes)
         else: raise ValueError(f"cannot build list with tag {tag}")
 
 
