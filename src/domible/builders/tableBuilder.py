@@ -29,6 +29,7 @@ customColumnHeadings = {'col1':'Column One', 'col2':'Column Two', ... }
 
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 from dataclasses import dataclass, field
@@ -60,7 +61,7 @@ class RowBuilder:
     heading: Any = "you need to set the row heading"
     # this is how **kwArgs works in dataclasses
     # to ensure each instantiation gets its own object,
-    # not a reference to a dict shared by all RowInfo objects 
+    # not a reference to a dict shared by all RowInfo objects
     entries: Dict = field(default_factory=dict)
 
     #####
@@ -140,7 +141,7 @@ class TableBuilder:
         # TODO: allow the user to specify ordering of the columns based on counts
         #    or maybe columnHeadings.sort()
         # self.columnHeadings = list(counts.keys())
-        self.columnHeadings = {key:key for key in counts.keys()}
+        self.columnHeadings = {key: key for key in counts.keys()}
 
     #####
     def getTable(self) -> tuple[Table, Style, Script]:
@@ -148,13 +149,16 @@ class TableBuilder:
         need to go through self (TableInfo) and convert all the info
         to corresponding elemensts (tr, th, td, caption...)
         """
+        logger.debug(f"getting table with caption {self.caption}")
         table = Table(Caption(self.caption))
         # first add the column headings to the table
         # if column headings hve not been set yet, generate them based on the  rows
         if len(self.columnHeadings) == 0:
             self.generateColumnHeadings()
         columnNames = [self.rowHeadingName] + list(self.columnHeadings.values())
-        logger.debug(f"table with caption {self.caption}, has column heading names:\n {columnNames}")
+        logger.debug(
+            f"table with caption {self.caption}, has column heading names:\n {columnNames}"
+        )
         """
         split this to multiple lines for readability 
         first add the table head <thead> element to the table.
@@ -180,7 +184,7 @@ class TableBuilder:
                 [row.getRow(list(self.columnHeadings.keys())) for row in self.rows]
             )
         )
-        return table, None, None 
+        return table, None, None
 
 
 #######

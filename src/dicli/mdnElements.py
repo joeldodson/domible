@@ -172,7 +172,8 @@ def getElementInformation(elemName: str, elemUrl: str) -> Dict:
         return getElementDetails(elemSoup, elemUrl)
     except Exception:
         logger.exception(f"failed while getting info for element {elemName}")
-        return dict()
+        logger.fatal(f"failed while getting info for element {elemName}")
+        exit(1)
 
 
 def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBuilder]:
@@ -207,6 +208,7 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBu
             sleep(random())  # don't get blocked by MDN...
             elemUrl = f"{MdnHostUrlBase}{elmPath}"
             elemName = path.split(elemUrl)[1]
+            logger.info(f"getting element {elemName} from path {elemUrl}")
             rowEntries = getElementInformation(elemName, elemUrl)
             row = RowBuilder(Anchor(elemUrl, elemName), rowEntries)
             if "Deprecated" in rowEntries.get("Summary"):

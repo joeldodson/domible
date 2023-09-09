@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 from datetime import datetime as dt
 import webbrowser as wb
 
-from typing import Any, Dict, list
+from typing import Any, Dict
 
 import typer
 app = typer.Typer()
@@ -89,8 +89,8 @@ def elements(
         body.addContent(Heading(1, f"failed to scrape elements from {mdnElements.mdnAnchor}"))
     else:
         # building up the body of the html document
-        currentTable, _, _ = currentElementsTable.getTable(),
-        deprecatedTable, _, _ = deprecatedElementsTable.getTable(),
+        currentTable, _, _ = currentElementsTable.getTable()
+        deprecatedTable, _, _ = deprecatedElementsTable.getTable()
         body.addContent(
             [
                 Heading(1, title),
