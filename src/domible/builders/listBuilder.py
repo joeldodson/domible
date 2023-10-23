@@ -50,7 +50,7 @@ class ListBuilder:
     I was also going down a rabbit hole deciding how much functionality to add to ListBuilder.
     I thought about all the cool stuff to do, but realized quickly it would be just as easy 
     for a user to grab the items from the ListBuilder and operate directly on that Python list.
-    OOP authorities might legitimately have me thrown in the socks for the idea of allowing 
+    OOP authorities might legitimately have me thrown in the stocks for the idea of allowing 
     users of ListBuilder to operate directly on its data.
     I'll rationalize this anti pattern by claiming pragmatism 
     and let's see first if anyone will use this before going deep on its interface.

@@ -11,7 +11,7 @@ Yes, this has devolved into much hackery.
 I should turn this in to a class and use properties
 and get rid of the globals.
 The globals were initially hard coded "const" values.
-When mdn_base_url and lang (language) became parameters, the conts became globals
+When mdn_base_url and lang (language) became parameters, the const became globals
 Someday... I'll fix this??  
 """
 
