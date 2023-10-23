@@ -1,0 +1,9 @@
+site_name: BlindGumption Documentation
+site_url: https://blindgumption.github.io/blindgumption
+repo_url: https://github.com/blindgumption/blindgumption 
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Captain's Log: captainslog.md
+  - Change Log: changelog.md
