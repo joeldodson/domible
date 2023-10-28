@@ -5,7 +5,7 @@ description = "python classes to create accessible HTML elements and documents "
 authors = ["Joel Dodson <joeldodson@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/joeldodson/domible"
+homepage = "https://joeldodson.github.io/domible"
 repository = "https://github.com/joeldodson/domible"
 keywords = [
     "html",
