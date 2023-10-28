@@ -4,6 +4,7 @@
 
 ## v0.1.3 (in progress)
 
+- wait for 0.1.4 to complete NavBuilder, want to get ListBuilder into pypi
 - changed to mkdocs, so easy to automate deployment of docs to github pages
 - created ListBuilder to support NavBuilder 
 - added many, and moved some, elements to support a nav builder
