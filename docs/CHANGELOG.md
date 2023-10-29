@@ -2,10 +2,10 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.3 (in progress)
+## v0.1.3 (2023-10-28)
 
 - wait for 0.1.4 to complete NavBuilder, want to get ListBuilder into pypi
-- changed to mkdocs, so easy to automate deployment of docs to github pages
+- changed documentation to mkdocs, so easy to automate deployment of docs to github pages
 - created ListBuilder to support NavBuilder 
 - added many, and moved some, elements to support a nav builder
 - some modifications to dicli code and tablebuilder to support returning &lt;style> and &lt;script> elements 

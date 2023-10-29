@@ -1,11 +1,13 @@
 [tool.poetry]
 name = "domible"
-version = "0.1.2"
+version = "0.1.3"
 description = "python classes to create accessible HTML elements and documents "
 authors = ["Joel Dodson <joeldodson@gmail.com>"]
+maintainers = ["BlindGumption <blindgumption@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://joeldodson.github.io/domible"
+documentation = "https://joeldodson.github.io/domible"
 repository = "https://github.com/joeldodson/domible"
 keywords = [
     "html",
