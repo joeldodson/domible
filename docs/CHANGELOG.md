@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.4 (2024-06-05)
+## v0.1.4 (2024-06-06)
 
 - kind of getting back to domible 
 - to use with another project, added a 'tools' module under domible
