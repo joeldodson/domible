@@ -1,6 +1,10 @@
 # Changelog
 
-<!--next-version-placeholder-->
+## v0.1.4 (2024-06-05)
+
+- kind of getting back to domible 
+- to use with another project, added a 'tools' module under domible
+- added open_in_browser and save_to_file in tools 
 
 ## v0.1.3 (2023-10-28)
 

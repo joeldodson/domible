@@ -7,10 +7,6 @@ import jsonloggeriso8601datetime as jlidt
 jlidt.setConfig()
 logger = logging.getLogger(__name__)
 
-from datetime import datetime as dt
-import webbrowser as wb
-
-from typing import Any, Dict
 
 import typer
 app = typer.Typer()
@@ -30,17 +26,7 @@ from domible.elements import (
 from domible.elements import Heading, Anchor, Paragraph
 from domible.builders.tableBuilder import TableBuilder, buildTableFromDicts
 from domible.starterDocuments import basicHeadEmptyBody
-
-
-#######
-def openPage(htmlDoc: Html, saveToFile: str = None) -> None:
-    """create temp html file to use webbrowser to open passed in Html doc"""
-    thf = saveToFile
-    if not thf:
-        thf = f"tmp_html_{dt.timestamp(dt.now())}.html"
-    with open(thf, "w") as f:
-        f.write(f"{htmlDoc}")
-    wb.open(thf)
+from domible.tools import open_in_browser 
 
 
 #######
@@ -62,7 +48,7 @@ def simple() -> None:
             ),
         ]
     )
-    openPage(htmlDoc)
+    open_in_browser(htmlDoc)
 
 
 #######
@@ -103,7 +89,7 @@ def elements(
                 deprecatedTable,
             ]
         )
-    openPage(htmlDoc, outputfile)
+    open_in_browser(htmlDoc)
 
 
 #######
@@ -132,7 +118,7 @@ def ctfd(
             table,
         ]
     )
-    openPage(htmlDoc)
+    open_in_browser(htmlDoc)
 
 
 #######
@@ -246,7 +232,7 @@ def lists():
             detailsList,
         ]
     )
-    openPage(htmlDoc)
+    open_in_browser(htmlDoc)
 
 
 #######
@@ -303,7 +289,7 @@ def headings():
             contents="heading level 3 with 'somethingUnique' for unique",
         )
     )
-    openPage(htmlDoc)
+    open_in_browser(htmlDoc)
 
 
 #######

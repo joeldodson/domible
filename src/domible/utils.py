@@ -1,5 +1,13 @@
-""" domible/src/utils.py 
+""" domible/src/domible/utils.py 
 little things I need to keep the code clean.
+
+I'm writing the following note after creating the tools.py module at the same level as utils.py.
+Hopefully this clarifies why there is a utils.py and tools.py, maybe it's just my bad planning...
+utils.py is imported in many of the submodules in domible
+thus should not import (depend on) anything within domible.
+It shuld mainly be generic Python code to keep domible code cleaner.
+Nothing in utils is intended to be used by users of the domible package.
+See comments in tools.py for more clarification. 
 """
 
 from typing import Any 
@@ -34,4 +42,4 @@ def indexMatchingAttributes(items: list[Any], attributes: dict[str,str]) -> int:
     return None 
 
 
-## end of file 
+## end of file
