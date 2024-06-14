@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "domible"
-version = "0.1.4"
+version = "0.1.5"
 description = "python classes to create accessible HTML elements and documents "
 authors = ["Joel Dodson <joeldodson@gmail.com>"]
 maintainers = ["BlindGumption <blindgumption@gmail.com>"]
