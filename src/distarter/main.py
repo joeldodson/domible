@@ -11,7 +11,7 @@ import webbrowser as wb
 
 from domible.elements import Html, Body, Title
 from domible.elements import Heading, Anchor, Paragraph
-from domible.starterDocuments import basicHeadEmptyBody
+from domible.starterDocuments import basic_head_empty_body
 
 
 def openPage(htmlDoc: Html) -> None:
@@ -32,9 +32,9 @@ def run() -> None:
     bga = Anchor(
         href="https://blindgumption.com", contents="the Blind Gumption Website"
     )
-    htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBodyElement()
-    body.addContent(
+    htmlDoc = basic_head_empty_body(title)
+    body = htmlDoc.get_body_element()
+    body.add_content(
         [
             Heading(1, title),
             Paragraph(f"You might find more interesting content at {bga}"),

@@ -16,7 +16,7 @@ from sys import argv
 
 from domible.builders import element_from_object as efo  
 from domible import open_in_browser as oib 
-from domible.starterDocuments import basicHeadEmptyBody 
+from domible.starterDocuments import basic_head_empty_body 
 from domible.elements import Html, Body, BaseElement  
 
 rd = {"key1": "value1", "key2": "value2", "bg_url": "https://blindgumption.com"}
@@ -58,10 +58,10 @@ if __name__ == '__main__':
         title = f"running test {arg}, depth is {depth}"
 
     if obj:
-        html = basicHeadEmptyBody(title)
-        body = html.getBodyElement()
+        html = basic_head_empty_body(title)
+        body = html.get_body_element()
         elem: BaseElement = efo(obj, depth)
-        body.addContent(elem)
+        body.add_content(elem)
         oib(html) 
         # print the HTML in case I want to redirect output to a file.
         # it's easier than supporting writing to a file in this code.

@@ -3,7 +3,7 @@
 from domible.elements import Html, Head, Meta, Title, Body
 
 
-def basicHeadEmptyBody(title: str = "Domible Default Title", lang: str = "en") -> Html:
+def basic_head_empty_body(title: str = "Domible Default Title", lang: str = "en") -> Html:
     """
     barebones creates an Html object with the minimal recommended elements:
     DOCTYPE, head with two meta elements and a tile, and a body with nothing

@@ -62,12 +62,12 @@ class Title(BaseElement):
         super().__init__(tag='title', contents=self.titleStr, **kwArgs)
 
 
-    def setTitle(self, title: str) -> None:
+    def set_title(self, title: str) -> None:
         """ set the value, must be a string, for the Title. """
-        self.setContent(title)
+        self.set_content(title)
 
 
-    def setContent(self, content: Any) -> None:
+    def set_content(self, content: Any) -> None:
         """ 
         <title> can only have a string that is the title  
         If the new content is a string, 
@@ -77,14 +77,14 @@ class Title(BaseElement):
         if not isinstance(content, str):
             raise TypeError("Title contents must be a string")
         self.titleStr = content
-        super().setContent(content)
+        super().set_content(content)
 
 
-    def addContent(self, content: Any, front: bool = False) -> None:
+    def add_content(self, content: Any, front: bool = False) -> None:
         """ 
         let Title.setContent handle this 
         """
-        self.setContent(content)
+        self.set_content(content)
 
 
 # end of file

@@ -13,7 +13,7 @@ See comments in tools.py for more clarification.
 from typing import Any 
 
 
-def isSubDict(dSub: dict[str,str], dSuper: dict[str,str]) -> bool:
+def is_subdict(dSub: dict[str,str], dSuper: dict[str,str]) -> bool:
     """
     if all attributes in dSub are also in dSuper,
     and all values match,
@@ -29,14 +29,14 @@ def isSubDict(dSub: dict[str,str], dSuper: dict[str,str]) -> bool:
     return subKV.issubset(superKV)
 
 
-def indexMatchingAttributes(items: list[Any], attributes: dict[str,str]) -> int:
+def index_matching_attributes(items: list[Any], attributes: dict[str,str]) -> int:
     """
     given a list of elements and a dict of attributes,
     return the index of the first element in the list for which attributes is a subset of its attributes 
     return None if no element has matching attributes 
     """
     for index, item in enumerate(items):
-        if isSubDict(attributes, item.attributes):
+        if is_subdict(attributes, item.attributes):
             print(f"indexMatchinAttributes returning index: {index}")
             return index
     return None 

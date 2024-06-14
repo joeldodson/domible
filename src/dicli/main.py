@@ -24,8 +24,8 @@ from domible.elements import (
     DescriptionDef,
 )
 from domible.elements import Heading, Anchor, Paragraph
-from domible.builders.tableBuilder import TableBuilder, buildTableFromDicts
-from domible.starterDocuments import basicHeadEmptyBody
+from domible.builders.tableBuilder import TableBuilder, build_table_from_dicts
+from domible.starterDocuments import basic_head_empty_body
 from domible.tools import open_in_browser 
 
 
@@ -37,9 +37,9 @@ def simple() -> None:
     a very simple HTML document
     """
     title = "BareBones with a Minimal Body"
-    htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBodyElement()
-    body.addContent(
+    htmlDoc = basic_head_empty_body(title)
+    body = htmlDoc.get_body_element()
+    body.add_content(
         [
             Heading(1, title),
             Paragraph("Really, this is all you're going to get."),
@@ -66,18 +66,18 @@ def elements(
     if outputfile:
         typer.echo(f"saving html output to file: {outputfile}")
     title = "Tables of HTML Elements Scraped from MDN "
-    htmlDoc = basicHeadEmptyBody(title, lang)
-    head = htmlDoc.getHeadElement()
-    head.addContent(Base(href=mdn_base_url))
-    body = htmlDoc.getBodyElement()
+    htmlDoc = basic_head_empty_body(title, lang)
+    head = htmlDoc.get_head_element()
+    head.add_content(Base(href=mdn_base_url))
+    body = htmlDoc.get_body_element()
     (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(mdn_base_url, lang)
     if not currentElementsTable or not deprecatedElementsTable:
-        body.addContent(Heading(1, f"failed to scrape elements from {mdnElements.mdnAnchor}"))
+        body.add_content(Heading(1, f"failed to scrape elements from {mdnElements.mdnAnchor}"))
     else:
         # building up the body of the html document
-        currentTable, _, _ = currentElementsTable.getTable()
-        deprecatedTable, _, _ = deprecatedElementsTable.getTable()
-        body.addContent(
+        currentTable, _, _ = currentElementsTable.get_table()
+        deprecatedTable, _, _ = deprecatedElementsTable.get_table()
+        body.add_content(
             [
                 Heading(1, title),
                 Paragraph(
@@ -107,11 +107,11 @@ def ctfd(
         row.update(dict([(y, x**y) for y in range(lower, upper + 1)]))
         rows.append(row)
     ## we have a matrix, now display it in an HTML table
-    table = buildTableFromDicts("base number raised to column heading number", rows)
+    table = build_table_from_dicts("base number raised to column heading number", rows)
     title = f"Testing createTableFromDicts function in tableBuilder, lower is {lower}, upper is {upper}"
-    htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBodyElement()
-    body.addContent(
+    htmlDoc = basic_head_empty_body(title)
+    body = htmlDoc.get_body_element()
+    body.add_content(
         [
             Heading(1, title),
             Heading(2, "Raise base to power (column heading number)"),
@@ -152,7 +152,7 @@ def lists():
             ListItem("milk, real or oat, whatever is in the fridge"),
         ]
     )
-    suppliesList.attrValue("aria-labelledby", suppliesHeading.id())
+    suppliesList.attr_value("aria-labelledby", suppliesHeading.id())
     oooHeading = Heading(2, "Order Of Operations")
     oooList = OrderedList(
         [
@@ -187,7 +187,7 @@ def lists():
             ListItem("sit on stool at counter, start podcast, enjoy the coffee"),
         ]
     )
-    oooList.attrValue("aria-labelledby", oooHeading.id())
+    oooList.attr_value("aria-labelledby", oooHeading.id())
     detailsHeading = Heading(2, "More Details (because I need to test the dl list)")
     detailsList = DescriptionList(
         [
@@ -217,11 +217,11 @@ def lists():
             ),
         ]
     )
-    detailsList.attrValue("aria-labelledby", detailsHeading.id())
+    detailsList.attr_value("aria-labelledby", detailsHeading.id())
     title = "Testing Domible Lists"
-    htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBodyElement()
-    body.addContent(
+    htmlDoc = basic_head_empty_body(title)
+    body = htmlDoc.get_body_element()
+    body.add_content(
         [
             Heading(1, "Makin' Coffee, the Coffeenator"),
             suppliesHeading,
@@ -246,12 +246,12 @@ def headings():
     """
     typer.echo("testing heading generation")
     title = "Domible testing Heading Element"
-    htmlDoc = basicHeadEmptyBody(title)
-    body = htmlDoc.getBodyElement()
-    body.addContent(Heading(1, title))
+    htmlDoc = basic_head_empty_body(title)
+    body = htmlDoc.get_body_element()
+    body.add_content(Heading(1, title))
     for lvl in range(0, 8):
-        body.addContent(Heading(level=str(lvl), contents=f"Heading with Level: {lvl}"))
-    body.addContent(
+        body.add_content(Heading(level=str(lvl), contents=f"Heading with Level: {lvl}"))
+    body.add_content(
         Heading(
             level=1,
             contents=Anchor(
@@ -261,28 +261,28 @@ def headings():
             ),
         )
     )
-    body.addContent(
+    body.add_content(
         Heading(
             className="someClass",
             level=2,
             contents="heading level 2 with someClass classname",
         )
     )
-    body.addContent(
+    body.add_content(
         Heading(
             className="<someClass>",
             level=2,
             contents="heading level 2 with <someClass> classname",
         )
     )
-    body.addContent(
+    body.add_content(
         Heading(
             uniqueId="somethingUnique",
             level=3,
             contents="heading level 3 with somethingUnique for unique",
         )
     )
-    body.addContent(
+    body.add_content(
         Heading(
             uniqueId="'somethingUnique'",
             level=3,

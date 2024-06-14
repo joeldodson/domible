@@ -199,10 +199,10 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBu
         # we have links to each element,
         # time to scrape each page and create rows for each element
         currentElementsTable = TableBuilder(
-            caption="Current HTML Elements", rowHeadingName="Element"
+            caption="Current HTML Elements", row_heading_name="Element"
         )
         deprecatedElementsTable = TableBuilder(
-            caption="Deprecated HTML Elements", rowHeadingName="Element"
+            caption="Deprecated HTML Elements", row_heading_name="Element"
         )
         for elmPath in elems:
             sleep(random())  # don't get blocked by MDN...
@@ -212,9 +212,9 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBu
             rowEntries = getElementInformation(elemName, elemUrl)
             row = RowBuilder(Anchor(elemUrl, elemName), rowEntries)
             if "Deprecated" in rowEntries.get("Summary"):
-                deprecatedElementsTable.addRow(row)
+                deprecatedElementsTable.add_row(row)
             else:
-                currentElementsTable.addRow(row)
+                currentElementsTable.add_row(row)
     except Exception:
         logger.exception("something bad happened while scraping MDN")
         return (None, None)

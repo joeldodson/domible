@@ -18,7 +18,7 @@ from domible.elements import BaseElement
 from domible.elements import DescriptionTerm, DescriptionDef, DListItem, ListItem 
 from domible.elements import OrderedList, UnorderedList, MenuList, DescriptionList
 from domible.elements import Script, Template
-from domible.utils import indexMatchingAttributes 
+from domible.utils import index_matching_attributes 
 
 
 class ListBuilder:
@@ -100,7 +100,7 @@ class ListBuilder:
             else:
                 raise IndexError(f"index {index} is outside range, len of items is {len(self.items)}")
         elif attributes:
-            if (insert := indexMatchingAttributes(self.items, attributes)) != None:
+            if (insert := index_matching_attributes(self.items, attributes)) != None:
                 print(f"inserting at index {insert}, before is {before}")
                 if before: self.items.insert(insert, item)
                 else: self.items.insert(insert + 1, item)

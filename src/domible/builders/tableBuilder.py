@@ -65,7 +65,7 @@ class RowBuilder:
     entries: Dict = field(default_factory=dict)
 
     #####
-    def addEntries(self, **kwArgs) -> None:
+    def add_entries(self, **kwArgs) -> None:
         """
         add entries to the row by passing in any number of named parameters (columnId = 'some value').
         the Ids represent the columns,
@@ -88,7 +88,7 @@ class RowBuilder:
             return []
 
     #####
-    def getRow(self, columns: list[Any]) -> TableRow:
+    def get_row(self, columns: list[Any]) -> TableRow:
         """
         return the TableRow object that can generate the HTML for the row
         the columns parameter is needed to know which values from entries to include in the row
@@ -113,16 +113,16 @@ class TableBuilder:
     # the 0th column, i.e., the column of row headings
     # the upper left cell, 0,0.
     # Hopefully this is set to something meaningful by the user of this class.
-    rowHeadingName: Any = "Row Names"
-    columnHeadings: Dict = field(default_factory=dict)
+    row_heading_name: Any = "Row Names"
+    column_headings: Dict = field(default_factory=dict)
     rows: list[RowBuilder] = field(default_factory=list)
 
     #####
-    def addRow(self, row: RowBuilder) -> None:
+    def add_row(self, row: RowBuilder) -> None:
         self.rows.append(row)
 
     #####
-    def generateColumnHeadings(self) -> None:
+    def generate_column_headings(self) -> None:
         """
         if you don't want to set the column headings directly, they can be inferred by the names of properties in the rows
 
@@ -141,10 +141,10 @@ class TableBuilder:
         # TODO: allow the user to specify ordering of the columns based on counts
         #    or maybe columnHeadings.sort()
         # self.columnHeadings = list(counts.keys())
-        self.columnHeadings = {key: key for key in counts.keys()}
+        self.column_headings = {key: key for key in counts.keys()}
 
     #####
-    def getTable(self) -> tuple[Table, Style, Script]:
+    def get_table(self) -> tuple[Table, Style, Script]:
         """
         need to go through self (TableInfo) and convert all the info
         to corresponding elemensts (tr, th, td, caption...)
@@ -153,9 +153,9 @@ class TableBuilder:
         table = Table(Caption(self.caption))
         # first add the column headings to the table
         # if column headings hve not been set yet, generate them based on the  rows
-        if len(self.columnHeadings) == 0:
-            self.generateColumnHeadings()
-        columnNames = [self.rowHeadingName] + list(self.columnHeadings.values())
+        if len(self.column_headings) == 0:
+            self.generate_column_headings()
+        columnNames = [self.row_heading_name] + list(self.column_headings.values())
         logger.debug(
             f"table with caption {self.caption}, has column heading names:\n {columnNames}"
         )
@@ -165,7 +165,7 @@ class TableBuilder:
         a <thead> is a list of rows though in this case it's a single row of the names of the columns
         a TableRow is a list of anything derived from TableData <td> or TableHeader <th> elements 
         """
-        table.addContent(
+        table.add_content(
             TableHead(
                 [
                     TableRow(
@@ -179,16 +179,16 @@ class TableBuilder:
         now add all the rows in the tbody element 
         same idea as adding the TableHead above 
         """
-        table.addContent(
+        table.add_content(
             TableBody(
-                [row.getRow(list(self.columnHeadings.keys())) for row in self.rows]
+                [row.get_row(list(self.column_headings.keys())) for row in self.rows]
             )
         )
         return table, None, None
 
 
 #######
-def buildTableFromDicts(caption: Any, rows: list[Dict]) -> Table:
+def build_table_from_dicts(caption: Any, rows: list[Dict]) -> Table:
     """
     this is, so far, the easiest way to construct an HTML table from data the user has pulled from anywhere
     The rows are the dicts in the list, in order they appear in the list
@@ -207,15 +207,15 @@ def buildTableFromDicts(caption: Any, rows: list[Dict]) -> Table:
     """
     if len(rows) == 0:
         raise ValueError("no rows sent to createTableFromDict")
-    rowHeadingName = list(rows[0].keys())[0]
-    tbuilder = TableBuilder(caption, rowHeadingName)
+    row_heading_name = list(rows[0].keys())[0]
+    tbuilder = TableBuilder(caption, row_heading_name)
     for row in rows:
         items = list(row.items())
         heading = items[0][1]
         entries = dict(items[1:])
         ri = RowBuilder(heading, entries)
-        tbuilder.addRow(ri)
-    return tbuilder.getTable()
+        tbuilder.add_row(ri)
+    return tbuilder.get_table()
 
 
 # end of file

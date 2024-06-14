@@ -24,13 +24,13 @@ class Html(BaseElement):
         self.lang = lang
         super().__init__(tag="html", contents=contents, lang=lang, **kwArgs)
 
-    def getHeadElement(self) -> Head:
+    def get_head_element(self) -> Head:
         """
         return the Head element from the html doc
         Only return it if it's the only one and is an instance of Head.
         else log a warning and return None
         """
-        elms = self.getElements("head")
+        elms = self.get_elements("head")
         if len(elms) == 1 and isinstance(elms[0], Head):
             # make this the first check as it's almost certainly true
             return elms[0]
@@ -49,13 +49,13 @@ class Html(BaseElement):
             )
             return None
 
-    def getBodyElement(self) -> Body:
+    def get_body_element(self) -> Body:
         """
         return the body element from the html doc
         Only return it if it's the only one and is an instance of Body.
         else log a warning and return None
         """
-        elms = self.getElements("body")
+        elms = self.get_elements("body")
         if len(elms) == 1 and isinstance(elms[0], Body):
             # make this the first check as it's almost certainly true
             return elms[0]

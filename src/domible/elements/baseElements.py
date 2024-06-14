@@ -22,7 +22,7 @@ from __future__ import annotations
 from random import random 
 from typing import Any
 
-from domible.utils import isSubDict 
+from domible.utils import is_subdict 
 
 
 class ContentsList(list):
@@ -72,7 +72,7 @@ class BaseElement:
             self.contents = ContentsList(contents)
         self.attributes = dict(kwArgs)
 
-    def getElements(self, tag: str = None, **attrs) -> list[Any]:
+    def get_elements(self, tag: str = None, **attrs) -> list[Any]:
         """
         look at this element and any elements in its contents and 
         return any elements with the given tag and list of attributes 
@@ -89,12 +89,12 @@ class BaseElement:
         searching = [self]
         while len(searching) > 0:
             current = searching.pop(0)
-            if tag == current.tag and isSubDict(attrs, current.attributes):
+            if tag == current.tag and is_subdict(attrs, current.attributes):
                 found.append(current)  
             searching += [elem for elem in current.contents if isinstance(elem, BaseElement)]    
         return found 
 
-    def attrValue(self, attr: str, value: str = None) -> str:
+    def attr_value(self, attr: str, value: str = None) -> str:
         """
         use this to set a value for a single attribute,
         or to get the value set for the given attribute.
@@ -118,7 +118,7 @@ class BaseElement:
         and return whatever attrValue returned.
         """
         if value:
-            return self.attrValue('id', value)
+            return self.attr_value('id', value)
         elif (existing := self.attributes.get('id')):
             # no value was provided and 'id' already exists in self.attyrs, return the existing value 
             return existing
@@ -126,10 +126,10 @@ class BaseElement:
             # no value was provided and 'id' does not already exist in self.attrs
             # generate an id, set it in attrs and return that new value 
             idValue = f'{self.tag}-{random()}'
-            self.attrValue('id', idValue)
+            self.attr_value('id', idValue)
             return idValue 
 
-    def getAttributesString(self, inAttrs: dict = None) -> str:
+    def get_attributes_string(self, inAttrs: dict = None) -> str:
         """
         in general, this will return the string of the attributes currently set on the element
         alternatively, if a derived element has a dict of attributes not in the base attrs dict,
@@ -143,12 +143,12 @@ class BaseElement:
         return attrString 
 
 
-    def addAttributes(self, **kwArgs) -> None:
+    def add_attributes(self, **kwArgs) -> None:
         """ add all atttributes in kwArgs to self.attrs """
         self.attributes.update(kwArgs)
 
 
-    def addContent(self, content: Any, front: bool = False) -> None: 
+    def add_content(self, content: Any, front: bool = False) -> None: 
         """ 
         add content to any existing contents.  
         Adds to end of contents by default 
@@ -161,7 +161,7 @@ class BaseElement:
         else:
             self.contents = ContentsList(self.contents + content)
 
-    def setContent(self, content: Any) -> None: 
+    def set_content(self, content: Any) -> None: 
         """ 
         set the content of this element to the passed in content
         any existing content will be be lost 
@@ -171,17 +171,17 @@ class BaseElement:
         self.contents = ContentsList(content)
 
 
-    def openingTag(self) -> str:
+    def opening_tag(self) -> str:
         """ returns a string representing the opening tag  including any attributes """
-        return f'<{self.tag}{self.getAttributesString()}>'
+        return f'<{self.tag}{self.get_attributes_string()}>'
         
-    def closingTag(self) -> str:
+    def closing_tag(self) -> str:
         """ returns closing tag """
         return f'</{self.tag}>'
 
 
     def __repr__(self):
-        return f'{self.openingTag()}{self.contents}{self.closingTag()}'
+        return f'{self.opening_tag()}{self.contents}{self.closing_tag()}'
 
 
 class BaseVoidElement(BaseElement):
@@ -192,7 +192,7 @@ class BaseVoidElement(BaseElement):
     def __init__(self, tag: str, **kwArgs):
         super().__init__(tag=tag, **kwArgs)
 
-    def addContent(self, content: Any, front: bool = False) -> None: 
+    def add_content(self, content: Any, front: bool = False) -> None: 
         """ 
         void elements do not contain content 
         as it is now, simply return from this method.
@@ -204,7 +204,7 @@ class BaseVoidElement(BaseElement):
 
     def __repr__(self):
         """ a void element only has an opening tag, with attributes, if any  """
-        return f'{self.openingTag()}'
+        return f'{self.opening_tag()}'
 
 
 ## end of file 
