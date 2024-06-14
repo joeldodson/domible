@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.5 (2024-06-xx)
+
+- WARNING - Breaking backward compatibility with this release 
+- changed several methods and variable names to snake case (yummy kool aid)
+- added element_from_object to domible.builders, including simple test script in tests directory 
+  (not tied in to pytest though)
+- added add_sublist to ListBuilder to address HTML/CSS issue with extra "bullet point."
+  (see comments in ListBuilder.py for more details)
+- updates to docs available at [github pages for the domible repo](https://joeldodson.github.io/domible/).
+
 ## v0.1.4 (2024-06-06)
 
 - kind of getting back to domible 

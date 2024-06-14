@@ -157,13 +157,13 @@ def lists():
     oooList = OrderedList(
         [
             ListItem("Collect Supplies"),
-            UnorderedList(
+            ListItem(UnorderedList(
                 [
                     ListItem("coffee from pantry, 3 packets.  Oh, and the sugar too"),
                     ListItem("mug from drying rack"),
                     ListItem("scissors from 'junk drawer'"),
                 ]
-            ),
+            )),
             ListItem("cut tops off coffee packets and empty contents into mug"),
             ListItem(
                 "don't forget to throw empty packets in the trash, and put the scissors back where you found them"
@@ -296,7 +296,7 @@ def headings():
 @app.callback(invoke_without_command=True)
 def main() -> None:
     typer.echo(
-        "that's it for main, hope it went well, and there's a page to view in your browser."
+        "that's it for main"
     )
 
 

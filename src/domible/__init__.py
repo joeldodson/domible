@@ -8,5 +8,5 @@ __version__ = version("domible")
 import domible.elements
 import domible.builders
 import domible.starterDocuments 
-
+from domible.tools import open_in_browser, save_to_file 
 ## end of file 

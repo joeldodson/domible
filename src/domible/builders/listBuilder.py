@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 from typing import Any
 
+from domible.elements import BaseElement 
 from domible.elements import DescriptionTerm, DescriptionDef, DListItem, ListItem 
 from domible.elements import OrderedList, UnorderedList, MenuList, DescriptionList
 from domible.elements import Script, Template
@@ -79,10 +80,10 @@ class ListBuilder:
                 raise TypeError(f"{item} -- is not an li, script, or template element")
 
 
-    def addItem(self, item: Any, index: int = None, attributes: dict[str, str] = None, before: bool = True) -> None:
+    def add_item(self, item: Any, index: int = None, attributes: dict[str, str] = None, before: bool = True) -> None:
         """
         add an item to the list, where is based on values of other parameters. 
-        if incdex given, add item at that index 
+        if index given, add item at that index 
         if index is not in range, raise IndexError
         if attributes, add item based on the attributes of another item
         if before is True, ad new item before existing item with matching attributes, else after
@@ -109,7 +110,24 @@ class ListBuilder:
             self.items.append(item)
 
 
-    def getList(self, tag: str, **attributes):
+    def add_sublist(self, sublist: BaseElement, index: int = None, attributes: dict[str, str] = None, before: bool = True):
+        """
+        add_sublist exists to address the issue of an extra bullet point 
+        when including an HTML list (e.g., <ul>, <ol>) within an <li>.
+        This is required to comply with the content guidelines of what is allowed as a childe of a list element.
+        check out the MDN docs for more details.
+
+        The sublist must be one of the list elements from domible.elements.lists.
+        add_sublist will wrap it in a <li> element and 
+        add a style="list-style-type:none" attribute to the <li> wrapper.
+        The <li> is then added to the list being built in this class/object. 
+        See comments for ListBuilder::add_item for description of parameters after sublist.
+        """
+        li_wrapper = ListItem(sublist, style="list-style-type:none")
+        self.add_item(li_wrapper, index, attributes, before)
+
+
+    def get_list(self, tag: str, **attributes):
         """ 
         return the HTML element.
         More attributes can be added to the lists' opening tag if desired. 
