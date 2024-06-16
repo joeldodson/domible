@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.6 (2024-06-15)
+
+- tweaks to element_from_object.
+  I didn't like the way headings read out within list items.
+  Also, treat empty objects like terminals, simple print statement.
+  I think it's a bit cleaner this way.
+
 ## v0.1.5 (2024-06-14)
 
 - WARNING - Breaking backward compatibility with this release 

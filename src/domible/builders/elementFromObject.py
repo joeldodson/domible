@@ -23,7 +23,7 @@ I think that's okay as long as the value is a terminal type.
 
 What about the case where the value is another dict, or an iterator (list, tuple, set)?
 I'm going to treat the key as a heading for that value.
-The key will be added to the current list within an hn, where n is TBD,
+The key will be added to the current list within an hn, where n is based on depth within the object,
 and the value will be a sublist.
 """
 
@@ -53,8 +53,9 @@ def process_iter(obj: object, depth: int) -> UnorderedList:
     logger.debug(f"process_iter with object {obj}, depth {depth}")
     lb = ListBuilder()
     for item in obj:
-        if depth >= max_depth:
+        if (depth >= max_depth) or (hasattr(item, '__len__') and len(item) == 0):
             # create a list of terminal objects, don't go any deeper 
+            # or if an object is empty, treat it like a terminal 
             lb.add_item(ListItem(process_terminal(item)))
             continue
         if isinstance(item, dict):
@@ -74,37 +75,39 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
     See comments at the file level regarding why dicts are treated the way they are here.
     As you'll see below, keys in the dict are treated as terminals (as I've defined in this file)
     Yes, a tuple can be a key in a dict.
-    I'm making a simplifying assumption here (already spent way too much time on this module).
+    I'm making a simplifying decision here (already spent way too much time on this module).
     If treating tuples as terminals here becomes a problem, maybe I'll change it.
     """
     logger.debug(f"process_dict with object {obj}, depth {depth}")
     lb = ListBuilder()
     for key, value in obj.items():
-        # k,v are handled based on the type of the value.
+        # key, value are handled based on the type of the value.
         # always treat the key as a "terminal" though.
         key_html = process_terminal(key)
-
-        # if the value is an iterable or dict,
-        # use a general ListItem with the key as a heading and value as a list
-        if isinstance(value, (list, tuple, set, dict)):
-            if depth >= max_depth:
-                value_html = process_terminal(value)
-                lb.add_item(ListItem(f"{key_html}: {value_html}"))            
-                continue
-            key_heading = Heading(min(depth, max_depth, 6), key_html)
-            if isinstance(value, dict):
-                valuelist = process_dict(value, depth + 1)
-            else:
-                valuelist = process_iter(value, depth + 1)
-            lb.add_item(ListItem([key_heading, valuelist]))
-        elif isinstance(value, str) and validators.url(value):
+        value_html = "something has gone wrong if you see this string"
+        if isinstance(value, str) and validators.url(value):
             # if the value is a valid HTTP(S) URL, add an anchor as a list item
             kv_anchor = Anchor(value, key_html)
             lb.add_item(ListItem(kv_anchor))
         else:
-            # otherwise, add a list item in "key: value" format
-            # (because I don't like how NVDA handles DL lists)
-            value_html = process_terminal(value)
+            if depth < max_depth and isinstance(value, (list, tuple, set, dict)):
+                # if the value is an iterable or dict,
+                # use a general ListItem with the key as a heading and value as a list
+                # UPDATE: I didn't like the NVDA flow with key as a heading...
+                # and changing that simplified this method
+                if len(value) == 0:
+                    # this reads a little cleaner in the screen reader 
+                    value_html = process_terminal(value) 
+                elif isinstance(value, dict):
+                    value_html = process_dict(value, depth + 1)
+                else:
+                    value_html= process_iter(value, depth + 1)
+            else:
+                # either we've hit depth,
+                # or value is not a dict or iter 
+                # simply add a list item in "key: value" format
+                # (because I don't like how NVDA handles DL lists)
+                value_html = process_terminal(value)
             lb.add_item(ListItem(f"{key_html}: {value_html}"))
     return lb.get_list('ul')
 
