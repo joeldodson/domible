@@ -13,16 +13,30 @@ from tempfile import NamedTemporaryFile
 import webbrowser as wb
 
 from domible.elements import BaseElement 
-from domible.elements import Html
+from domible.elements import Html, Body 
+from domible.builders import element_from_object 
+from domible.starterDocuments import basic_head_empty_body 
 
-
-def open_in_browser(htmlDoc: Html) -> None:
+def open_in_browser(html_doc: Html) -> None:
     """create temp file to use webbrowser to open passed in Html doc"""
     path =NamedTemporaryFile(delete=False, suffix='.html')
     f=open(path.name, 'w+t')
-    f.write(f"{htmlDoc}")
+    f.write(f"{html_doc}")
     f.close()
     wb.open('file://' + path.name)
+
+
+def open_object_in_browser(obj: object, title: str = "opening an object in the browser") -> None:
+    """
+    the passed in object is used to get HTML from element_from_object.
+    That HTML is then put into a simple HtML document using the basicHeadEmptyBody starter document.
+    that simple document is then opened in the browser. 
+    """
+    obj_html = element_from_object(obj)
+    html_doc: Html  = basic_head_empty_body(title)
+    body: Body = html_doc.get_body_element() 
+    body.add_content(obj_html)
+    open_in_browser(html_doc)
 
 
 def save_to_file(element: BaseElement, filename: str, force: bool = False) -> None:

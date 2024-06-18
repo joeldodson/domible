@@ -49,24 +49,29 @@ def process_iter(obj: object, depth: int) -> UnorderedList:
     get the HTML for that item,
     wrap it in a ListItem,
     and add it to the ListBuilder.
+
+    if the item is another list/tuple/set, or a dict,
+    a sublist is added to the list.
+    Initially there was no bullet point at the current level indicating a sublist was being added.
+    I found that confusing and added the bullet point 
+    about the type of sublist, and its length.
     """
     logger.debug(f"process_iter with object {obj}, depth {depth}")
     lb = ListBuilder()
     for item in obj:
         if (depth >= max_depth) or (hasattr(item, '__len__') and len(item) == 0):
-            # create a list of terminal objects, don't go any deeper 
+            # if depth has been reached, create a list of terminal objects, don't go any deeper 
             # or if an object is empty, treat it like a terminal 
             lb.add_item(ListItem(process_terminal(item)))
             continue
+        sublist = None
         if isinstance(item, dict):
-            contents = process_dict(item, depth + 1)
-            lb.add_sublist(contents)
+            sublist = process_dict(item, depth + 1)
         elif isinstance(item, (list, tuple, set)):
-            contents = process_iter(item, depth + 1)
-            lb.add_sublist(contents)
-        else:
-            contents = process_terminal(item)
-            lb.add_item(ListItem(contents))
+            sublist = process_iter(item, depth + 1)
+        bullet_str = process_terminal(item)
+        contents = [bullet_str, sublist] if sublist else bullet_str
+        lb.add_item(ListItem(contents))
     return lb.get_list('ul')
 
 
@@ -77,6 +82,10 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
     Yes, a tuple can be a key in a dict.
     I'm making a simplifying decision here (already spent way too much time on this module).
     If treating tuples as terminals here becomes a problem, maybe I'll change it.
+
+    if the value results in a sublist,
+    add a string after the key indicating the type and length of that value
+    I think it adds clarity when using a screen reader 
     """
     logger.debug(f"process_dict with object {obj}, depth {depth}")
     lb = ListBuilder()
@@ -96,15 +105,17 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
                 # UPDATE: I didn't like the NVDA flow with key as a heading...
                 # and changing that simplified this method
                 if len(value) == 0:
-                    # this reads a little cleaner in the screen reader 
-                    value_html = process_terminal(value) 
+                    # this reads a little cleaner in the screen reader
+                    value_html = process_terminal(value).replace('object', 'value') 
                 elif isinstance(value, dict):
+                    key_html = f"{key_html} ({process_terminal(value).replace('object', 'value')})" 
                     value_html = process_dict(value, depth + 1)
                 else:
-                    value_html= process_iter(value, depth + 1)
+                    key_html = f"{key_html} ({process_terminal(value).replace('object', 'value')})"
+                    value_html = process_iter(value, depth + 1)
             else:
                 # either we've hit depth,
-                # or value is not a dict or iter 
+                # or value is not a dict or iter
                 # simply add a list item in "key: value" format
                 # (because I don't like how NVDA handles DL lists)
                 value_html = process_terminal(value)

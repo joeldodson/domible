@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.7 (2024-06-18)
+
+- more tweaks to element_from_object
+- added open_object_in_browser to tools.
+  now, in the REPL, I don't have to call element_from_object then open_in_browser.
+
 ## v0.1.6 (2024-06-15)
 
 - tweaks to element_from_object.
