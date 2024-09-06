@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.8 (2024-09-06)
+
+- more tweaks to tools and updating other areas to use tools
+- updated some dependencies 
+- been focused on work and some volunteering stuff, hope to get back to this soon...
+
 ## v0.1.7 (2024-06-18)
 
 - more tweaks to element_from_object

@@ -188,9 +188,11 @@ class TableBuilder:
 
 
 #######
-def build_table_from_dicts(caption: Any, rows: list[Dict]) -> Table:
+def build_table_from_dicts(caption: Any, rows: list[dict]) -> Table:
     """
     this is, so far, the easiest way to construct an HTML table from data the user has pulled from anywhere
+    create an HTML table from the list of dictionaries 
+
     The rows are the dicts in the list, in order they appear in the list
     the column names are derived from the keys in the dicts
     the row heading is the value from the first item in the dict representing that row

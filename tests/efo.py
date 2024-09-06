@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 from sys import argv
 
 from domible.builders import element_from_object as efo
-from domible import open_in_browser as oib
+from domible import open_html_in_browser as oib
 from domible.starterDocuments import basic_head_empty_body
 from domible.elements import Html, Body, BaseElement
 

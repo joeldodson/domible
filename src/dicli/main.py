@@ -26,7 +26,7 @@ from domible.elements import (
 from domible.elements import Heading, Anchor, Paragraph
 from domible.builders.tableBuilder import TableBuilder, build_table_from_dicts
 from domible.starterDocuments import basic_head_empty_body
-from domible.tools import open_in_browser 
+from domible.tools import open_html_in_browser 
 
 
 #######
@@ -48,7 +48,7 @@ def simple() -> None:
             ),
         ]
     )
-    open_in_browser(htmlDoc)
+    open_html_in_browser(htmlDoc)
 
 
 #######
@@ -72,7 +72,7 @@ def elements(
     body = htmlDoc.get_body_element()
     (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(mdn_base_url, lang)
     if not currentElementsTable or not deprecatedElementsTable:
-        body.add_content(Heading(1, f"failed to scrape elements from {mdnElements.mdnAnchor}"))
+        body.add_content(Heading(1, f"failed to scrape elements from {mdnElements.MdnAnchor}"))
     else:
         # building up the body of the html document
         currentTable, _, _ = currentElementsTable.get_table()
@@ -89,7 +89,7 @@ def elements(
                 deprecatedTable,
             ]
         )
-    open_in_browser(htmlDoc)
+    open_html_in_browser(htmlDoc)
 
 
 #######
@@ -118,7 +118,7 @@ def ctfd(
             table,
         ]
     )
-    open_in_browser(htmlDoc)
+    open_html_in_browser(htmlDoc)
 
 
 #######
@@ -232,7 +232,7 @@ def lists():
             detailsList,
         ]
     )
-    open_in_browser(htmlDoc)
+    open_html_in_browser(htmlDoc)
 
 
 #######
@@ -289,7 +289,7 @@ def headings():
             contents="heading level 3 with 'somethingUnique' for unique",
         )
     )
-    open_in_browser(htmlDoc)
+    open_html_in_browser(htmlDoc)
 
 
 #######
