@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.9 (2024-09-14)
+
+- added &lt;hr> (HorizontalRule) element to sectioning
+- added ability to save html doc to a file in open_html_in_browser
+- and now setting encoding correctly to utf-8 when writing to file (saved or temporary)
+
 ## v0.1.8 (2024-09-06)
 
 - more tweaks to tools and updating other areas to use tools
