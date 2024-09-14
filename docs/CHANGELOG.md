@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.10 (2024-09-14)
+
+- fixed bug I created in v0.1.9 when using a temp file to open_html_in_browser
+- would have been nice for the .10 release to be something cool, not just me screwing up 
+
 ## v0.1.9 (2024-09-14)
 
 - added &lt;hr> (HorizontalRule) element to sectioning

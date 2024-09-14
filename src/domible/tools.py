@@ -53,6 +53,7 @@ def open_html_in_browser(html_doc: Html, save_file: str = None, force: bool = Fa
         f=open(path.name, 'w+t', encoding='utf-8')
         f.write(f"{html_doc}")
         f.close()
+        path = path.name # consistent with path from saving file 
     wb.open('file://' + path)
 
 
