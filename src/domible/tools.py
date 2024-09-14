@@ -17,16 +17,46 @@ from domible.elements import Html, Body
 from domible.builders import element_from_object 
 from domible.starterDocuments import basic_head_empty_body 
 
-def open_html_in_browser(html_doc: Html) -> None:
-    """create temp file to use webbrowser to open passed in Html doc"""
-    path =NamedTemporaryFile(delete=False, suffix='.html')
-    f=open(path.name, 'w+t')
-    f.write(f"{html_doc}")
-    f.close()
-    wb.open('file://' + path.name)
+
+def save_to_file(element: BaseElement, filename: str, force: bool = False) -> None:
+    """
+    save the passed in element to passed in filename.
+    If the file name exists and is a regular file,
+    save will fail unless force is Tru
+    """
+    fp = Path(filename)
+    if fp.exists():
+        # if the file exists, is a regular file and force is true, carry on
+        # otherwise, raise a FileExists error
+        if not fp.is_file() or not force:
+            raise FileExistsError(
+                f"{filename} exists and is not a regular file, or force is False"
+            )
+    # if file does exists, force must be True
+    with fp.open("w+t", encoding="utf-8") as f:
+        f.write(f"{element}")
 
 
-def open_object_in_browser(obj: object, title: str = "opening an object in the browser") -> None:
+def open_html_in_browser(html_doc: Html, save_file: str = None, force: bool = False) -> None:
+    """
+    open the html_doc in the default browser.
+    if a save_to_file is provided, also save the html_doc to that file,
+    else use a temporary file 
+    """
+    if save_file:
+        save_to_file(html_doc, save_file, force)
+        # path must be absolute to match how temp file works 
+        path = str(Path(save_file).absolute()) 
+    else: 
+        path =NamedTemporaryFile(delete=False, suffix='.html')
+        print(f'name of temp file: {path.name}')
+        f=open(path.name, 'w+t', encoding='utf-8')
+        f.write(f"{html_doc}")
+        f.close()
+    wb.open('file://' + path)
+
+
+def open_object_in_browser(obj: object, title: str = "opening an object in the browser", save_file: str = None, force: bool = False) -> None:
     """
     get HTML representation of the object then open it in the default browser.
 
@@ -38,24 +68,7 @@ def open_object_in_browser(obj: object, title: str = "opening an object in the b
     html_doc: Html  = basic_head_empty_body(title)
     body: Body = html_doc.get_body_element() 
     body.add_content(obj_html)
-    open_html_in_browser(html_doc)
-
-
-def save_to_file(element: BaseElement, filename: str, force: bool = False) -> None:
-    """ 
-    save the passed in element to passed in filename.
-    If the file name exists and is a regular file, 
-    save will fail unless force is Tru 
-    """
-    fp = Path(filename)
-    if fp.exists():
-        # if the file exists, is a regular file and force is true, carry on
-        # otherwise, raise a FileExists error
-        if not  fp.is_file() or not force:
-            raise FileExistsError(f"{filename} exists and is not a regular file, or force is False")
-    # if file does exists, force must be True
-    with fp.open('w+t') as f:
-        f.write(f"{element}")
+    open_html_in_browser(html_doc, save_file, force)
 
 
 ## end of file

@@ -2,7 +2,7 @@
 """
 
 from typing import Any
-from domible.elements.baseElements import BaseElement
+from domible.elements.baseElements import BaseElement, BaseVoidElement
 
 
 class Article(BaseElement):
@@ -39,6 +39,14 @@ class Heading(BaseElement):
     def __init__(self, level: int, contents: Any = None, **kwArgs):
         self.level = level
         super().__init__(tag=f"h{level}", contents=contents, **kwArgs)
+
+
+class HorizontalRule(BaseVoidElement):
+    """generates the hr voide element"""
+
+    def __init__(self, **kwArgs):
+        """hris a void element, no contents are allowed"""
+        super().__init__(tag="hr", **kwArgs)
 
 
 class Main(BaseElement):
