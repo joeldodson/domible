@@ -49,7 +49,6 @@ def open_html_in_browser(html_doc: Html, save_file: str = None, force: bool = Fa
         path = str(Path(save_file).absolute()) 
     else: 
         path =NamedTemporaryFile(delete=False, suffix='.html')
-        print(f'name of temp file: {path.name}')
         f=open(path.name, 'w+t', encoding='utf-8')
         f.write(f"{html_doc}")
         f.close()
@@ -57,7 +56,7 @@ def open_html_in_browser(html_doc: Html, save_file: str = None, force: bool = Fa
     wb.open('file://' + path)
 
 
-def open_object_in_browser(obj: object, title: str = "opening an object in the browser", save_file: str = None, force: bool = False) -> None:
+def open_object_in_browser(obj: object, title: str = "opening an object in the browser", save_file: str = None, force: bool = False, ignore_Nones: bool = True) -> None:
     """
     get HTML representation of the object then open it in the default browser.
 
@@ -65,7 +64,7 @@ def open_object_in_browser(obj: object, title: str = "opening an object in the b
     That HTML is then put into a simple HtML document using the basicHeadEmptyBody starter document.
     that simple document is then opened in the browser. 
     """
-    obj_html = element_from_object(obj)
+    obj_html = element_from_object(obj, ignore_Nones = ignore_Nones)
     html_doc: Html  = basic_head_empty_body(title)
     body: Body = html_doc.get_body_element() 
     body.add_content(obj_html)

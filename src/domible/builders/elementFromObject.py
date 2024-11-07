@@ -42,7 +42,7 @@ import validators
 # using a global for depth to use depth to calculate heading levels
 max_depth = None
 
-def process_iter(obj: object, depth: int) -> UnorderedList:
+def process_iter(obj: object, depth: int, ignore_Nones: bool = True) -> UnorderedList:
     """
     create an HTML <ul> from the iterator  
     For each item in the iterator, 
@@ -60,22 +60,22 @@ def process_iter(obj: object, depth: int) -> UnorderedList:
     lb = ListBuilder()
     for item in obj:
         if (depth >= max_depth) or (hasattr(item, '__len__') and len(item) == 0):
-            # if depth has been reached, create a list of terminal objects, don't go any deeper 
-            # or if an object is empty, treat it like a terminal 
+            # if depth has been reached, create a list of terminal objects, don't go any deeper
+            # or if an object is empty, treat it like a terminal
             lb.add_item(ListItem(process_terminal(item)))
             continue
         sublist = None
         if isinstance(item, dict):
-            sublist = process_dict(item, depth + 1)
+            sublist = process_dict(item, depth + 1, ignore_Nones = ignore_Nones)
         elif isinstance(item, (list, tuple, set)):
-            sublist = process_iter(item, depth + 1)
+            sublist = process_iter(item, depth + 1, ignore_Nones=ignore_Nones)
         bullet_str = process_terminal(item)
         contents = [bullet_str, sublist] if sublist else bullet_str
         lb.add_item(ListItem(contents))
     return lb.get_list('ul')
 
 
-def process_dict(obj: dict, depth: int) -> BaseElement:
+def process_dict(obj: dict, depth: int, ignore_Nones: bool = True) -> BaseElement:
     """
     See comments at the file level regarding why dicts are treated the way they are here.
     As you'll see below, keys in the dict are treated as terminals (as I've defined in this file)
@@ -90,6 +90,10 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
     logger.debug(f"process_dict with object {obj}, depth {depth}")
     lb = ListBuilder()
     for key, value in obj.items():
+        # first, if we're not adding anything with a None value to output, simply skip this k,v pair.
+        if value == None and ignore_Nones: 
+            continue 
+
         # key, value are handled based on the type of the value.
         # always treat the key as a "terminal" though.
         key_html = process_terminal(key)
@@ -109,10 +113,12 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
                     value_html = process_terminal(value).replace('object', 'value') 
                 elif isinstance(value, dict):
                     key_html = f"{key_html} ({process_terminal(value).replace('object', 'value')})" 
-                    value_html = process_dict(value, depth + 1)
+                    value_html = process_dict(
+                        value, depth + 1, ignore_Nones=ignore_Nones
+                    )
                 else:
                     key_html = f"{key_html} ({process_terminal(value).replace('object', 'value')})"
-                    value_html = process_iter(value, depth + 1)
+                    value_html = process_iter(value, depth + 1, ignore_Nones=ignore_Nones)
             else:
                 # either we've hit depth,
                 # or value is not a dict or iter
@@ -134,7 +140,7 @@ def process_terminal(obj) -> str:
     return html.escape(str(obj))
 
 
-def element_from_object(obj: object, depth: int = 42) -> BaseElement: 
+def element_from_object(obj: object, depth: int = 42, ignore_Nones: bool = True ) -> BaseElement: 
     """
     since, in theory, objects can have unlimited complexity, 
     depth can be specified to limit the amount of HTML returned.
@@ -144,7 +150,7 @@ def element_from_object(obj: object, depth: int = 42) -> BaseElement:
     now depth is used to calculate which HTML heading tag to use
     (see file comments regarding headings)
 
-    inistially support a subset of Python objects:
+    initially support a subset of Python objects:
     int, float, str, bool, list, tuple, set, and dict 
     anything else will have its str representation returned in a paragraph element
     For converting to HTML, list, tuple, and set can all be represented in an unordered list,
@@ -158,9 +164,9 @@ def element_from_object(obj: object, depth: int = 42) -> BaseElement:
     global max_depth 
     max_depth = depth 
     if isinstance(obj, dict):
-        return process_dict(obj, 1)
+        return process_dict(obj, 1, ignore_Nones = ignore_Nones)
     elif isinstance(obj, (list, tuple, set)):
-        return process_iter(obj, 1)
+        return process_iter(obj, 1, ignore_Nones = ignore_Nones)
     return Paragraph(process_terminal(obj))
 
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.11 (2024-11-06)
+
+- added bool to tell element_from_object to not include properties with value None      
+
 ## v0.1.10 (2024-09-14)
 
 - fixed bug I created in v0.1.9 when using a temp file to open_html_in_browser
