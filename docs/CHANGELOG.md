@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.12 (2024-11-27)
+
+- added Details and Summary elements to support collapsible regions 
+- significant rewrite of element_from_object to hide lists in collapsible regions 
+- removed bool to tell element_from_object to not include properties with value None, too hacky     
+
 ## v0.1.11 (2024-11-06)
 
 - added bool to tell element_from_object to not include properties with value None      
