@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.13 (2024-11-28)
+
+- missed ignore_Nones in tools.py 
+- found a few more bugs in element_from_object 
+- enhanced efo.py (element_from_object) in tests 
+
 ## v0.1.12 (2024-11-27)
 
 - added Details and Summary elements to support collapsible regions 

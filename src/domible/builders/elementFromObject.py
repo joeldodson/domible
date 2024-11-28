@@ -50,10 +50,11 @@ def process_iter(obj: object, depth: int) -> UnorderedList:
             # create a collapsible widget with the item meta-data as the Summary,
             # and the item as a list in the collapsible content.
             summary = Summary(list_contents)
+            hidden_html = None 
             if isinstance(item, dict):
                 hidden_html = process_dict(item, depth + 1)
             else:  # must be a list, tuple, or set 
-                hidden_thml = process_iter(item, depth + 1)
+                hidden_html = process_iter(item, depth + 1)
             list_contents = Details(summary, hidden_html)
         lb.add_item(ListItem(list_contents))
     return lb.get_list('ul')
@@ -84,6 +85,7 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
             # create a collapsible widget with the key as the Summary,
             # and the value as a list in the collapsible content.
             summary = Summary(list_contents)
+            hidden_html = None 
             if isinstance(value, dict):
                 hidden_html = process_dict(value, depth + 1)
             else: # value is a list, set, or tuple

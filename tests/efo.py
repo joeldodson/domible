@@ -14,10 +14,10 @@ logger = logging.getLogger(__name__)
 
 from sys import argv
 
-from domible.builders import element_from_object as efo
-from domible import open_html_in_browser as oib
+from domible.builders import element_from_object 
+from domible import open_html_in_browser, open_object_in_browser 
 from domible.starterDocuments import basic_head_empty_body
-from domible.elements import Html, Body, BaseElement
+from domible.elements import Html, Body, BaseElement, Heading
 
 ##
 # following are some hard coded values to test
@@ -26,7 +26,7 @@ from domible.elements import Html, Body, BaseElement
 rd = {"key1": "value1", "key2": "value2", "bg_url": "https://blindgumption.com"}
 
 bio = {
-    "name": "Joel Dodson",
+    "name":{"first": "Joel", "last": "Dodson"},
     "location": "SF Bay Area",
     "projects": [
         "list of projects as dicts",
@@ -52,14 +52,15 @@ cases = {
         [1, 2, 3],
         [4, 5, 6],
         [[11, 22, 33], ["a", "b", "c", "d"]],
-        ["annie", "chelsea", "maple"],
+        {"sweet girls":["annie", "chelsea", "maple"]},
     ],
-    ## list of randoms
-    "lor": [1, 2, 3, "rando string", rd, {}, [[], {}]],
 }
 
 if __name__ == "__main__":
+
     if len(argv) < 2:
+        print("usage: efo <obj name | 'cases' to run all> [depth]")
+        print(f"names of objects in cases: {[c for c in cases.keys()]}")
         exit(0)
 
     depth = 42
@@ -70,20 +71,24 @@ if __name__ == "__main__":
             depth = 42
 
     obj, title = None, None
-    if (arg := argv[1]) in cases:
+    arg = argv[1]
+    if arg in cases:
         obj = cases[arg]
         title = f"running test {arg}, depth is {depth}"
-
-    if obj:
-        html = basic_head_empty_body(title)
+        open_object_in_browser(obj, depth, title,)
+    elif arg == 'cases':
+        html = basic_head_empty_body(f"EFO: running all cases, depth {depth}")
         body = html.get_body_element()
-        elem: BaseElement = efo(obj, depth)
-        body.add_content(elem)
-        oib(html)
+        for name, obj in cases.items():
+            elem = element_from_object(obj, depth)
+            body.add_content([Heading(2, f"Object {name}"), elem])
+        open_html_in_browser(html)
         # print the HTML in case I want to redirect output to a file.
         # it's easier than supporting writing to a file in this code.
         if len(argv) > 3 and argv[3] == "print":
             print(f"{html}")
+    else:
+        print(f"no object with name '{arg}' in cases.  run efo with no arguments to list cases.")
 
 
 ## end of file
