@@ -28,7 +28,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.10"
 beautifulsoup4 = { version = "^4.12.3", optional = true }
-typer = "^0.12.3"
 jsonloggeriso8601datetime = { version = "^1.0.5", optional = true }
 requests = { version = "^2.32.3", optional = true }
 validators = "^0.28.3"
@@ -47,7 +46,7 @@ requests = "^2.32.3"
 mkdocs-material = "^9.5.30"
 
 [tool.poetry.extras]
-dicli = ["beautifulsoup4", "typer", "jsonloggeriso8601datetime", "requests"]
+dicli = ["beautifulsoup4", "jsonloggeriso8601datetime", "requests"]
 
 [tool.poetry.scripts]
 distarter = "distarter:run"

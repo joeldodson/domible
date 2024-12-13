@@ -7,13 +7,10 @@ from importlib.metadata import version
 __version__ = version("domible")
 
 
-from dicli.main import app
-
-app_name = "dicli"
-
+from dicli import main 
 
 def run():
-    app(prog_name=app_name)
+    main.run()
 
 
 ## end of file

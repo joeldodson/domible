@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 """ domible/src/dicli/main.py 
+simple command line tool to test/experiment with domible 
 """
 
 import logging
@@ -7,9 +9,6 @@ import jsonloggeriso8601datetime as jlidt
 jlidt.setConfig()
 logger = logging.getLogger(__name__)
 
-
-import typer
-app = typer.Typer()
 
 import dicli.mdnElements as mdnElements  
 
@@ -28,14 +27,18 @@ from domible.builders.tableBuilder import TableBuilder, build_table_from_dicts
 from domible.starterDocuments import basic_head_empty_body
 from domible.tools import open_html_in_browser 
 
+import argparse
 
-#######
-@app.command()
-def simple() -> None:
-    """
-    generate, and show in browser,
-    a very simple HTML document
-    """
+global_parser = argparse.ArgumentParser(
+    prog="dicli",
+    description="command line utility for domible testing",
+    formatter_class=argparse.RawTextHelpFormatter,
+    epilog="Cheers!",
+)
+
+
+def simple(args) -> None:
+    """ create a very simple HTML document and open it in the default browser """
     title = "BareBones with a Minimal Body"
     htmlDoc = basic_head_empty_body(title)
     body = htmlDoc.get_body_element()
@@ -51,20 +54,18 @@ def simple() -> None:
     open_html_in_browser(htmlDoc)
 
 
-#######
-@app.command()
-def elements(
-    mdn_base_url: str = typer.Option("https://developer.mozilla.org", "-u", "--url_mdn"),
-    lang: str = typer.Option("en-US", "-l", "--lang"),
-    outputfile: str = typer.Option(None, "-o", "--outputfile")
-) -> None:
+def elements(args) -> None:
     """
     elements is used to test, and provide an example of, Table and the tableBuilder
     it will scrape HTML element reference info from MDN and present it in a table in your default browser
     The HTML is also saved to a passed in file, not saved if no file specified.
     """
+    mdn_base_url: str = args.url_mdn
+    lang: str = args.lang
+    outputfile: str = args.outfile
+
     if outputfile:
-        typer.echo(f"saving html output to file: {outputfile}")
+        print(f"saving html output to file: {outputfile}")
     title = "Tables of HTML Elements Scraped from MDN "
     htmlDoc = basic_head_empty_body(title, lang)
     head = htmlDoc.get_head_element()
@@ -92,15 +93,12 @@ def elements(
     open_html_in_browser(htmlDoc)
 
 
-#######
-@app.command()
-def ctfd(
-    lower: int = typer.Option(1, "-l", "--lower"),
-    upper: int = typer.Option(10, "-u", "--upper"),
-):
+def ctfd(args) -> None:
     """
     to test the buildTableFromDicts function from tableBuilder
     """
+    lower: int = args.lower
+    upper: int = args.upper
     rows = []
     for x in range(lower, upper + 1):
         row = {"base": x}
@@ -121,9 +119,7 @@ def ctfd(
     open_html_in_browser(htmlDoc)
 
 
-#######
-@app.command()
-def lists():
+def lists(args) -> None:
     """
     Testing/example of using the lists related elements
     Note how elements are created using composition
@@ -133,7 +129,7 @@ def lists():
     ordered (ol) - steps to make the coffee
     definition (dl) - some details regarding the supplies
     """
-    typer.echo("testing lists")
+    print("testing lists")
     starbucks = Anchor(
         href="https://www.starbucks.com/menu/at-home-coffee/via-instant",
         contents="Starbucks Via instant coffee",
@@ -235,16 +231,14 @@ def lists():
     open_html_in_browser(htmlDoc)
 
 
-#######
-@app.command()
-def headings():
+def headings(args) -> None:
     """
     test the creation and display of HTML headings.
     this also shows how to add attributes to elements
     Note heading level 0 and 7 do not result in legit headings to the screen reader
     For now, to verify attributes, you'll need to view source in your browser
     """
-    typer.echo("testing heading generation")
+    print("testing heading generation")
     title = "Domible testing Heading Element"
     htmlDoc = basic_head_empty_body(title)
     body = htmlDoc.get_body_element()
@@ -292,12 +286,31 @@ def headings():
     open_html_in_browser(htmlDoc)
 
 
-#######
-@app.callback(invoke_without_command=True)
-def main() -> None:
-    typer.echo(
-        "that's it for main"
-    )
+def run() -> None:
+    subparsers = global_parser.add_subparsers(required = True, help = "sub commands for dicli")
+
+    simple_parser = subparsers.add_parser('simple', help = simple.__doc__)
+    simple_parser.set_defaults(func= simple)
+
+    elements_parser = subparsers.add_parser('elements', help = elements.__doc__)
+    elements_parser.add_argument('-u', '--url_mdn', default = "https://developer.mozilla.org")
+    elements_parser.add_argument('-l', '--lang', default = 'en-US')
+    elements_parser.add_argument('-o', '--outfile')
+    elements_parser.set_defaults(func= elements)
+
+    ctfd_parser = subparsers.add_parser('ctfd', help = ctfd.__doc__)
+    ctfd_parser.add_argument('-l', '--lower', default = 1, type = int, help = "lower bound")
+    ctfd_parser.add_argument('-u', '--upper', default = 10, type = int, help = "upper bound")
+    ctfd_parser.set_defaults(func= ctfd)
+
+    lists_parser = subparsers.add_parser('lists', help = lists.__doc__)
+    lists_parser.set_defaults(func= lists)
+
+    headings_parser = subparsers.add_parser('headings', help = headings.__doc__)
+    headings_parser.set_defaults(func= headings)
+
+    args = global_parser.parse_args()
+    args.func(args)
 
 
 ## end of file
