@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.1.14 (2024-12-19) -- BREAKING BACKWARD COMPATIBILITY 
+
+- removed typer from dicli, starts a little faster
+  - going simple with argparse to avoid pip installing lots of stuff 
+- major work on lists -- BREAKS COMPATIBILITY 
+  - removed ListBuilder 
+  - created new base class for HTML lists in domible/lists.py - HtmlListBase  
+  - moved functionality from ListBuilder into HtmlListBase 
+  - added ability to get list hidden in a Details element with a Summary 
+  - updated tests in dicli and tests/efo.py to validate the changes 
+
 ## v0.1.13 (2024-11-28)
 
 - missed ignore_Nones in tools.py 

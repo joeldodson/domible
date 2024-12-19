@@ -21,7 +21,6 @@ import html
 import json 
 
 from domible.elements import BaseElement, ListItem, UnorderedList, Paragraph, Anchor, Heading, Details, Summary  
-from domible.builders.listBuilder import ListBuilder 
 
 import validators 
 
@@ -35,14 +34,14 @@ def process_iter(obj: object, depth: int) -> UnorderedList:
     For each item in the iterator, 
     get the HTML for that item,
     wrap it in a ListItem,
-    and add it to the ListBuilder.
+    and add it to the list.
 
     if the item is another list/tuple/set, or a dict,
     a sublist is added to the list in a collapsible widget.
     meta-data is used as the summary for the sublist.
     """
     logger.debug(f"process_iter with object {obj}, depth {depth}")
-    lb = ListBuilder(**{"aria-label":f"entering level  {depth}", "style": "list-style-type: none;"})
+    ul = UnorderedList(**{"aria-label":f"entering level  {depth}", "style": "list-style-type: none;"})
     for item in obj:
         list_contents = process_terminal(item)
         if depth < max_depth and isinstance(item, (list, tuple, set, dict)) and len(item) > 0:
@@ -56,8 +55,8 @@ def process_iter(obj: object, depth: int) -> UnorderedList:
             else:  # must be a list, tuple, or set 
                 hidden_html = process_iter(item, depth + 1)
             list_contents = Details(summary, hidden_html)
-        lb.add_item(ListItem(list_contents))
-    return lb.get_list('ul')
+        ul.add_item(ListItem(list_contents))
+    return ul
 
 
 def process_dict(obj: dict, depth: int) -> BaseElement:
@@ -74,7 +73,7 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
     Added a disclosure widget to be able to collapse/expand sublist 
     """
     logger.debug(f"process_dict with object {obj}, depth {depth}")
-    lb = ListBuilder(**{"aria-label": f"entering level {depth}", "style": "list-style-type: none;",})
+    ul = UnorderedList(**{"aria-label": f"entering level {depth}", "style": "list-style-type: none;",})
     for key, value in obj.items():
         # key, value are handled based on the type of the value.
         # always treat the key as a "terminal" though.
@@ -92,8 +91,8 @@ def process_dict(obj: dict, depth: int) -> BaseElement:
                 hidden_html = process_iter(value, depth + 1)
             # now create the collapsible widget
             list_contents = Details(summary, hidden_html)
-        lb.add_item(ListItem(list_contents))
-    return lb.get_list('ul')
+        ul.add_item(ListItem(list_contents))
+    return ul
 
 
 def process_terminal(obj) -> str:

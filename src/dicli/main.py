@@ -10,7 +10,7 @@ jlidt.setConfig()
 logger = logging.getLogger(__name__)
 
 
-import dicli.mdnElements as mdnElements  
+import dicli.mdnElements as mdnElements
 
 from domible.elements import Html, Head, Body, Title, Base
 from domible.elements import (
@@ -25,7 +25,7 @@ from domible.elements import (
 from domible.elements import Heading, Anchor, Paragraph
 from domible.builders.tableBuilder import TableBuilder, build_table_from_dicts
 from domible.starterDocuments import basic_head_empty_body
-from domible.tools import open_html_in_browser 
+from domible.tools import open_html_in_browser
 
 import argparse
 
@@ -38,7 +38,7 @@ global_parser = argparse.ArgumentParser(
 
 
 def simple(args) -> None:
-    """ create a very simple HTML document and open it in the default browser """
+    """create a very simple HTML document and open it in the default browser"""
     title = "BareBones with a Minimal Body"
     htmlDoc = basic_head_empty_body(title)
     body = htmlDoc.get_body_element()
@@ -71,9 +71,13 @@ def elements(args) -> None:
     head = htmlDoc.get_head_element()
     head.add_content(Base(href=mdn_base_url))
     body = htmlDoc.get_body_element()
-    (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(mdn_base_url, lang)
+    (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(
+        mdn_base_url, lang
+    )
     if not currentElementsTable or not deprecatedElementsTable:
-        body.add_content(Heading(1, f"failed to scrape elements from {mdnElements.MdnAnchor}"))
+        body.add_content(
+            Heading(1, f"failed to scrape elements from {mdnElements.MdnAnchor}")
+        )
     else:
         # building up the body of the html document
         currentTable, _, _ = currentElementsTable.get_table()
@@ -141,25 +145,17 @@ def lists(args) -> None:
             ListItem("knock-over resistant large coffee mug"),
             ListItem("Sugar"),
             ListItem("spoon to stir"),
-            ListItem(
-                "Liquid level detector, plays 'Small World' when fluid reaches the probes."
-            ),
+            ListItem("Liquid level detector"),
             ListItem("Hot/near boiling water, from dispenser on counter."),
             ListItem("milk, real or oat, whatever is in the fridge"),
         ]
     )
+    suppliesList.add_content(ListItem("testing add_content"))
     suppliesList.attr_value("aria-labelledby", suppliesHeading.id())
     oooHeading = Heading(2, "Order Of Operations")
     oooList = OrderedList(
         [
-            ListItem("Collect Supplies"),
-            ListItem(UnorderedList(
-                [
-                    ListItem("coffee from pantry, 3 packets.  Oh, and the sugar too"),
-                    ListItem("mug from drying rack"),
-                    ListItem("scissors from 'junk drawer'"),
-                ]
-            )),
+            ListItem("Collect Supplies", **{"x-test": "collect-supplies"}),
             ListItem("cut tops off coffee packets and empty contents into mug"),
             ListItem(
                 "don't forget to throw empty packets in the trash, and put the scissors back where you found them"
@@ -183,6 +179,20 @@ def lists(args) -> None:
             ListItem("sit on stool at counter, start podcast, enjoy the coffee"),
         ]
     )
+    supplies_sublist = UnorderedList(
+        [
+            ListItem("coffee from pantry, 3 packets.  Oh, and the sugar too"),
+            ListItem("mug from drying rack"),
+            ListItem("scissors from 'junk drawer'"),
+        ]
+    )
+    oooList.add_sublist(supplies_sublist, attributes={"x-test": "collect-supplies"}, before = False)
+    hidden_sublist = UnorderedList([
+        ListItem("what to do when you're trying to quietly drink your coffee, and someone wants to talk to you"),
+        ListItem("take your coffee to a ruum in the house that is traditionally quiet and people leave you alone"),
+        ListItem("It's okay to bring your toast/muffin/biscotti as well")
+    ])
+    oooList.add_sublist(hidden_sublist.get_collapsible("our little secret"))
     oooList.attr_value("aria-labelledby", oooHeading.id())
     detailsHeading = Heading(2, "More Details (because I need to test the dl list)")
     detailsList = DescriptionList(
@@ -228,6 +238,15 @@ def lists(args) -> None:
             detailsList,
         ]
     )
+    open_html_in_browser(htmlDoc)
+
+
+def list_builder(args) -> None:
+    """ """
+    title = "Testing Domible List builder"
+    htmlDoc = basic_head_empty_body(title)
+    body = htmlDoc.get_body_element()
+    body.add_content([])
     open_html_in_browser(htmlDoc)
 
 
@@ -287,27 +306,31 @@ def headings(args) -> None:
 
 
 def run() -> None:
-    subparsers = global_parser.add_subparsers(required = True, help = "sub commands for dicli")
+    subparsers = global_parser.add_subparsers(
+        required=True, help="sub commands for dicli"
+    )
 
-    simple_parser = subparsers.add_parser('simple', help = simple.__doc__)
-    simple_parser.set_defaults(func= simple)
+    simple_parser = subparsers.add_parser("simple", help=simple.__doc__)
+    simple_parser.set_defaults(func=simple)
 
-    elements_parser = subparsers.add_parser('elements', help = elements.__doc__)
-    elements_parser.add_argument('-u', '--url_mdn', default = "https://developer.mozilla.org")
-    elements_parser.add_argument('-l', '--lang', default = 'en-US')
-    elements_parser.add_argument('-o', '--outfile')
-    elements_parser.set_defaults(func= elements)
+    elements_parser = subparsers.add_parser("elements", help=elements.__doc__)
+    elements_parser.add_argument(
+        "-u", "--url_mdn", default="https://developer.mozilla.org"
+    )
+    elements_parser.add_argument("-l", "--lang", default="en-US")
+    elements_parser.add_argument("-o", "--outfile")
+    elements_parser.set_defaults(func=elements)
 
-    ctfd_parser = subparsers.add_parser('ctfd', help = ctfd.__doc__)
-    ctfd_parser.add_argument('-l', '--lower', default = 1, type = int, help = "lower bound")
-    ctfd_parser.add_argument('-u', '--upper', default = 10, type = int, help = "upper bound")
-    ctfd_parser.set_defaults(func= ctfd)
+    ctfd_parser = subparsers.add_parser("ctfd", help=ctfd.__doc__)
+    ctfd_parser.add_argument("-l", "--lower", default=1, type=int, help="lower bound")
+    ctfd_parser.add_argument("-u", "--upper", default=10, type=int, help="upper bound")
+    ctfd_parser.set_defaults(func=ctfd)
 
-    lists_parser = subparsers.add_parser('lists', help = lists.__doc__)
-    lists_parser.set_defaults(func= lists)
+    lists_parser = subparsers.add_parser("lists", help=lists.__doc__)
+    lists_parser.set_defaults(func=lists)
 
-    headings_parser = subparsers.add_parser('headings', help = headings.__doc__)
-    headings_parser.set_defaults(func= headings)
+    headings_parser = subparsers.add_parser("headings", help=headings.__doc__)
+    headings_parser.set_defaults(func=headings)
 
     args = global_parser.parse_args()
     args.func(args)
