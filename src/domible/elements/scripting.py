@@ -12,9 +12,8 @@ class Canvas(BaseElement):
     All I know of the <canvas> element is it's a problem for accessibility.
     As I learn more, I might build out this class to enforce as much accessibility as possible in a <canvas>.
     """
-
     def __init__(self, contents: Any = None, **kwArgs):
-        super().__init__(tag="canvas", **kwArgs)
+        super().__init__(tag="canvas", contents=contents, **kwArgs)
 
 
 class NoScript(BaseElement):
@@ -23,9 +22,8 @@ class NoScript(BaseElement):
     I guess this is like a <div> that can contain general HTML
     to be rendered if the rowser doesn't support the desired scripting.
     """
-
     def __init__(self, contents: Any = None, **kwArgs):
-        super().__init__(tag="noscript", **kwArgs)
+        super().__init__(tag="noscript", contents=contents, **kwArgs)
 
 
 class Script(BaseElement):
@@ -35,9 +33,8 @@ class Script(BaseElement):
     This class exists for the domible user to add scripts to their HTML.
     The content should be a string of valid text (probably JS) given the attributes of the element.
     """
-
     def __init__(self, contents: str, **kwArgs):
-        super().__init__(tag="script", **kwArgs)
+        super().__init__(tag="script", contents=contents, **kwArgs)
 
 
 class Template(BaseElement):
@@ -46,9 +43,8 @@ class Template(BaseElement):
     I guess this is like a <div> that can contain general HTML
     to be rendered later using JavaScript
     """
-
     def __init__(self, contents: Any = None, **kwArgs):
-        super().__init__(tag="template", **kwArgs)
+        super().__init__(tag="template", contents=contents, **kwArgs)
 
 
 ## end of file

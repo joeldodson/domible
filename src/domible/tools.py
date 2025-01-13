@@ -13,8 +13,8 @@ from tempfile import NamedTemporaryFile
 import webbrowser as wb
 
 from domible.elements import BaseElement 
-from domible.elements import Html, Body 
-from domible.builders import element_from_object 
+from domible.elements import Html, Body, Heading 
+from domible.builders import element_from_object, default_toggle_details_button  
 from domible.starterDocuments import basic_head_empty_body 
 
 
@@ -67,6 +67,7 @@ def open_object_in_browser(obj: object, depth:int = 42, title: str = "opening an
     obj_html = element_from_object(obj, depth)
     html_doc: Html  = basic_head_empty_body(title)
     body: Body = html_doc.get_body_element() 
+    body.add_content([Heading(1, f"showing object of type {type(obj).__name__}"), default_toggle_details_button()])
     body.add_content(obj_html)
     open_html_in_browser(html_doc, save_file, force)
 
