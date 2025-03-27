@@ -8,6 +8,6 @@ __version__ = version("domible")
 import domible.elements
 import domible.builders
 import domible.starterDocuments 
-from domible.tools import open_object_in_browser, open_html_document_in_browser, save_to_file 
+from domible.tools import open_object_in_browser, open_html_document_in_browser, open_html_fragment_in_browser, save_to_file 
 
 ## end of file 

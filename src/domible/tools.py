@@ -74,6 +74,7 @@ def open_html_fragment_in_browser(
     html_doc: Html = basic_head_empty_body(title)
     body: Body = html_doc.get_body_element()
     body.add_content(html_frag)
+    open_html_document_in_browser(html_doc, save_file, force)
 
 
 def open_object_in_browser(

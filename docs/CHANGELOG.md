@@ -1,13 +1,19 @@
 # Changelog
 
+## v0.1.17 (2025-03-27) -- BREAKING BACKWARD COMPATIBILITY  
+
+- fixed a few bugs in 0.1.16, no new functionality added 
+- keeping the BREAKING note in case someone only looks at 0.1.17 and misses 0.1.16
+- as though anyone is looking at any of this  ;)
+
 ## v0.1.16 (2025-03-27) -- BREAKING BACKWARD COMPATIBILITY  
 
 - BREAKING: Changed domible.tools.open_html_in_browser to open_html_document_in_browser
 - and added domible.tools.open_html_fragment_in_browser
-- makes it easier to, for example, create an HTML table using a builder then have that table popped open in the browser
+- makes it easier to, for example, create an HTML table using a builder then have that table popped open in the browser 
 - updated domible.tools.open_object_in_browser
 
-  - this change is transpaerent but is good for testing open_html_fragment_in_browser
+  - this change is transparent but is good for testing open_html_fragment_in_browser
 
 ## v0.1.15 (2025-01-13) 
 
@@ -88,7 +94,7 @@
 ## v0.1.5 (2024-06-14)
 
 - WARNING - Breaking backward compatibility with this release 
-- changed several methods and variable names to snake case (Hey, kool aid!!)
+- changed several methods and variable names to snake case (Hey, cool aid!!)
 - added element_from_object to domible.builders, including simple test script (efo.py) in tests directory 
   (not tied in to pytest though)
 - added add_sublist to ListBuilder to address HTML/CSS issue with extra "bullet point."
