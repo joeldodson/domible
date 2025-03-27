@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 from sys import argv
 
 from domible.builders import element_from_object, ToggleDetailsButton, default_toggle_details_button   
-from domible import open_html_in_browser, open_object_in_browser 
+from domible import open_html_document_in_browser, open_object_in_browser 
 from domible.starterDocuments import basic_head_empty_body
 from domible.elements import Html, Body, BaseElement, Heading
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
         for name, obj in cases.items():
             elem = element_from_object(obj, depth)
             body.add_content([Heading(2, f"Object {name}"), elem])
-        open_html_in_browser(html)
+        open_html_document_in_browser(html)
         # print the HTML in case I want to redirect output to a file.
         # it's easier than supporting writing to a file in this code.
         if len(argv) > 3 and argv[3] == "print":

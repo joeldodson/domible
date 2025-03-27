@@ -25,7 +25,7 @@ from domible.elements import (
 from domible.elements import Heading, Anchor, Paragraph
 from domible.builders.tableBuilder import TableBuilder, build_table_from_dicts
 from domible.starterDocuments import basic_head_empty_body
-from domible.tools import open_html_in_browser
+from domible.tools import open_html_document_in_browser
 
 import argparse
 
@@ -51,7 +51,7 @@ def simple(args) -> None:
             ),
         ]
     )
-    open_html_in_browser(htmlDoc)
+    open_html_document_in_browser(htmlDoc)
 
 
 def elements(args) -> None:
@@ -94,7 +94,7 @@ def elements(args) -> None:
                 deprecatedTable,
             ]
         )
-    open_html_in_browser(htmlDoc)
+    open_html_document_in_browser(htmlDoc)
 
 
 def ctfd(args) -> None:
@@ -120,7 +120,7 @@ def ctfd(args) -> None:
             table,
         ]
     )
-    open_html_in_browser(htmlDoc)
+    open_html_document_in_browser(htmlDoc)
 
 
 def lists(args) -> None:
@@ -238,7 +238,7 @@ def lists(args) -> None:
             detailsList,
         ]
     )
-    open_html_in_browser(htmlDoc)
+    open_html_document_in_browser(htmlDoc)
 
 
 def list_builder(args) -> None:
@@ -247,7 +247,7 @@ def list_builder(args) -> None:
     htmlDoc = basic_head_empty_body(title)
     body = htmlDoc.get_body_element()
     body.add_content([])
-    open_html_in_browser(htmlDoc)
+    open_html_document_in_browser(htmlDoc)
 
 
 def headings(args) -> None:
@@ -302,7 +302,7 @@ def headings(args) -> None:
             contents="heading level 3 with 'somethingUnique' for unique",
         )
     )
-    open_html_in_browser(htmlDoc)
+    open_html_document_in_browser(htmlDoc)
 
 
 def run() -> None:

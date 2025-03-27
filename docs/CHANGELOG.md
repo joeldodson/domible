@@ -1,16 +1,29 @@
 # Changelog
 
+## v0.1.16 (2025-03-27) -- BREAKING BACKWARD COMPATIBILITY  
+
+- BREAKING: Changed domible.tools.open_html_in_browser to open_html_document_in_browser
+- and added domible.tools.open_html_fragment_in_browser
+- makes it easier to, for example, create an HTML table using a builder then have that table popped open in the browser
+- updated domible.tools.open_object_in_browser
+
+  - this change is transpaerent but is good for testing open_html_fragment_in_browser
+
 ## v0.1.15 (2025-01-13) 
 
 - this version is motivated by a desire to toggle visibility of all details elements 
 - and now, forms... starting with the button  
+
   - this is a very basic ability to create a button element
   - any attributes (e.g., type) will be done manually or via a builders class
   - this is all TBD and might change in subsequent releases 
+
 - a new builder to add a toggle button to a page to expand/collapse the content of a details element 
+
   - this is also the introduction of JavaScript into domible (sorry, it was inevitable) 
   - the JS is hard coded into the builder, which might be the long term solution, but I doubt it 
   - focus is on functionality, no CSS has been added 
+
 - added toggle details button into efo.py in tests 
 - added a toggle details button in open_object_in_browser() in domible tools 
 - fixed bug in Script element where contents was not being passed to super().__init__ 
