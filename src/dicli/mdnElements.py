@@ -40,6 +40,13 @@ MdnAnchor = None
 
 DomibleIssuesPage = Anchor(href="https://github.com/joeldodson/domible/issues", contents="domible issue page on github")
 
+def print_globals():
+    print(f"MdnLocalPathPrefix: {MdnLocalPathPrefix}")
+    print(f"ElementsReferencePath: {ElementsReferencePath}")
+    print(f"MdnHostUrlBase: {MdnHostUrlBase}")
+    print(f"ElementsReferenceUrl: {ElementsReferenceUrl}")
+
+
 def updateInPageAnchorHref(soup: BSoup, elemUrl: str) -> None:
     """
     any anchors with href to local id, 
@@ -62,6 +69,7 @@ def filterAnchor(anchor: Tag) -> bool:
     This filter is to ensure we get only the anchors referencing HTML elements
     """
     href = anchor.attrs.get("href")
+    ## breakpoint()
     if not href or ElementsReferencePath not in href or "contributors.txt" in href:
         return False
     elif path.split(href)[0] != ElementsReferencePath:
@@ -74,12 +82,12 @@ def getElementSummary(soup: BSoup) -> Dict:
     find and return the summary in the document,
 
     NOTE: this method hard codes knowledge of the format of the document.
-    consider the first paragraph after the main element opening tag,
+    consider the first paragraph after the header element,
     and all its sibling paragraphs, to be the summary.
     """
     summary = ""
     try:
-        p0 = soup.find("main").find("p")
+        p0 = soup.find("main").find("header").find_next_sibling("div").find("p") 
         summary = p0.decode()
         for el in p0.next_siblings:
             if el.name and el.name == 'p': summary += el.decode()
@@ -99,7 +107,8 @@ def getElementSpecificationReference(soup: BSoup) -> Dict:
     """
     entry = dict()
     for table in soup.find_all('table'):
-        if (thead := table.find('thead')) and thead.text.lower() == "specification":
+        ## if (thead := table.find('thead').find('th')) and thead.text.lower() == "specification":
+        if (thead := table.find('th')) and thead.text.lower() == "specification":
             entry["Specification"] = table.find('tbody').find('td').decode_contents()
     return entry 
 
@@ -178,9 +187,9 @@ def getElementInformation(elemName: str, elemUrl: str) -> Dict:
 
 def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBuilder]:
     global MdnLocalPathPrefix, ElementsReferencePath, MdnHostUrlBase, ElementsReferenceUrl, MdnAnchor 
-    MdnLocalPathPrefix = f"/{lang}/docs" ## was  "/en-US/docs/Web"
-    ElementsReferencePath = f"{MdnLocalPathPrefix}/Web/HTML/Element"  ## was "/en-US/docs/Web/HTML/Element"
-    MdnHostUrlBase = mdnBaseUrl  ## was "https://developer.mozilla.org"
+    MdnLocalPathPrefix = f"/{lang}/docs" 
+    ElementsReferencePath = f"{MdnLocalPathPrefix}/Web/HTML/Reference/Elements"  
+    MdnHostUrlBase = mdnBaseUrl  
     ElementsReferenceUrl = f"{MdnHostUrlBase}{ElementsReferencePath}"
     MdnAnchor = Anchor(
         ElementsReferenceUrl,
@@ -188,6 +197,8 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBu
     )
 
     try:
+        print(f"getting elements reference page at: {ElementsReferenceUrl}")
+        ## breakpoint()
         refPage = requests.get(ElementsReferenceUrl)
         soup = BSoup(refPage.content, "html.parser")
         anchors = soup.find_all("a")
@@ -205,7 +216,7 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBu
             caption="Deprecated HTML Elements", row_heading_name="Element"
         )
         for elmPath in elems:
-            sleep(random())  # don't get blocked by MDN...
+            ## sleep(random())  # don't get blocked by MDN...
             elemUrl = f"{MdnHostUrlBase}{elmPath}"
             elemName = path.split(elemUrl)[1]
             logger.info(f"getting element {elemName} from path {elemUrl}")
@@ -215,7 +226,8 @@ def getElementsTables(mdnBaseUrl: str, lang: str) -> Tuple[TableBuilder, TableBu
                 deprecatedElementsTable.add_row(row)
             else:
                 currentElementsTable.add_row(row)
-    except Exception:
+    except Exception as ex:
+        print(f"exception while scraping MDN: {ex}")
         logger.exception("something bad happened while scraping MDN")
         return (None, None)
     return (currentElementsTable, deprecatedElementsTable)

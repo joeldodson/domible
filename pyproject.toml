@@ -1,14 +1,28 @@
-[tool.poetry]
+## see https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+[project]
 name = "domible"
 version = "0.1.17"
 description = "python classes to create accessible HTML elements and documents "
-authors = ["Joel Dodson <joeldodson@gmail.com>"]
-maintainers = ["BlindGumption <blindgumption@gmail.com>"]
+authors = [
+    {name = "Joel Dodson",email = "joeldodson@gmail.com"}
+]
 license = "MIT"
 readme = "README.md"
-homepage = "https://joeldodson.github.io/domible"
-documentation = "https://joeldodson.github.io/domible"
-repository = "https://github.com/joeldodson/domible"
+requires-python = ">=3.10"
+
+dependencies = [
+    "validators (>=0.34.0)"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Topic :: Text Processing :: Markup :: HTML",
+]
+
 keywords = [
     "html",
     "accessibility",
@@ -17,40 +31,27 @@ keywords = [
     "frontend",
     "server side rendering",
     "SSR",
+    "hydrate",
 ]
+
+[project.urls]
+homepage = "https://joeldodson.github.io/domible"
+documentation = "https://joeldodson.github.io/domible"
+repository = "https://github.com/joeldodson/domible"
+issues = "https://github.com/joeldodson/domible/issues"
+
+[project.optional-dependencies]
+dicli = ["requests (>=2.32.3,<3.0.0)", "beautifulsoup4 (>=4.13.4,<5.0.0)", "jsonloggeriso8601datetime (>=3.0.0,<4.0.0)"]
+
+[project.scripts]
+dicli = "dicli:run"
+
+[tool.poetry]
+
 packages = [
     { include = "domible", from = "src" },
     { include = "dicli", from = "src" },
-    { include = "distarter", from = "src" },
 ]
-
-
-[tool.poetry.dependencies]
-python = "^3.10"
-beautifulsoup4 = { version = "^4.12.3", optional = true }
-jsonloggeriso8601datetime = { version = "^1.0.5", optional = true }
-requests = { version = "^2.32.3", optional = true }
-validators = "^0.28.3"
-
-[tool.poetry.group.dev.dependencies]
-autopep8 = "^2.3.1"
-pytest = "^8.3.2"
-pytest-cov = "^5.0.0"
-beautifulsoup4 = "^4.12.3"
-jsonloggeriso8601datetime = "^1.0.5"
-pytest-reportlog = "^0.3.0"
-ruff = "^0.5.5"
-requests = "^2.32.3"
-
-[tool.poetry.group.docs.dependencies]
-mkdocs-material = "^9.5.30"
-
-[tool.poetry.extras]
-dicli = ["beautifulsoup4", "jsonloggeriso8601datetime", "requests"]
-
-[tool.poetry.scripts]
-distarter = "distarter:run"
-dicli = { callable = "dicli:run", extras = ["dicli"] }
 
 [tool.semantic_release]
 version_variable = "pyproject.toml:version" # version location
@@ -64,7 +65,7 @@ remove_dist = false                         # don't remove dists
 patch_without_tag = true                    # patch release by default
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]

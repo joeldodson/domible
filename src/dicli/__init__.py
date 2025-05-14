@@ -14,3 +14,7 @@ def run():
 
 
 ## end of file
+if __name__ == "__main__":
+    run()
+
+## end of file 

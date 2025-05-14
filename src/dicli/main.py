@@ -9,7 +9,6 @@ import jsonloggeriso8601datetime as jlidt
 jlidt.setConfig()
 logger = logging.getLogger(__name__)
 
-
 import dicli.mdnElements as mdnElements
 
 from domible.elements import Html, Head, Body, Title, Base
@@ -47,7 +46,7 @@ def simple(args) -> None:
             Heading(1, title),
             Paragraph("Really, this is all you're going to get."),
             Paragraph(
-                f'You might find more interesting content at {Anchor(href="https://blindgumption.com", contents="the Blind Gumption Website")}'
+                f'You might find more interesting content at {Anchor(href="https://joeldodson.github.io/codinginblind", contents="Coding in Blind website")}'
             ),
         ]
     )
