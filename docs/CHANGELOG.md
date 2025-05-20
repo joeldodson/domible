@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.1.18 (2025-05-xx)
+
+- changes to packaging and docs, nothing API related though
+- upgraded to poetry 2.x
+
+  - no longer able to specify dicli script as an extra
+    without using deprecated functionality from poetry
+
+- moved dicli to be in domible package and  moved elements command out of dicli
+
+  - see [docs for webdevaccess](https://joeldodson.github.io/webdevaccess) for why.
+  - dicli is installed as a script (cli entry point to domible) and can be run via pipx out of PyPI
+
+- switched to sphinx from mkdocs
+
+  - better accessibility using the pydata-sphinx-theme
+  - [domible docs on github pages](https://joeldodson.github.io/domible)
+
 ## v0.1.17 (2025-03-27) -- BREAKING BACKWARD COMPATIBILITY  
 
 - fixed a few bugs in 0.1.16, no new functionality added 

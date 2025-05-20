@@ -1,15 +1,10 @@
 #!/usr/bin/env python
-""" domible/src/dicli/main.py 
+""" domible/src/domible/scripts/dicli/main.py 
 simple command line tool to test/experiment with domible 
 """
 
 import logging
-import jsonloggeriso8601datetime as jlidt
-
-jlidt.setConfig()
 logger = logging.getLogger(__name__)
-
-import dicli.mdnElements as mdnElements
 
 from domible.elements import Html, Head, Body, Title, Base
 from domible.elements import (
@@ -22,7 +17,7 @@ from domible.elements import (
     DescriptionDef,
 )
 from domible.elements import Heading, Anchor, Paragraph
-from domible.builders.tableBuilder import TableBuilder, build_table_from_dicts
+from domible.builders.tableBuilder import build_table_from_dicts
 from domible.starterDocuments import basic_head_empty_body
 from domible.tools import open_html_document_in_browser
 
@@ -53,52 +48,9 @@ def simple(args) -> None:
     open_html_document_in_browser(htmlDoc)
 
 
-def elements(args) -> None:
-    """
-    elements is used to test, and provide an example of, Table and the tableBuilder
-    it will scrape HTML element reference info from MDN and present it in a table in your default browser
-    The HTML is also saved to a passed in file, not saved if no file specified.
-    """
-    mdn_base_url: str = args.url_mdn
-    lang: str = args.lang
-    outputfile: str = args.outfile
-
-    if outputfile:
-        print(f"saving html output to file: {outputfile}")
-    title = "Tables of HTML Elements Scraped from MDN "
-    htmlDoc = basic_head_empty_body(title, lang)
-    head = htmlDoc.get_head_element()
-    head.add_content(Base(href=mdn_base_url))
-    body = htmlDoc.get_body_element()
-    (currentElementsTable, deprecatedElementsTable) = mdnElements.getElementsTables(
-        mdn_base_url, lang
-    )
-    if not currentElementsTable or not deprecatedElementsTable:
-        body.add_content(
-            Heading(1, f"failed to scrape elements from {mdnElements.MdnAnchor}")
-        )
-    else:
-        # building up the body of the html document
-        currentTable, _, _ = currentElementsTable.get_table()
-        deprecatedTable, _, _ = deprecatedElementsTable.get_table()
-        body.add_content(
-            [
-                Heading(1, title),
-                Paragraph(
-                    f"Information in the below tables was scraped from {mdnElements.MdnAnchor}."
-                ),
-                Heading(2, "Currently Supported HTML Elements"),
-                currentTable,
-                Heading(2, "Deprecated HTML Elements"),
-                deprecatedTable,
-            ]
-        )
-    open_html_document_in_browser(htmlDoc)
-
-
 def ctfd(args) -> None:
     """
-    to test the buildTableFromDicts function from tableBuilder
+    to test the createTableFromDicts function from tableBuilder
     """
     lower: int = args.lower
     upper: int = args.upper
@@ -240,15 +192,6 @@ def lists(args) -> None:
     open_html_document_in_browser(htmlDoc)
 
 
-def list_builder(args) -> None:
-    """ """
-    title = "Testing Domible List builder"
-    htmlDoc = basic_head_empty_body(title)
-    body = htmlDoc.get_body_element()
-    body.add_content([])
-    open_html_document_in_browser(htmlDoc)
-
-
 def headings(args) -> None:
     """
     test the creation and display of HTML headings.
@@ -311,14 +254,6 @@ def run() -> None:
 
     simple_parser = subparsers.add_parser("simple", help=simple.__doc__)
     simple_parser.set_defaults(func=simple)
-
-    elements_parser = subparsers.add_parser("elements", help=elements.__doc__)
-    elements_parser.add_argument(
-        "-u", "--url_mdn", default="https://developer.mozilla.org"
-    )
-    elements_parser.add_argument("-l", "--lang", default="en-US")
-    elements_parser.add_argument("-o", "--outfile")
-    elements_parser.set_defaults(func=elements)
 
     ctfd_parser = subparsers.add_parser("ctfd", help=ctfd.__doc__)
     ctfd_parser.add_argument("-l", "--lower", default=1, type=int, help="lower bound")
