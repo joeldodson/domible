@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>domible Documentation &#8212; Domible Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="About" href="about.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="May 21, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Domible Documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="about.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="CONDUCT.html">
+    Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="CHANGELOG.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/joeldodson/webdevaccess" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="about.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="CONDUCT.html">
+    Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="CHANGELOG.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/joeldodson/webdevaccess" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="domible-documentation">
+<h1>domible Documentation<a class="headerlink" href="#domible-documentation" title="Link to this heading">#</a></h1>
+<p>Domible is a set of Python classes used to generate HTML documents and elements of arbitrary complexity.</p>
+<p>The basic idea behind domible is fairly simple, HTML elements are represented using Python classes.
+When an element object is evaluated, it renders the text of the HTML element.
+Objects can contain other element objects which will also evaluate to text when the containing object is evaluated.
+Through this process of composition and recursive rendering,
+domible can be used to programmatically create HTML elements
+of arbitrary complexity directly from your Python code.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>To install the domible package, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>domible
+</pre></div>
+</div>
+<section id="command-line-interface-dicli">
+<h3>Command Line Interface (dicli)<a class="headerlink" href="#command-line-interface-dicli" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">dicli</span></code> is a simple script with examples of how to use domible.
+it is installed along with domible and should be in your path after installation.
+For details on how to use <code class="docutils literal notranslate"><span class="pre">dicli</span></code>, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dicli<span class="w"> </span>--help
+</pre></div>
+</div>
+</section>
+</section>
+<section id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
+<p>Domible has three areas of integration.<br />
+They’re not layers, as in one builds upon the other.
+It’s more of there is a foundational idea,
+then interfaces using that foundational piece to provide higher level abstractions to encapsulate functionality.
+It’s within these abstractions I hope to include HTML/CSS/JS to generate more accessible, semantic HTML documents.</p>
+<p>A developer using domible is likely to use all three points of integration in their code.
+For example, an anchor should be created using the basic <code class="docutils literal notranslate"><span class="pre">Anchor</span></code> class.
+There is no builder for an anchor, it’s straight forward as is.</p>
+<section id="elements-create-basic-html-elements">
+<h3>elements - Create basic HTML elements.<a class="headerlink" href="#elements-create-basic-html-elements" title="Link to this heading">#</a></h3>
+<p>These are Python classes, one for each element, and are very low level.
+Attributes and contents can be included at element object creation time, or added later.
+Contents can be other element objects, or other Python objects (e.g. str).</p>
+</section>
+<section id="builders-classes-to-create-more-complicated-html-elements">
+<h3>builders - classes to create more complicated HTML elements.<a class="headerlink" href="#builders-classes-to-create-more-complicated-html-elements" title="Link to this heading">#</a></h3>
+<p>For example, a &lt;table&gt; element is an HTML element but not very useful alone.
+The tableBuilder module contains abstractions for rows and table.
+These can be used in your python code to build tables using your data
+without explicitly creating all the subsequent elements required in a &lt;table&gt;.
+Within the tableBuilder
+interface, accessibility related code can be included,
+thus resulting in more accessible, semantic HTML.</p>
+</section>
+<section id="starterdocuments-initial-document-structure-to-build-upon">
+<h3>starterDocuments - initial document structure to build upon<a class="headerlink" href="#starterdocuments-initial-document-structure-to-build-upon" title="Link to this heading">#</a></h3>
+<p>This module provides an initial HTML document on which to begin building your application.
+It will range from the most basic, an &lt;html&gt; element with a
+&lt;head&gt;, with a few default &lt;meta&gt; tags,
+and an empty &lt;body&gt; element ready to be added to with your own elements.</p>
+<p>Other starter documents will increase in complexity with more initial boiler plate elements
+like &lt;nav&gt; components you can extend with your own navigation elements.</p>
+<p>The starter documents will most likely be evolving as needs are better understood.</p>
+</section>
+</section>
+<section id="what-about-css-and-javascript">
+<h2>What About CSS and JavaScript?<a class="headerlink" href="#what-about-css-and-javascript" title="Link to this heading">#</a></h2>
+<p>Ideally, there will be no JavaScript.
+Unfortunately, we live in a broken world.
+Some JavaScript might be needed to make an element more accessible or functional/usable.</p>
+<p>Similar story regarding CSS.
+Not the unfortunate part, the reality some CSS might be required for accessibility considerations.</p>
+<p>As I write this, only the tablebuilder exists.
+The navbuilder is in process, which forced me to think about CSS and JS.
+Considering there is only one complete (as in usable) builder now,
+and writing a nav builder is raising issues I need to think through,
+it seems likely the builders will evolve for a while.
+And probably not in a backward compatible way.</p>
+<p>Here are my current thoughts regarding including CSS and JS.
+Each builder will return not just the root element of the component it encapsulates,
+it will return a tuple with three elements:</p>
+<ol class="arabic simple">
+<li><p>the root element representing the component</p></li>
+<li><p>a Style element containing any CSS required for accessibility</p></li>
+<li><p>a Script element containing any necessary JavaScript.</p></li>
+</ol>
+<p>If the component doesn’t need any CSS, or JS,
+None will be returned in place of that element.</p>
+<p>Note: by “root” element, I mean the root of the element being built.
+For example,</p>
+<p>tablebuilder creates a &lt;table&gt; element
+thus the “root” element is &lt;table&gt;.
+The “root” from the
+navbuilder will be a &lt;nav&gt; element.</p>
+</section>
+<section id="typing-type-hints">
+<h2>typing (type hints)<a class="headerlink" href="#typing-type-hints" title="Link to this heading">#</a></h2>
+<p>A note on my random use of python type hints.
+Since each element is a class, in theory, I could, for example,
+use type hints to indicate the contents of a &lt;ul&gt; can contain only
+objects of type ListItem, Script, and Template (three classes defined in elements).</p>
+<p>I should do that, someday.</p>
+<p>For now though, I need to get more builders working to
+create more sophisticated proofs of concept.</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="about.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">About</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on May 21, 2025.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>
