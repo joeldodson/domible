@@ -1,12 +1,13 @@
 # Changelog
 
-## v0.1.18 (2025-05-xx)
+## v0.1.18 (2025-05-21)
 
 - changes to packaging and docs, nothing API related though
 - upgraded to poetry 2.x
 
   - no longer able to specify dicli script as an extra
     without using deprecated functionality from poetry
+  - so now it is always installed 
 
 - moved dicli to be in domible package and  moved elements command out of dicli
 

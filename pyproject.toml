@@ -2,14 +2,14 @@
 
 [project]
 name = "domible"
-version = "0.1.17"
+version = "0.1.18"
 description = "python classes to create accessible HTML elements and documents "
 authors = [
     {name = "Joel Dodson",email = "joeldodson@gmail.com"}
 ]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 dependencies = [
     "validators (>=0.34.0)"
@@ -48,6 +48,18 @@ dicli = "domible.scripts.dicli.main:run"
 packages = [
     { include = "domible", from = "src" },
 ]
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+jsonloggeriso8601datetime = "^3.0.0"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^8.2.3"
+pydata-sphinx-theme = "^0.16.1"
+myst-parser = "^4.0.1"
+
+[tool.poetry.group.dev.dependencies]
+pyreadline3 = "^3.5.4"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

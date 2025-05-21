@@ -7,61 +7,25 @@ When an element object is evaluated, it renders the text of the HTML element.
 Objects can contain other element objects which will also evaluate to text when the containing object is evaluated.
 Through this process of composition and recursive rendering,
 domible can be used to programmatically create HTML elements
-of arbitrary complexity directly with your Python code.
-
-## Origin Story
-
-domible is an evolution of the
-[pymenable package](https://pypi.org/project/pymenable/)
-which is deprecated.
-
-Instead of using jinja templates for the basic structure of the HTML document (as I did in pymenable),
-domible uses only Python classes to create and modify the HTML document.
-a root class, Html, generates the &lt;html> element.
-Head and Body classes generate the &lt;head> and &lt;body> elements.
-Elements can be added to the head and body to generate HTML documents of arbitrary complexity.
-
-I decided pymenable was too complicated using jinja templates
-(e.g., having to manage extra resources and learn to use jinja).
-
-I'm not disparaging jinja, it's an awesome tool.
-I think it's easier though to use Python classes to create the root element as well as all the other elements for the HTML document.
-
-Plus I wanted to change the name.
+of arbitrary complexity directly from your Python code.
 
 ## Installation
 
-To install the domible package (which includes a simple starter script), run:
+To install the domible package, run:
 
 ```bash
 pip install domible
 ```
 
-Along with the domible package is a script, `distarter` to serve as an example of how to use domible.  After you pip install domible, you should be able to run `distarter` from the command line.  Running it should result in a very simple web page shown in your default browser.  See below for how to find the code for `distarter`.
-
 ### Command Line Interface (dicli)
 
-Domible has an optional command line interface (`dicli`) to show some examples.  To install `dicli` along with domible, and be able to run `dicli` from the command line, install domible with:
-
-``` bash
-pip install domible[dicli] 
-```
-
-`dicli` is built using the Python package
-[typer](https://typer.tiangolo.com).
-Instead of documenting `dicli` here, I'll keep the internal typer supported help current.
+```dicli``` is a simple script with examples of how to use domible.
+it is installed along with domible and should be in your path after installation.
 For details on how to use `dicli`, run:
 
 ``` bash
 dicli --help
 ```
-
-## Usage
-
-At some point there will be really cool examples here using Jupyter Notebooks.  Until then, the code from `distarter` will serve as a starting point.
-
-To get the code for `distarter`, look in the site-packages, where you pip installed domible, for the distarter package.
-And/or, you can clone the domible repo and look in `domible/src/distarter/main.py`.
 
 ## Interfaces
 
@@ -70,6 +34,10 @@ They're not layers, as in one builds upon the other.
 It's more of there is a foundational idea,
 then interfaces using that foundational piece to provide higher level abstractions to encapsulate functionality.
 It's within these abstractions I hope to include HTML/CSS/JS to generate more accessible, semantic HTML documents.
+
+A developer using domible is likely to use all three points of integration in their code.
+For example, an anchor should be created using the basic ```Anchor``` class.
+There is no builder for an anchor, it's straight forward as is.
 
 ### elements - Create basic HTML elements.
 
@@ -103,7 +71,7 @@ The starter documents will most likely be evolving as needs are better understoo
 
 Ideally, there will be no JavaScript.
 Unfortunately, we live in a broken world.
-Some JavaScript might be needed to make an element more accessible.
+Some JavaScript might be needed to make an element more accessible or functional/usable.
 
 Similar story regarding CSS.
 Not the unfortunate part, the reality some CSS might be required for accessibility considerations.
@@ -114,8 +82,8 @@ Considering there is only one complete (as in usable) builder now,
 and writing a nav builder is raising issues I need to think through,
 it seems likely the builders will evolve for a while.
 And probably not in a backward compatible way.
-Here's how I'll address the CSS and JS issue for now.
 
+Here are my current thoughts regarding including CSS and JS.
 Each builder will return not just the root element of the component it encapsulates,
 it will return a tuple with three elements:
 
@@ -145,18 +113,12 @@ I should do that, someday.
 For now though, I need to get more builders working to 
 create more sophisticated proofs of concept.
 
-## Contributing
+``` {toctree}
+:maxdepth: 2
+:hidden: true
+:caption: Table of Contents
 
-Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
-
-## License
-
-`domible` was created by Joel Dodson. It is licensed under the terms of the MIT license.
-
-## Credits
-
-`domible` was created with
-[`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/)
-and the
-[`py-pkgs-cookiecutter` template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
-
+about.md
+CONDUCT.md
+CHANGELOG.md
+```
