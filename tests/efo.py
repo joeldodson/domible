@@ -14,7 +14,13 @@ logger = logging.getLogger(__name__)
 
 from sys import argv
 
-from domible.builders import element_from_object, ToggleDetailsButton, default_toggle_details_button   
+from domible.builders import (
+    element_from_object,
+    ToggleAllDetailsButton,
+    default_toggle_details_button,
+    default_expand_details_button,
+    default_collapse_details_button,
+)
 from domible import open_html_document_in_browser, open_object_in_browser 
 from domible.starterDocuments import basic_head_empty_body
 from domible.elements import Html, Body, BaseElement, Heading
@@ -79,8 +85,15 @@ if __name__ == "__main__":
     elif arg == 'cases':
         html = basic_head_empty_body(f"EFO: running all cases, depth {depth}")
         body = html.get_body_element()
-        body.add_content([Heading(1, "Show All Objects"),ToggleDetailsButton("Custom Togle Details Button Label").get_button()])
-        body.add_content([Heading(1, "Show All Objects"),default_toggle_details_button()])
+        body.add_content(
+            [
+                Heading(1, "Show All Objects"),
+                ToggleAllDetailsButton("Custom Label toggleDetails ").get_button(),
+                default_toggle_details_button(),
+                default_expand_details_button(),
+                default_collapse_details_button(),
+            ]
+        )
         for name, obj in cases.items():
             elem = element_from_object(obj, depth)
             body.add_content([Heading(2, f"Object {name}"), elem])

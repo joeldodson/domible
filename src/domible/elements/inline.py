@@ -57,7 +57,7 @@ class Details(BaseElement):
         if not summary or not isinstance(summary, Summary):
             raise ValueError("Details element must contain a Summary element")
         if isinstance(contents, list): 
-            contents = contents.insert(0, summary)
+            contents.insert(0, summary)
         else:
             contents  = [summary] + [contents] if contents else summary
         super().__init__(tag="details", contents=contents, **kwArgs)

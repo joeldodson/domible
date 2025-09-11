@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.19 (2025-09-10)
+
+- fixed bug in Details element
+- added two new buttons in builders/formBuilder
+
+  - CollapseAllDetailsButton, with default_collapse_details_button shortcut  
+  - ExpandAllDetailsButton, with default_expand_details_button shortcut  
+
+- added details.py in tests to test details fix and new buttons 
+
 ## v0.1.18 (2025-05-21)
 
 - changes to packaging and docs, nothing API related though
