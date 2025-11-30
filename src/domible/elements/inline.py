@@ -11,6 +11,13 @@ class Anchor(BaseElement):
         super().__init__(tag="a", contents=contents, href=self.href, **kwArgs)
 
 
+class Code(BaseElement):
+    """create a code element"""
+
+    def __init__(self, contents: Any = None, **kwArgs):
+        super().__init__(tag="code", contents=contents, **kwArgs)
+
+
 class Div(BaseElement):
     """create a div element"""
 
@@ -18,13 +25,18 @@ class Div(BaseElement):
         super().__init__(tag="div", contents=contents, **kwArgs)
 
 
-#######
 class Paragraph(BaseElement):
     def __init__(self, contents: Any = None, **kwArgs):
         super().__init__(tag="p", contents=contents, **kwArgs)
 
 
-#######
+class Pre(BaseElement):
+    """create a pre element"""
+
+    def __init__(self, contents: Any = None, **kwArgs):
+        super().__init__(tag="pre", contents=contents, **kwArgs)
+
+
 class Span(BaseElement):
     """create a span element
     use for wrapping a single content .

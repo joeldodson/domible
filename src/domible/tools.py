@@ -1,4 +1,4 @@
-"""domible/src/domible/tools.py
+"""domible/tools.py
 
 tools.py has functions for users of the domible package to do simple things
 like open their HTML doc in the browser,

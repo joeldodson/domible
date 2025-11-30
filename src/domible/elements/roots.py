@@ -49,6 +49,12 @@ class Html(BaseElement):
             )
             return None
 
+    def add_elements_to_head(self, element: BaseElement | list[BaseElement]) -> None:
+        """ add the passed in element to the end of list of elements in the head element of the HTML doc """
+        head:Head = self.get_head_element()
+        if head:
+            head.add_content(element)
+
     def get_body_element(self) -> Body:
         """
         return the body element from the html doc
@@ -73,6 +79,12 @@ class Html(BaseElement):
                 "html doc has an element with tag body, but element is not of type Body.  I blame the user!"
             )
             return None
+
+    def add_contents_to_body(self, contents:Any) -> None:
+        """ add contents to end of the body element """
+        body: Body = self.get_body_element()
+        if body:
+            body.add_content(contents)
 
     def __repr__(self):
         return f"<!DOCTYPE html> \n{super().__repr__()}"

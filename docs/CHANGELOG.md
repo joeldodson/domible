@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.1.20 (2025-11-29)
+
+- focus on generating html files with source code for domible
+
+  - added elements Pre and Code to display source code 
+  - using inspect to traverse domible package 
+  - added new script, dibrowse (run dibrowse --help)
+  - dibrowse shows code for domible in default browser
+
+- changed __init__.py files to relative imports to not clutter namespaces 
+- updates in domible docs for dibrowse 
+- changed how to add CSS to domible HTML docs. See domible documentation for details
+- changed opening comment in many .py files to show only relative path within domible package
+- fixed bug in Style where contents was not passed to super().__init__()
+
 ## v0.1.19 (2025-09-10)
 
 - fixed bug in Details element
@@ -8,7 +23,7 @@
   - CollapseAllDetailsButton, with default_collapse_details_button shortcut  
   - ExpandAllDetailsButton, with default_expand_details_button shortcut  
 
-- added details.py in tests to test details fix and new buttons 
+- added details.py in tests to test details fix and new   buttons 
 
 ## v0.1.18 (2025-05-21)
 

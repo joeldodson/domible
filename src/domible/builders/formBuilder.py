@@ -1,5 +1,4 @@
-""" domible/src/domible/builders/formBuilder.py 
-""" 
+""" domible/builders/formBuilder.py """ 
 
 from typing import Any
 
@@ -28,7 +27,8 @@ function toggleAllDetails() {
 class ToggleDetailsBase:
     """
     using this base, create buttons with different behavior by 
-    - passing in different onclick handlers
+    - passing in different onclick handlers via attributes from the derived classes 
+    - note the onclick handlers are using the appropriate JS function with the appropriate argument based on the button's semantics
     - setting contents to an appropriate label 
     """
 
@@ -61,7 +61,7 @@ class CollapseAllDetailsButton(ToggleDetailsBase):
 
 
 ##
-# create this default to be easily used where the default label is acceptable
+# create these defaults to be easily used where the default label is acceptable
 default_toggle_details_button = ToggleAllDetailsButton()
 default_expand_details_button = ExpandAllDetailsButton()
 default_collapse_details_button = CollapseAllDetailsButton()

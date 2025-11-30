@@ -144,7 +144,7 @@ class TableBuilder:
         self.column_headings = {key: key for key in counts.keys()}
 
     #####
-    def get_table(self) -> tuple[Table, Style, Script]:
+    def get_table(self) -> Table:
         """
         need to go through self (TableInfo) and convert all the info
         to corresponding elemensts (tr, th, td, caption...)
@@ -184,7 +184,7 @@ class TableBuilder:
                 [row.get_row(list(self.column_headings.keys())) for row in self.rows]
             )
         )
-        return table, None, None
+        return table
 
 
 #######

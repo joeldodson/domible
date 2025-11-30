@@ -1,4 +1,4 @@
-"""  domible/src/domible/elements/baseElements.py
+"""  domible/elements/baseElements.py
 classes in here are used to build HTML elements
 most of the functionality of an element is in the base class
 The derived classes are mostly responsible for setting the appropriate tag string value 
@@ -50,16 +50,6 @@ class BaseElement:
 
     The text for the element is genereated by __repr__
     and almost all elements derived from BaseElement can let BaseElement.__repr__ generate the text
-
-    Should we deep copy the contents and attributes?
-    Probably not the attributes, they're all strings.
-    The contents though can be very complicated structures 
-    with many levels of nesting of other elements.
-    If someone used elementX in the contents of elementB, 
-    then changed elementX, that would change elementB if only references were copied.
-
-    Should it then be an explicit callout that contents are references, not deep copied?
-    Maybe ...    But isn't that just saying Python uses pass by reference?
     """
     def __init__(self, tag: str, contents: Any = None, **kwArgs):
         self.tag = tag

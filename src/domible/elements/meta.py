@@ -43,7 +43,7 @@ class Style(BaseElement):
     and create this element with the CSS content as a string.
     """
     def __init__(self, contents: str, **kwArgs):
-        super().__init__(tag="style", **kwArgs)
+        super().__init__(tag="style", contents=contents, **kwArgs)
 
 
 class Title(BaseElement):

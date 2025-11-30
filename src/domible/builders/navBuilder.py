@@ -1,4 +1,4 @@
-""" domible/src/domible/builders/navBuilder.py
+""" domible/builders/navBuilder.py
 
 here we have a class to build a navigation element, <nav>.
 It's based on an article from web.dev:

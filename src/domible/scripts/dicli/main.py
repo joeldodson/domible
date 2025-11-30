@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" domible/src/domible/scripts/dicli/main.py 
+""" domible/scripts/dicli/main.py 
 simple command line tool to test/experiment with domible 
 """
 
