@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Changelog &#8212; Domible Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'CHANGELOG';</script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Code of Conduct" href="CONDUCT.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1" />
+    <meta name="docbuild:last-update" content="Nov 30, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Domible Documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="about.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="CONDUCT.html">
+    Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/joeldodson/webdevaccess" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="about.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="CONDUCT.html">
+    Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/joeldodson/webdevaccess" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Changelog</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<section id="v0-1-20-2025-11-29">
+<h2>v0.1.20 (2025-11-29)<a class="headerlink" href="#v0-1-20-2025-11-29" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>focus on generating html files with source code for domible</p>
+<ul>
+<li><p>added elements Pre and Code to display source code</p></li>
+<li><p>using inspect to traverse domible package</p></li>
+<li><p>added new script, dibrowse (run dibrowse –help)</p></li>
+<li><p>dibrowse shows code for domible in default browser</p></li>
+</ul>
+</li>
+<li><p>changed <strong>init</strong>.py files to relative imports to not clutter namespaces</p></li>
+<li><p>updates in domible docs for dibrowse</p></li>
+<li><p>changed how to add CSS to domible HTML docs. See domible documentation for details</p></li>
+<li><p>changed opening comment in many .py files to show only relative path within domible package</p></li>
+<li><p>fixed bug in Style where contents was not passed to super().<strong>init</strong>()</p></li>
+</ul>
+</section>
+<section id="v0-1-19-2025-09-10">
+<h2>v0.1.19 (2025-09-10)<a class="headerlink" href="#v0-1-19-2025-09-10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed bug in Details element</p></li>
+<li><p>added two new buttons in builders/formBuilder</p>
+<ul>
+<li><p>CollapseAllDetailsButton, with default_collapse_details_button shortcut</p></li>
+<li><p>ExpandAllDetailsButton, with default_expand_details_button shortcut</p></li>
+</ul>
+</li>
+<li><p>added details.py in tests to test details fix and new   buttons</p></li>
+</ul>
+</section>
+<section id="v0-1-18-2025-05-21">
+<h2>v0.1.18 (2025-05-21)<a class="headerlink" href="#v0-1-18-2025-05-21" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>changes to packaging and docs, nothing API related though</p></li>
+<li><p>upgraded to poetry 2.x</p>
+<ul>
+<li><p>no longer able to specify dicli script as an extra
+without using deprecated functionality from poetry</p></li>
+<li><p>so now it is always installed</p></li>
+</ul>
+</li>
+<li><p>moved dicli to be in domible package and  moved elements command out of dicli</p>
+<ul>
+<li><p>see <a class="reference external" href="https://joeldodson.github.io/webdevaccess">docs for webdevaccess</a> for why.</p></li>
+<li><p>dicli is installed as a script (cli entry point to domible) and can be run via pipx out of PyPI</p></li>
+</ul>
+</li>
+<li><p>switched to sphinx from mkdocs</p>
+<ul>
+<li><p>better accessibility using the pydata-sphinx-theme</p></li>
+<li><p><a class="reference external" href="https://joeldodson.github.io/domible">domible docs on github pages</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="v0-1-17-2025-03-27-breaking-backward-compatibility">
+<h2>v0.1.17 (2025-03-27) – BREAKING BACKWARD COMPATIBILITY<a class="headerlink" href="#v0-1-17-2025-03-27-breaking-backward-compatibility" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed a few bugs in 0.1.16, no new functionality added</p></li>
+<li><p>keeping the BREAKING note in case someone only looks at 0.1.17 and misses 0.1.16</p></li>
+<li><p>as though anyone is looking at any of this  ;)</p></li>
+</ul>
+</section>
+<section id="v0-1-16-2025-03-27-breaking-backward-compatibility">
+<h2>v0.1.16 (2025-03-27) – BREAKING BACKWARD COMPATIBILITY<a class="headerlink" href="#v0-1-16-2025-03-27-breaking-backward-compatibility" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>BREAKING: Changed domible.tools.open_html_in_browser to open_html_document_in_browser</p></li>
+<li><p>and added domible.tools.open_html_fragment_in_browser</p></li>
+<li><p>makes it easier to, for example, create an HTML table using a builder then have that table popped open in the browser</p></li>
+<li><p>updated domible.tools.open_object_in_browser</p>
+<ul>
+<li><p>this change is transparent but is good for testing open_html_fragment_in_browser</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="v0-1-15-2025-01-13">
+<h2>v0.1.15 (2025-01-13)<a class="headerlink" href="#v0-1-15-2025-01-13" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>this version is motivated by a desire to toggle visibility of all details elements</p></li>
+<li><p>and now, forms… starting with the button</p>
+<ul>
+<li><p>this is a very basic ability to create a button element</p></li>
+<li><p>any attributes (e.g., type) will be done manually or via a builders class</p></li>
+<li><p>this is all TBD and might change in subsequent releases</p></li>
+</ul>
+</li>
+<li><p>a new builder to add a toggle button to a page to expand/collapse the content of a details element</p>
+<ul>
+<li><p>this is also the introduction of JavaScript into domible (sorry, it was inevitable)</p></li>
+<li><p>the JS is hard coded into the builder, which might be the long term solution, but I doubt it</p></li>
+<li><p>focus is on functionality, no CSS has been added</p></li>
+</ul>
+</li>
+<li><p>added toggle details button into efo.py in tests</p></li>
+<li><p>added a toggle details button in open_object_in_browser() in domible tools</p></li>
+<li><p>fixed bug in Script element where contents was not being passed to super().<strong>init</strong></p></li>
+</ul>
+</section>
+<section id="v0-1-14-2024-12-19-breaking-backward-compatibility">
+<h2>v0.1.14 (2024-12-19) – BREAKING BACKWARD COMPATIBILITY<a class="headerlink" href="#v0-1-14-2024-12-19-breaking-backward-compatibility" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>removed typer from dicli, starts a little faster</p>
+<ul>
+<li><p>going simple with argparse to avoid pip installing lots of stuff</p></li>
+</ul>
+</li>
+<li><p>major work on lists – BREAKS COMPATIBILITY</p>
+<ul>
+<li><p>removed ListBuilder</p></li>
+<li><p>created new base class for HTML lists in domible/lists.py - HtmlListBase</p></li>
+<li><p>moved functionality from ListBuilder into HtmlListBase</p></li>
+<li><p>added ability to get list hidden in a Details element with a Summary</p></li>
+<li><p>updated tests in dicli and tests/efo.py to validate the changes</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="v0-1-13-2024-11-28">
+<h2>v0.1.13 (2024-11-28)<a class="headerlink" href="#v0-1-13-2024-11-28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>missed ignore_Nones in tools.py</p></li>
+<li><p>found a few more bugs in element_from_object</p></li>
+<li><p>enhanced efo.py (element_from_object) in tests</p></li>
+</ul>
+</section>
+<section id="v0-1-12-2024-11-27">
+<h2>v0.1.12 (2024-11-27)<a class="headerlink" href="#v0-1-12-2024-11-27" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added Details and Summary elements to support collapsible regions</p></li>
+<li><p>significant rewrite of element_from_object to hide lists in collapsible regions</p></li>
+<li><p>removed bool to tell element_from_object to not include properties with value None, too hacky</p></li>
+</ul>
+</section>
+<section id="v0-1-11-2024-11-06">
+<h2>v0.1.11 (2024-11-06)<a class="headerlink" href="#v0-1-11-2024-11-06" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added bool to tell element_from_object to not include properties with value None</p></li>
+</ul>
+</section>
+<section id="v0-1-10-2024-09-14">
+<h2>v0.1.10 (2024-09-14)<a class="headerlink" href="#v0-1-10-2024-09-14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>fixed bug I created in v0.1.9 when using a temp file to open_html_in_browser</p></li>
+<li><p>would have been nice for the .10 release to be something cool, not just me screwing up</p></li>
+</ul>
+</section>
+<section id="v0-1-9-2024-09-14">
+<h2>v0.1.9 (2024-09-14)<a class="headerlink" href="#v0-1-9-2024-09-14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>added &lt;hr&gt; (HorizontalRule) element to sectioning</p></li>
+<li><p>added ability to save html doc to a file in open_html_in_browser</p></li>
+<li><p>and now setting encoding correctly to utf-8 when writing to file (saved or temporary)</p></li>
+</ul>
+</section>
+<section id="v0-1-8-2024-09-06">
+<h2>v0.1.8 (2024-09-06)<a class="headerlink" href="#v0-1-8-2024-09-06" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>more tweaks to tools and updating other areas to use tools</p></li>
+<li><p>updated some dependencies</p></li>
+<li><p>been focused on work and some volunteering stuff, hope to get back to this soon…</p></li>
+</ul>
+</section>
+<section id="v0-1-7-2024-06-18">
+<h2>v0.1.7 (2024-06-18)<a class="headerlink" href="#v0-1-7-2024-06-18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>more tweaks to element_from_object</p></li>
+<li><p>added open_object_in_browser to tools.
+now, in the REPL, I don’t have to call element_from_object then open_in_browser.</p></li>
+</ul>
+</section>
+<section id="v0-1-6-2024-06-15">
+<h2>v0.1.6 (2024-06-15)<a class="headerlink" href="#v0-1-6-2024-06-15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>tweaks to element_from_object.
+I didn’t like the way headings read out within list items.
+Also, treat empty objects like terminals, simple print statement.
+I think it’s a bit cleaner this way.</p></li>
+</ul>
+</section>
+<section id="v0-1-5-2024-06-14">
+<h2>v0.1.5 (2024-06-14)<a class="headerlink" href="#v0-1-5-2024-06-14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>WARNING - Breaking backward compatibility with this release</p></li>
+<li><p>changed several methods and variable names to snake case (Hey, cool aid!!)</p></li>
+<li><p>added element_from_object to domible.builders, including simple test script (efo.py) in tests directory
+(not tied in to pytest though)</p></li>
+<li><p>added add_sublist to ListBuilder to address HTML/CSS issue with extra “bullet point.”
+(see comments in ListBuilder.py for more details)</p></li>
+<li><p>ran “poetry up” to update all version constraints in pyproject.toml</p></li>
+<li><p>updates to docs available at <a class="reference external" href="https://joeldodson.github.io/domible/">github pages for the domible repo</a>.</p></li>
+</ul>
+</section>
+<section id="v0-1-4-2024-06-06">
+<h2>v0.1.4 (2024-06-06)<a class="headerlink" href="#v0-1-4-2024-06-06" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>kind of getting back to domible</p></li>
+<li><p>to use with another project, added a ‘tools’ module under domible</p></li>
+<li><p>added open_in_browser and save_to_file in tools</p></li>
+</ul>
+</section>
+<section id="v0-1-3-2023-10-28">
+<h2>v0.1.3 (2023-10-28)<a class="headerlink" href="#v0-1-3-2023-10-28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>wait for 0.1.4 to complete NavBuilder, want to get ListBuilder into pypi</p></li>
+<li><p>changed documentation to mkdocs, so easy to automate deployment of docs to github pages</p></li>
+<li><p>created ListBuilder to support NavBuilder</p></li>
+<li><p>added many, and moved some, elements to support a nav builder</p></li>
+<li><p>some modifications to dicli code and tablebuilder to support returning &lt;style&gt; and &lt;script&gt; elements</p></li>
+<li><p>updated README to explain how CSS and JavaScript will be generated by builders</p></li>
+</ul>
+</section>
+<section id="v0-1-2-2023-05-11">
+<h2>v0.1.2 (2023-05-11)<a class="headerlink" href="#v0-1-2-2023-05-11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>strange problem when installing domible[dicli].  pip appears to be installing dicli 0.1.0 and 0.1.1.</p></li>
+<li><p>adding versioning to dicli package using same version from
+pyproject.  let’s see if that helps…</p></li>
+</ul>
+</section>
+<section id="v0-1-1-2023-05-11">
+<h2>v0.1.1 (2023-05-11)<a class="headerlink" href="#v0-1-1-2023-05-11" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>missed adding <code class="docutils literal notranslate"><span class="pre">requests</span></code> package to <code class="docutils literal notranslate"><span class="pre">dev</span></code> group and <code class="docutils literal notranslate"><span class="pre">dicli</span></code> extra</p></li>
+<li><p>element reference pages on MDN appear to have changed.  Updated parsing accordingly.  This is for <code class="docutils literal notranslate"><span class="pre">dicli</span> <span class="pre">elements</span></code></p></li>
+<li><p>Along with upgrading the parsing, extended the summary to include all sibling paragraphs after the h1 heading in the element reference page.  Also for <code class="docutils literal notranslate"><span class="pre">dicli</span> <span class="pre">elements</span></code></p></li>
+</ul>
+</section>
+<section id="v0-1-0-2023-05-08">
+<h2>v0.1.0 (2023-05-08)<a class="headerlink" href="#v0-1-0-2023-05-08" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>First release of <code class="docutils literal notranslate"><span class="pre">domible</span></code>!</p></li>
+<li><p>This release completes the evolution of
+<a class="reference external" href="https://github.com/joeldodson/pymenable">pymenable</a> from using jinja for document structure to using only Python classes.</p></li>
+<li><p>Started some very basic
+pytest automated testing.</p></li>
+<li><p>Started basic examples.  Not sure if it will continue in notebooks.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="CONDUCT.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Code of Conduct</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+        <div class="footer-item"><p class="last-updated">
+  Last updated on Nov 30, 2025.
+  <br/>
+</p></div>
+      
+    </div>
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>
